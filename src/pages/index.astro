@@ -1,0 +1,188 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTAButtons from '../components/CTAButtons.astro';
+import FAQSection from '../components/FAQSection.astro';
+import RelatedServices from '../components/RelatedServices.astro';
+import TrustBullets from '../components/TrustBullets.astro';
+import { services } from '../data/services';
+import { situations } from '../data/trust';
+import { homeFaqs } from '../data/faqs';
+import { site } from '../config/site';
+
+const title = 'CargoAdvisor.sg — Singapore Specialist for Special Cargo & Customs Support';
+const description =
+  'We help Singapore businesses handle unusual shipments: special cargo, exhibition and event logistics, oversized or fragile items, one-off imports, and TradeNet/customs coordination.';
+
+const howItWorks = [
+  {
+    title: 'Tell us what you need',
+    body: 'Pick the situation closest to yours — or “not sure” — and we take it from there.',
+  },
+  {
+    title: 'Describe the shipment',
+    body: 'What it is, roughly how big and heavy, and photos if you have them. No jargon required.',
+  },
+  {
+    title: 'Give us route and timing',
+    body: 'Where it’s coming from, where it needs to land, and whether the date is fixed.',
+  },
+  {
+    title: 'We assess and respond',
+    body: 'We review the details and get back to you with what’s involved — usually within one business day.',
+  },
+];
+
+const whyUs = [
+  {
+    title: 'We take the jobs generalists pass on',
+    body: 'Awkward dimensions, low volume, unfamiliar documentation — this is the work we’re set up for, not an exception to it.',
+  },
+  {
+    title: 'Clarity before commitment',
+    body: 'You get a proper assessment of what your shipment needs before any pricing conversation, not a generic quote.',
+  },
+  {
+    title: 'Singapore-specific coordination',
+    body: 'Venue access, delivery locations, and the TradeNet/permit process as they actually work here.',
+  },
+  {
+    title: 'A guided intake, not a form',
+    body: 'The enquiry process is built to help you explain an unusual shipment clearly, even if you’ve never had to before.',
+  },
+];
+---
+
+<BaseLayout title={title} description={description} path="/">
+  <!-- 1. Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero__content">
+        <div class="eyebrow">Special cargo &amp; customs coordination · Singapore</div>
+        <h1>Singapore specialist for special cargo and customs support</h1>
+        <p class="lede">
+          We help businesses handle unusual shipments, one-off imports, exhibition cargo, oversized
+          items, fragile equipment, and customs-related coordination in Singapore.
+        </p>
+        <div class="hero__ctas">
+          <CTAButtons />
+        </div>
+        <div class="hero__meta">
+          <span class="hero__meta-item">Small and unusual jobs welcome</span>
+          <span class="hero__meta-item">Clear intake before quotation</span>
+          <span class="hero__meta-item">Usually a response within one business day</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. What we help with -->
+  <section class="section section--border-top" aria-labelledby="help-heading">
+    <div class="container stack">
+      <div class="eyebrow">What we help with</div>
+      <h2 id="help-heading">Cargo that needs more than a standard freight quote</h2>
+      <p class="lede">
+        Most of what we handle isn’t large-volume freight. It’s the shipment that’s hard to categorise —
+        too unusual, too urgent, too fragile, or too tied up in paperwork for a generalist forwarder to
+        take on comfortably.
+      </p>
+      <div class="grid grid--3">
+        {
+          services.map((s) => (
+            <a class="service-card" href={`/${s.slug}`}>
+              <h3>{s.title}</h3>
+              <p>{s.summary}</p>
+              <div class="service-card__link">Read more →</div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Common situations we solve -->
+  <section class="section section--subtle section--border-top" aria-labelledby="situations-heading">
+    <div class="container stack">
+      <div class="eyebrow">Common situations</div>
+      <h2 id="situations-heading">If any of this sounds familiar</h2>
+      <div class="grid grid--2">
+        {
+          situations.map((s) => (
+            <div class="situation-card">
+              <h3>{s.title}</h3>
+              <p>{s.description}</p>
+            </div>
+          ))
+        }
+      </div>
+      <div style="margin-top: var(--space-3);">
+        <TrustBullets />
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. How the guided enquiry works -->
+  <section class="section section--border-top" aria-labelledby="how-heading">
+    <div class="container stack">
+      <div class="eyebrow">How it works</div>
+      <h2 id="how-heading">A guided enquiry, not a dull contact form</h2>
+      <p class="lede">
+        The fastest way to get a clear answer is to walk through a short, guided process built for
+        exactly this kind of shipment.
+      </p>
+      <ol class="steps-list">
+        {
+          howItWorks.map((step, i) => (
+            <li>
+              <span class="step-num" aria-hidden="true">{i + 1}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <div>
+        <a class="btn btn--primary btn--lg" href="/enquiry">{site.ctaPrimaryLabel}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Why businesses use CargoAdvisor.sg -->
+  <section class="section section--subtle section--border-top" aria-labelledby="why-heading">
+    <div class="container stack">
+      <div class="eyebrow">Why CargoAdvisor.sg</div>
+      <h2 id="why-heading">Built around the shipments other forwarders hesitate on</h2>
+      <div class="grid grid--2">
+        {
+          whyUs.map((item) => (
+            <div class="card">
+              <h3 style="font-size: var(--step-0); font-family: var(--font-sans); font-weight: 700;">{item.title}</h3>
+              <p class="text-muted" style="margin-top: var(--space-2);">{item.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Related service pages -->
+  <RelatedServices services={services.slice(0, 6)} heading="Explore by shipment type" />
+
+  <!-- 7. FAQ -->
+  <FAQSection faqs={homeFaqs} heading="Frequently asked questions" />
+
+  <!-- 8. Final CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-band">
+        <h2>Not sure where your shipment fits?</h2>
+        <p class="lede">
+          That’s the most common starting point. Begin the guided enquiry and we’ll help you work out
+          what kind of support applies.
+        </p>
+        <div class="cta-band__ctas">
+          <CTAButtons align="center" />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

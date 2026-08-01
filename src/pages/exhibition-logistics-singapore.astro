@@ -1,0 +1,68 @@
+---
+import ServicePageLayout from '../layouts/ServicePageLayout.astro';
+import { faqsBySlug } from '../data/faqs';
+
+const slug = 'exhibition-logistics-singapore';
+
+const supportOptions = [
+  { title: 'Venue delivery', body: 'Coordinated drop-off timed to your build-up window, with access and loading-dock constraints accounted for.' },
+  { title: 'Storage before the event', body: 'If materials arrive before the venue can accept them, we help arrange short-term holding.' },
+  { title: 'Setup and teardown support', body: 'Coordination around your build-up and breakdown schedule, not a generic delivery estimate.' },
+  { title: 'Return shipment', body: 'Planned alongside the inbound delivery so nothing is arranged as an afterthought once the event ends.' },
+];
+---
+
+<ServicePageLayout
+  slug={slug}
+  metaTitle="Exhibition Logistics Singapore | Event Cargo Delivery"
+  metaDescription="Exhibition and event cargo logistics for Singapore shows and conferences — booth materials, display units, and equipment delivered against a fixed event date, with venue coordination."
+  breadcrumbLabel="Exhibition logistics"
+  eyebrow="Exhibition & event cargo"
+  h1="Exhibition and event cargo logistics in Singapore"
+  lede="Booth materials, display units, and event equipment coordinated against a fixed date — with venue delivery, storage, and teardown handled as one job, not separate bookings."
+  faqs={faqsBySlug[slug]}
+  whatsappMessage="Hi CargoAdvisor, I need help with exhibition/event cargo for an upcoming show in Singapore."
+>
+  <section class="section section--border-top" aria-labelledby="why-different-heading">
+    <div class="container stack">
+      <div class="eyebrow">Why event cargo is different</div>
+      <h2 id="why-different-heading">The deadline isn't flexible — the logistics have to work around it</h2>
+      <p class="lede">
+        Exhibition cargo has one constraint that standard freight doesn’t: the event date doesn’t move.
+        A shipment that would be "a few days late, no problem" for a normal order can mean a bare booth
+        at opening. We plan backwards from your build-up window, not forwards from a generic transit
+        estimate.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--subtle section--border-top" aria-labelledby="support-heading">
+    <div class="container stack">
+      <div class="eyebrow">Support available</div>
+      <h2 id="support-heading">What we coordinate around your event</h2>
+      <div class="grid grid--2">
+        {
+          supportOptions.map((item) => (
+            <div class="card">
+              <h3 style="font-size: var(--step-0); font-family: var(--font-sans); font-weight: 700;">{item.title}</h3>
+              <p class="text-muted" style="margin-top: var(--space-2);">{item.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--border-top" aria-labelledby="need-heading">
+    <div class="container stack">
+      <div class="eyebrow">What we'll ask</div>
+      <h2 id="need-heading">Details that help us plan accurately</h2>
+      <ul class="trust-list">
+        <li>The event name, venue, and your build-up / teardown dates.</li>
+        <li>What’s being shipped — booth structure, printed materials, demo units, or a mix.</li>
+        <li>Whether the venue has loading-dock access, and any delivery-window restrictions.</li>
+        <li>Whether the materials need to travel back out after the event.</li>
+      </ul>
+    </div>
+  </section>
+</ServicePageLayout>

@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CTAButtons from '../components/CTAButtons.astro';
+import TrustBullets from '../components/TrustBullets.astro';
+
+const title = 'About CargoAdvisor.sg | Singapore Special Cargo Specialists';
+const description =
+  'CargoAdvisor.sg focuses on unusual, time-sensitive, and documentation-heavy cargo situations in Singapore — what we do, what we don\'t claim to be, and how we work.';
+---
+
+<BaseLayout title={title} description={description} path="/about">
+  <Breadcrumbs items={[{ label: 'About', href: '/about' }]} />
+
+  <section class="page-hero">
+    <div class="container hero__content">
+      <div class="eyebrow">About</div>
+      <h1>A focused practice, not a general logistics provider</h1>
+      <p class="lede">
+        CargoAdvisor.sg exists for one kind of problem: cargo that doesn't fit the standard freight
+        process. We focus narrowly so we can be genuinely useful on the jobs that matter most to get
+        right — the unusual, the urgent, and the paperwork-heavy.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--border-top" aria-labelledby="focus-heading">
+    <div class="container stack">
+      <div class="eyebrow">What we focus on</div>
+      <h2 id="focus-heading">Singapore coordination for cargo that needs more thought</h2>
+      <p class="lede">
+        Special and one-off cargo, exhibition and event materials, oversized or fragile items, and
+        the customs and TradeNet questions that come with all of the above. If a shipment is easy to
+        categorise and a generalist forwarder would handle it well, we're probably not the right fit —
+        and we'll say so.
+      </p>
+      <TrustBullets />
+    </div>
+  </section>
+
+  <section class="section section--subtle section--border-top" aria-labelledby="honest-heading">
+    <div class="container stack">
+      <div class="eyebrow">To be clear about what we are</div>
+      <h2 id="honest-heading">What CargoAdvisor.sg does — and doesn't — claim to be</h2>
+      <div class="grid grid--2">
+        <div class="card card--elevated">
+          <h3 style="font-size: var(--step-0); font-family: var(--font-sans); font-weight: 700;">What we do</h3>
+          <ul class="trust-list" style="margin-top: var(--space-3);">
+            <li>Help you understand what category your shipment falls into.</li>
+            <li>Help you prepare the information a customs declaration is likely to need.</li>
+            <li>Coordinate delivery, timing, packing, and site access around your shipment.</li>
+            <li>Connect you with appropriate, appropriately licensed support where required — for
+              example, a Declaring Agent for a TradeNet submission.</li>
+          </ul>
+        </div>
+        <div class="card card--elevated">
+          <h3 style="font-size: var(--step-0); font-family: var(--font-sans); font-weight: 700;">What we don't claim</h3>
+          <ul class="trust-list" style="margin-top: var(--space-3);">
+            <li>We don't present ourselves as a licensed Declaring Agent unless that's explicitly true
+              for a specific engagement.</li>
+            <li>We don't provide legal or regulatory advice — for binding requirements, we point you to
+              Singapore Customs or a licensed professional.</li>
+            <li>We don't claim to be the cheapest option — our value is clarity and coordination on
+              jobs that are hard to get right.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--border-top" aria-labelledby="who-heading">
+    <div class="container stack">
+      <div class="eyebrow">Who this is for</div>
+      <h2 id="who-heading">SME teams, exhibitors, and first-time importers</h2>
+      <p class="lede">
+        Most people who reach out are ops staff or business owners handling a shipment that isn't part
+        of their everyday work — an exhibition, a one-off import, a piece of equipment that needs to
+        get somewhere fragile-side-up and on time. If that's you, the guided enquiry is built to make
+        this easier, not to add another form to fill in.
+      </p>
+      <CTAButtons />
+    </div>
+  </section>
+</BaseLayout>

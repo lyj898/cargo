@@ -1,0 +1,75 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CTAButtons from '../components/CTAButtons.astro';
+import FAQSection from '../components/FAQSection.astro';
+import RelatedServices from '../components/RelatedServices.astro';
+import { site, absoluteUrl } from '../config/site';
+import { relatedServices } from '../data/services';
+import type { Faq } from '../data/faqs';
+
+export interface Props {
+  slug: string;
+  metaTitle: string;
+  metaDescription: string;
+  breadcrumbLabel: string;
+  eyebrow: string;
+  h1: string;
+  lede: string;
+  faqs: Faq[];
+  whatsappMessage?: string;
+}
+
+const { slug, metaTitle, metaDescription, breadcrumbLabel, eyebrow, h1, lede, faqs, whatsappMessage } = Astro.props;
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: h1,
+  name: metaTitle,
+  description: metaDescription,
+  url: absoluteUrl(`/${slug}`),
+  provider: {
+    '@type': 'ProfessionalService',
+    name: site.name,
+    url: site.url,
+  },
+  areaServed: {
+    '@type': 'Country',
+    name: 'Singapore',
+  },
+};
+---
+
+<BaseLayout title={metaTitle} description={metaDescription} path={`/${slug}`} jsonLd={[serviceSchema]}>
+  <Breadcrumbs items={[{ label: breadcrumbLabel, href: `/${slug}` }]} />
+
+  <section class="page-hero">
+    <div class="container hero__content">
+      <div class="eyebrow">{eyebrow}</div>
+      <h1>{h1}</h1>
+      <p class="lede">{lede}</p>
+      <div class="page-hero__ctas">
+        <CTAButtons whatsappMessage={whatsappMessage} />
+      </div>
+    </div>
+  </section>
+
+  <slot />
+
+  <FAQSection faqs={faqs} heading={`Questions about ${eyebrow.toLowerCase()}`} id="faq" />
+
+  <RelatedServices services={relatedServices(slug)} />
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-band">
+        <h2>Not sure if this is the right page?</h2>
+        <p class="lede">Start the guided enquiry — it takes a few minutes and helps place your shipment in the right category.</p>
+        <div class="cta-band__ctas">
+          <CTAButtons whatsappMessage={whatsappMessage} align="center" />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

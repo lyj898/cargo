@@ -1,0 +1,30 @@
+---
+import { site, whatsappLink } from '../config/site';
+
+export interface Props {
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  whatsappMessage?: string;
+  size?: 'default' | 'lg';
+  align?: 'start' | 'center';
+}
+
+const {
+  primaryLabel = site.ctaPrimaryLabel,
+  primaryHref = '/enquiry',
+  secondaryLabel = site.ctaSecondaryLabel,
+  whatsappMessage = 'Hi CargoAdvisor, I have a shipment I’d like help assessing.',
+  size = 'default',
+  align = 'start',
+} = Astro.props;
+
+const sizeClass = size === 'lg' ? 'btn--lg' : '';
+---
+
+<div class="cluster" style={align === 'center' ? 'justify-content: center;' : undefined}>
+  <a class={`btn btn--primary ${sizeClass}`} href={primaryHref}>{primaryLabel}</a>
+  <a class={`btn btn--whatsapp ${sizeClass}`} href={whatsappLink(whatsappMessage)} rel="noopener" target="_blank">
+    {secondaryLabel}
+  </a>
+</div>

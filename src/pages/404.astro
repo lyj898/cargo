@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTAButtons from '../components/CTAButtons.astro';
+---
+
+<BaseLayout title="Page not found" description="This page doesn't exist." path="/404" noIndex>
+  <section class="section" style="padding-block: var(--space-9);">
+    <div class="container stack" style="text-align: center;">
+      <div class="eyebrow" style="justify-content: center;">404</div>
+      <h1>We couldn't find that page</h1>
+      <p class="lede" style="margin-inline: auto;">
+        The page may have moved, or the link may be out of date. Try the guided enquiry, or head back
+        to the homepage.
+      </p>
+      <CTAButtons primaryLabel="Get shipment assessed" align="center" />
+      <p><a href="/">← Back to homepage</a></p>
+    </div>
+  </section>
+</BaseLayout>

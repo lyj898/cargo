@@ -1,0 +1,73 @@
+---
+import ServicePageLayout from '../layouts/ServicePageLayout.astro';
+import { faqsBySlug } from '../data/faqs';
+
+const slug = 'fragile-equipment-shipping-singapore';
+
+const examples = [
+  'Lab, medical, or scientific instruments',
+  'Prototypes and pre-production units',
+  'Sensitive electronics or optical equipment',
+  'Delicate machinery components',
+  'Art, display pieces, or fabricated items',
+];
+---
+
+<ServicePageLayout
+  slug={slug}
+  metaTitle="Fragile Equipment Shipping Singapore | Delicate Cargo Coordination"
+  metaDescription="Shipping coordination for fragile and high-value equipment into Singapore — sensitive instruments, prototypes, and delicate machinery, with careful packing and handling guidance."
+  breadcrumbLabel="Fragile equipment"
+  eyebrow="Fragile equipment"
+  h1="Fragile equipment shipping into Singapore"
+  lede="For sensitive instruments, prototypes, and delicate machinery where handling and packing quality matter more than speed — with guidance from first pickup to final placement."
+  faqs={faqsBySlug[slug]}
+  whatsappMessage="Hi CargoAdvisor, I have a fragile equipment shipment I'd like to ask about."
+>
+  <section class="section section--border-top" aria-labelledby="examples-heading">
+    <div class="container stack">
+      <div class="eyebrow">What this typically covers</div>
+      <h2 id="examples-heading">Examples of equipment we help coordinate</h2>
+      <ul class="trust-list">
+        {examples.map((e) => <li>{e}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--subtle section--border-top" aria-labelledby="handling-heading">
+    <div class="container stack">
+      <div class="eyebrow">How we think about handling</div>
+      <h2 id="handling-heading">Packing, precautions, and placement</h2>
+      <div class="grid grid--2">
+        <div class="card">
+          <h3 style="font-size: var(--step-0); font-family: var(--font-sans); font-weight: 700;">Packing and repacking</h3>
+          <p class="text-muted" style="margin-top: var(--space-2);">
+            If your item isn’t already professionally packed, we help arrange packing suited to its
+            sensitivity. If it is, tell us in the enquiry and we’ll focus on transport and delivery.
+          </p>
+        </div>
+        <div class="card">
+          <h3 style="font-size: var(--step-0); font-family: var(--font-sans); font-weight: 700;">Manufacturer or special handling instructions</h3>
+          <p class="text-muted" style="margin-top: var(--space-2);">
+            Orientation, temperature sensitivity, or shock precautions — note these upfront in the
+            shipment details step so they’re accounted for at every stage, not just at pickup.
+          </p>
+        </div>
+        <div class="card">
+          <h3 style="font-size: var(--step-0); font-family: var(--font-sans); font-weight: 700;">Site delivery and placement</h3>
+          <p class="text-muted" style="margin-top: var(--space-2);">
+            Delivery to a lab, office, or venue often means more than dropping a box at reception —
+            tell us the delivery location type so we can plan accordingly.
+          </p>
+        </div>
+        <div class="card">
+          <h3 style="font-size: var(--step-0); font-family: var(--font-sans); font-weight: 700;">Insurance-aware handling</h3>
+          <p class="text-muted" style="margin-top: var(--space-2);">
+            High-value equipment often warrants extra care in documentation and condition checks —
+            flag the commercial value in the enquiry so this is factored in from the start.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</ServicePageLayout>

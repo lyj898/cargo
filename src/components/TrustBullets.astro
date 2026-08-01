@@ -1,0 +1,13 @@
+---
+import { trustBullets } from '../data/trust';
+
+export interface Props {
+  bullets?: string[];
+}
+
+const { bullets = trustBullets } = Astro.props;
+---
+
+<ul class="trust-list">
+  {bullets.map((b) => <li>{b}</li>)}
+</ul>

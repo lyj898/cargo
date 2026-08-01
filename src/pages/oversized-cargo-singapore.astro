@@ -1,0 +1,57 @@
+---
+import ServicePageLayout from '../layouts/ServicePageLayout.astro';
+import WhatToPrepare from '../components/WhatToPrepare.astro';
+import { faqsBySlug } from '../data/faqs';
+
+const slug = 'oversized-cargo-singapore';
+
+const considerations = [
+  { title: 'Dimensions and weight', body: 'Exact figures aren’t required to start — estimates let us assess feasibility and plan the right equipment.' },
+  { title: 'Access at the delivery point', body: 'Loading docks, lift size, stairwells, or street access all change how a delivery is planned.' },
+  { title: 'Assembly or positioning on site', body: 'Some oversized items need to be placed or assembled in a specific way once delivered.' },
+  { title: 'Route from origin', body: 'How the item is packed and moved from its origin affects what’s realistic on arrival.' },
+];
+---
+
+<ServicePageLayout
+  slug={slug}
+  metaTitle="Oversized Cargo Singapore | Awkward & Bulky Shipment Coordination"
+  metaDescription="Coordination for oversized, heavy, or awkwardly shaped cargo into Singapore — machinery, structures, and bulky one-off items, with dimension-aware planning and site delivery."
+  breadcrumbLabel="Oversized cargo"
+  eyebrow="Oversized cargo"
+  h1="Oversized and awkward shipments into Singapore"
+  lede="For machinery, structures, and bulky one-off items that need more than a standard courier — dimension-aware planning, the right equipment, and coordinated delivery to site."
+  faqs={faqsBySlug[slug]}
+  whatsappMessage="Hi CargoAdvisor, I have an oversized shipment I'd like to ask about."
+>
+  <section class="section section--border-top" aria-labelledby="considerations-heading">
+    <div class="container stack">
+      <div class="eyebrow">What changes the plan</div>
+      <h2 id="considerations-heading">Details that shape how an oversized delivery works</h2>
+      <div class="grid grid--2">
+        {
+          considerations.map((item) => (
+            <div class="card">
+              <h3 style="font-size: var(--step-0); font-family: var(--font-sans); font-weight: 700;">{item.title}</h3>
+              <p class="text-muted" style="margin-top: var(--space-2);">{item.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--subtle section--border-top" aria-labelledby="pricing-heading">
+    <div class="container stack">
+      <div class="eyebrow">On cost</div>
+      <h2 id="pricing-heading">Size alone doesn't set the price</h2>
+      <p class="lede">
+        Oversized doesn’t automatically mean expensive. Cost is driven by dimensions, weight, delivery
+        access, and timing together — which is why we assess each shipment individually during the
+        guided enquiry rather than quoting from a size chart.
+      </p>
+    </div>
+  </section>
+
+  <WhatToPrepare />
+</ServicePageLayout>

@@ -1,0 +1,369 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { site, whatsappLink } from '../../config/site';
+
+const title = 'Guided Shipment Enquiry | CargoAdvisor.sg';
+const description =
+  'Tell us about your shipment in five short steps — what it is, where it needs to go, and what support you need. We assess before we quote.';
+
+const helpOptions = [
+  { value: 'special-cargo', title: 'Special cargo', help: 'A shipment that doesn’t fit a standard freight category.' },
+  { value: 'exhibition', title: 'Exhibition / event cargo', help: 'Booth materials or equipment tied to an event date.' },
+  { value: 'oversized', title: 'Oversized shipment', help: 'Large, heavy, or awkwardly shaped items.' },
+  { value: 'fragile', title: 'Fragile equipment', help: 'Delicate or high-value items needing careful handling.' },
+  { value: 'customs-permit', title: 'Customs / permit help', help: 'Understanding what your import needs to clear.' },
+  { value: 'not-sure', title: 'Not sure', help: 'That’s fine — we’ll help you work it out.' },
+];
+
+const deliveryLocationTypes = [
+  { value: 'warehouse', label: 'Warehouse' },
+  { value: 'office', label: 'Office' },
+  { value: 'venue', label: 'Venue' },
+  { value: 'retail', label: 'Retail location' },
+  { value: 'other', label: 'Other' },
+];
+
+const supportToggles = [
+  {
+    id: 'toggle-customs',
+    name: 'needCustoms',
+    label: 'Need customs or permit support?',
+    help: 'Help understanding or preparing for a TradeNet declaration.',
+    conditionalId: 'field-customs-notes',
+    conditionalName: 'customsNotes',
+    conditionalLabel: 'Anything you already know about permits or the product category?',
+  },
+  {
+    id: 'toggle-venue',
+    name: 'needVenueDelivery',
+    label: 'Need venue delivery?',
+    help: 'Direct delivery to an event, office, or site location.',
+    conditionalId: 'field-venue-details',
+    conditionalName: 'venueDetails',
+    conditionalLabel: 'Venue name and/or delivery address',
+  },
+  {
+    id: 'toggle-packing',
+    name: 'needPacking',
+    label: 'Need packing / repacking?',
+    help: 'Professional packing suited to fragile or high-value items.',
+  },
+  {
+    id: 'toggle-storage',
+    name: 'needStorage',
+    label: 'Need temporary storage?',
+    help: 'Short-term holding before delivery or an event.',
+    conditionalId: 'field-storage-duration',
+    conditionalName: 'storageDuration',
+    conditionalLabel: 'Roughly how long would you need storage for?',
+  },
+  {
+    id: 'toggle-return',
+    name: 'needReturn',
+    label: 'Need return shipment?',
+    help: 'Sending the item(s) back out after use, e.g. post-event.',
+    conditionalId: 'field-return-date',
+    conditionalName: 'returnDate',
+    conditionalLabel: 'Approximate return shipment date',
+  },
+  {
+    id: 'toggle-setup',
+    name: 'needSetupTeardown',
+    label: 'Need setup / teardown support?',
+    help: 'On-site assembly or breakdown, e.g. for a booth or display.',
+  },
+];
+---
+
+<BaseLayout title={title} description={description} path="/enquiry">
+  <Breadcrumbs items={[{ label: 'Guided enquiry', href: '/enquiry' }]} />
+
+  <section class="enquiry">
+    <div class="container">
+      <div class="enquiry__shell">
+        <div class="visually-hidden" id="enquiry-live-region" aria-live="polite"></div>
+
+        <div class="enquiry__progress" id="enquiry-progress">
+          <div class="enquiry__progress-label">
+            <span id="enquiry-progress-text">Step 1 of 5: What do you need help with?</span>
+          </div>
+          <div class="enquiry__progress-track">
+            <div class="enquiry__progress-fill" id="enquiry-progress-fill"></div>
+          </div>
+        </div>
+
+        <div class="enquiry__panel" id="enquiry-form-panel">
+          <div class="enquiry__error-banner" id="enquiry-error-banner" role="alert">
+            <span>Something went wrong sending your enquiry. Your answers are still here — please try again, or reach us directly on WhatsApp or email.</span>
+          </div>
+
+          <form id="enquiry-form" novalidate>
+            <!-- honeypot -->
+            <div class="visually-hidden" aria-hidden="true">
+              <label for="field-company-website">Leave this field blank</label>
+              <input type="text" id="field-company-website" name="_gotcha" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <!-- STEP 1 -->
+            <section class="enquiry__step" id="step-1" data-step="1" aria-labelledby="step-1-title">
+              <h2 class="enquiry__step-title" id="step-1-title" tabindex="-1">What do you need help with?</h2>
+              <p class="enquiry__step-help">Pick whichever is closest — you can add more detail on the next steps.</p>
+
+              <fieldset class="field" style="border: none; padding: 0; margin-top: var(--space-6);">
+                <legend class="visually-hidden">What do you need help with?</legend>
+                <ul class="card-select">
+                  {
+                    helpOptions.map((opt) => (
+                      <li class="card-select__option">
+                        <input
+                          class="card-select__input"
+                          type="radio"
+                          name="helpType"
+                          id={`help-${opt.value}`}
+                          value={opt.value}
+                          required
+                        />
+                        <label class="card-select__label" for={`help-${opt.value}`}>
+                          <strong>{opt.title}</strong>
+                          <span>{opt.help}</span>
+                        </label>
+                      </li>
+                    ))
+                  }
+                </ul>
+                <p class="field-error" id="helpType-error">Please choose one option to continue.</p>
+              </fieldset>
+            </section>
+
+            <!-- STEP 2 -->
+            <section class="enquiry__step" id="step-2" data-step="2" hidden aria-labelledby="step-2-title">
+              <h2 class="enquiry__step-title" id="step-2-title" tabindex="-1">Shipment details</h2>
+              <p class="enquiry__step-help">Estimates are fine everywhere — nothing here needs to be exact.</p>
+
+              <div class="field">
+                <label for="field-shipment-description">What are you shipping?</label>
+                <textarea class="textarea" id="field-shipment-description" name="shipmentDescription" required aria-describedby="field-shipment-description-error"></textarea>
+                <p class="field__help">A short plain description is fine, e.g. "3 crates of exhibition booth panels".</p>
+                <p class="field-error" id="field-shipment-description-error">Tell us briefly what’s being shipped.</p>
+              </div>
+
+              <div class="field">
+                <label for="field-commercial-value">Commercial value (SGD)</label>
+                <input class="input" type="text" inputmode="decimal" id="field-commercial-value" name="commercialValue" required aria-describedby="field-commercial-value-error" />
+                <p class="field-error" id="field-commercial-value-error">Please give a rough value — an estimate is fine.</p>
+              </div>
+
+              <div class="field">
+                <label for="field-piece-count">Number of pieces</label>
+                <input class="input" type="number" min="1" step="1" id="field-piece-count" name="pieceCount" required aria-describedby="field-piece-count-error" />
+                <p class="field-error" id="field-piece-count-error">Please enter how many pieces are in the shipment.</p>
+              </div>
+
+              <div class="field">
+                <label for="field-approx-weight">Approximate weight</label>
+                <input class="input" type="text" id="field-approx-weight" name="approxWeight" required aria-describedby="field-approx-weight-help field-approx-weight-error" />
+                <p class="field__help" id="field-approx-weight-help">e.g. "120kg" or "not sure yet".</p>
+                <p class="field-error" id="field-approx-weight-error">Please give an approximate weight.</p>
+              </div>
+
+              <div class="field">
+                <label for="field-dimensions">Dimensions <span class="field__optional">(optional)</span></label>
+                <input class="input" type="text" id="field-dimensions" name="dimensions" aria-describedby="field-dimensions-help" />
+                <p class="field__help" id="field-dimensions-help">L x W x H, e.g. "120 x 80 x 100 cm".</p>
+              </div>
+
+              <div class="field">
+                <label for="field-attachments">Upload photos or documents <span class="field__optional">(optional)</span></label>
+                <div class="dropzone" id="dropzone">
+                  <input type="file" id="field-attachments" name="attachments" multiple accept="image/*,.pdf,.doc,.docx" aria-describedby="field-attachments-help" />
+                  <p class="dropzone__text">Drop files here, or click to browse</p>
+                  <p class="dropzone__hint" id="field-attachments-help">Photos, invoices, or packing lists — up to 8 files.</p>
+                </div>
+                <ul class="file-list" id="file-list"></ul>
+              </div>
+            </section>
+
+            <!-- STEP 3 -->
+            <section class="enquiry__step" id="step-3" data-step="3" hidden aria-labelledby="step-3-title">
+              <h2 class="enquiry__step-title" id="step-3-title" tabindex="-1">Route and timing</h2>
+              <p class="enquiry__step-help">Where it’s coming from, where it needs to land, and when.</p>
+
+              <div class="field">
+                <label for="field-origin">Origin city / country</label>
+                <input class="input" type="text" id="field-origin" name="origin" required aria-describedby="field-origin-error" />
+                <p class="field-error" id="field-origin-error">Please tell us where the shipment is coming from.</p>
+              </div>
+
+              <div class="field">
+                <label for="field-destination">Destination in Singapore</label>
+                <input class="input" type="text" id="field-destination" name="destination" required aria-describedby="field-destination-help field-destination-error" />
+                <p class="field__help" id="field-destination-help">Area, postal code, or venue name.</p>
+                <p class="field-error" id="field-destination-error">Please tell us the destination in Singapore.</p>
+              </div>
+
+              <div class="field">
+                <label for="field-delivery-location-type">Delivery location type</label>
+                <select class="select" id="field-delivery-location-type" name="deliveryLocationType" required aria-describedby="field-delivery-location-type-error">
+                  <option value="" selected disabled>Choose one</option>
+                  {deliveryLocationTypes.map((t) => <option value={t.value}>{t.label}</option>)}
+                </select>
+                <p class="field-error" id="field-delivery-location-type-error">Please choose a delivery location type.</p>
+              </div>
+
+              <div class="field">
+                <label for="field-deadline">Delivery deadline / event date <span class="field__optional">(optional)</span></label>
+                <input class="input" type="date" id="field-deadline" name="deadline" aria-describedby="field-deadline-help" />
+                <p class="field__help" id="field-deadline-help">Leave blank if your timing is flexible.</p>
+              </div>
+
+              <fieldset class="field" style="border: none; padding: 0;">
+                <legend>Is timing fixed?</legend>
+                <div class="pill-group" role="radiogroup" aria-describedby="timingFixed-error">
+                  <span>
+                    <input class="pill-group__input" type="radio" name="timingFixed" id="timing-fixed-yes" value="yes" required />
+                    <label class="pill-group__label" for="timing-fixed-yes">Yes, fixed</label>
+                  </span>
+                  <span>
+                    <input class="pill-group__input" type="radio" name="timingFixed" id="timing-fixed-no" value="no" />
+                    <label class="pill-group__label" for="timing-fixed-no">No, flexible</label>
+                  </span>
+                </div>
+                <p class="field-error" id="timingFixed-error">Please let us know if the timing is fixed.</p>
+              </fieldset>
+            </section>
+
+            <!-- STEP 4 -->
+            <section class="enquiry__step" id="step-4" data-step="4" hidden aria-labelledby="step-4-title">
+              <h2 class="enquiry__step-title" id="step-4-title" tabindex="-1">Support needed</h2>
+              <p class="enquiry__step-help">Toggle on whatever applies — none of this is binding yet.</p>
+
+              <fieldset style="border: none; padding: 0; margin-top: var(--space-5);">
+                <legend class="visually-hidden">Support needed</legend>
+                {
+                  supportToggles.map((t) => (
+                    <div>
+                      <div class="toggle-row">
+                        <div>
+                          <label class="toggle-row__label" for={t.id}>{t.label}</label>
+                          <p class="toggle-row__help">{t.help}</p>
+                        </div>
+                        <span class="switch">
+                          <input type="checkbox" id={t.id} name={t.name} data-conditional-target={t.conditionalId} />
+                          <span class="switch__track" aria-hidden="true" />
+                        </span>
+                      </div>
+                      {t.conditionalId && (
+                        <div class="conditional-field" id={`${t.conditionalId}-wrap`} hidden>
+                          <label for={t.conditionalId}>{t.conditionalLabel}</label>
+                          <input class="input" type="text" id={t.conditionalId} name={t.conditionalName} />
+                        </div>
+                      )}
+                    </div>
+                  ))
+                }
+              </fieldset>
+            </section>
+
+            <!-- STEP 5 -->
+            <section class="enquiry__step" id="step-5" data-step="5" hidden aria-labelledby="step-5-title">
+              <h2 class="enquiry__step-title" id="step-5-title" tabindex="-1">Contact details</h2>
+              <p class="enquiry__step-help">So we know where to send the assessment.</p>
+
+              <div class="field">
+                <label for="field-full-name">Name</label>
+                <input class="input" type="text" id="field-full-name" name="fullName" required autocomplete="name" aria-describedby="field-full-name-error" />
+                <p class="field-error" id="field-full-name-error">Please enter your name.</p>
+              </div>
+
+              <div class="field">
+                <label for="field-company">Company <span class="field__optional">(if applicable)</span></label>
+                <input class="input" type="text" id="field-company" name="company" autocomplete="organization" />
+              </div>
+
+              <div class="field">
+                <label for="field-mobile">WhatsApp / mobile number</label>
+                <input class="input" type="tel" id="field-mobile" name="mobile" required autocomplete="tel" aria-describedby="field-mobile-help field-mobile-error" />
+                <p class="field__help" id="field-mobile-help">Include country code, e.g. +65 8123 4567.</p>
+                <p class="field-error" id="field-mobile-error">Please enter a contact number.</p>
+              </div>
+
+              <div class="field">
+                <label for="field-email">Email</label>
+                <input class="input" type="email" id="field-email" name="email" required autocomplete="email" aria-describedby="field-email-error" />
+                <p class="field-error" id="field-email-error">Please enter a valid email address.</p>
+              </div>
+
+              <fieldset class="field" style="border: none; padding: 0;">
+                <legend>Preferred contact method</legend>
+                <div class="pill-group" role="radiogroup" aria-describedby="preferredContact-error">
+                  <span>
+                    <input class="pill-group__input" type="radio" name="preferredContact" id="contact-whatsapp" value="whatsapp" required />
+                    <label class="pill-group__label" for="contact-whatsapp">WhatsApp</label>
+                  </span>
+                  <span>
+                    <input class="pill-group__input" type="radio" name="preferredContact" id="contact-email" value="email" />
+                    <label class="pill-group__label" for="contact-email">Email</label>
+                  </span>
+                  <span>
+                    <input class="pill-group__input" type="radio" name="preferredContact" id="contact-phone" value="phone" />
+                    <label class="pill-group__label" for="contact-phone">Phone call</label>
+                  </span>
+                </div>
+                <p class="field-error" id="preferredContact-error">Please choose a preferred contact method.</p>
+              </fieldset>
+
+              <div class="field">
+                <label for="field-notes">Notes <span class="field__optional">(optional)</span></label>
+                <textarea class="textarea" id="field-notes" name="notes" aria-describedby="field-notes-help"></textarea>
+                <p class="field__help" id="field-notes-help">Anything else that would help us assess this shipment.</p>
+              </div>
+            </section>
+
+            <div class="enquiry__actions" id="enquiry-actions">
+              <button type="button" class="btn btn--ghost" id="enquiry-back-btn" hidden>← Back</button>
+              <button type="button" class="btn btn--primary" id="enquiry-continue-btn">Continue</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- CONFIRMATION -->
+        <div class="enquiry__panel" id="enquiry-confirmation" hidden>
+          <div class="confirm-icon" aria-hidden="true">✓</div>
+          <h2 tabindex="-1" id="confirmation-title">Thanks — your enquiry is in</h2>
+          <p class="lede" style="margin-top: var(--space-3);">
+            We’ll review the details below and get back to you, usually within one business day. If
+            your timing is fixed, we prioritise accordingly.
+          </p>
+
+          <div class="card" style="margin-top: var(--space-6); background: var(--color-bg-subtle); border: none;">
+            <h3 style="font-size: var(--step-0); font-family: var(--font-sans); font-weight: 700;">What happens next</h3>
+            <ol class="stack-sm" style="margin-top: var(--space-3); padding-left: 1.1rem;">
+              <li>We review your shipment details against what you’ve told us.</li>
+              <li>We reply with what’s involved — approach, rough timing, and any questions.</li>
+              <li>If it’s a fit, we coordinate the next steps together.</li>
+            </ol>
+          </div>
+
+          <div class="stack" style="margin-top: var(--space-6);">
+            <h3 style="font-size: var(--step-0); font-family: var(--font-sans); font-weight: 700;">Your submitted request</h3>
+            <dl class="summary-list" id="enquiry-summary-list"></dl>
+          </div>
+
+          <div class="cluster" style="margin-top: var(--space-7);">
+            <a class="btn btn--whatsapp" id="enquiry-whatsapp-followup" href={whatsappLink()} rel="noopener" target="_blank">
+              Send more details on WhatsApp
+            </a>
+            <button type="button" class="btn btn--secondary" id="enquiry-reset-btn">Start a new enquiry</button>
+          </div>
+        </div>
+
+        <div class="sticky-cta" id="enquiry-sticky-cta">
+          <button type="button" class="btn btn--primary btn--block" id="enquiry-sticky-continue-btn">Continue</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="../../scripts/enquiry.ts"></script>
+</BaseLayout>
