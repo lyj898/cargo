@@ -1,26 +1,29 @@
 ---
-import { site } from '../config/site';
+import { site, withBase } from '../config/site';
 
 const currentPath = Astro.url.pathname;
 ---
 
 <header class="site-header">
   <div class="container site-header__bar">
-    <a href="/" class="brand">Cargo<span>Advisor</span>.sg</a>
+    <a href={withBase('/')} class="brand">Cargo<span>Advisor</span>.sg</a>
 
     <nav class="main-nav" aria-label="Primary">
       {
-        site.primaryNav.map((item) => (
-          <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>
-            {item.label}
-          </a>
-        ))
+        site.primaryNav.map((item) => {
+          const href = withBase(item.href);
+          return (
+            <a href={href} aria-current={currentPath === href ? 'page' : undefined}>
+              {item.label}
+            </a>
+          );
+        })
       }
     </nav>
 
     <div class="header-ctas">
-      <a class="btn btn--secondary" href="/contact">Contact</a>
-      <a class="btn btn--primary" href="/enquiry">{site.ctaPrimaryLabel}</a>
+      <a class="btn btn--secondary" href={withBase('/contact')}>Contact</a>
+      <a class="btn btn--primary" href={withBase('/enquiry')}>{site.ctaPrimaryLabel}</a>
       <button
         type="button"
         class="mobile-nav-toggle"
@@ -38,12 +41,12 @@ const currentPath = Astro.url.pathname;
       {
         site.primaryNav.map((item) => (
           <li>
-            <a href={item.href}>{item.label}</a>
+            <a href={withBase(item.href)}>{item.label}</a>
           </li>
         ))
       }
-      <li><a href="/contact">Contact</a></li>
-      <li><a href="/enquiry">{site.ctaPrimaryLabel}</a></li>
+      <li><a href={withBase('/contact')}>Contact</a></li>
+      <li><a href={withBase('/enquiry')}>{site.ctaPrimaryLabel}</a></li>
     </ul>
   </nav>
 </header>

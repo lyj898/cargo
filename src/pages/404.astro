@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CTAButtons from '../components/CTAButtons.astro';
+import { withBase } from '../config/site';
 ---
 
 <BaseLayout title="Page not found" description="This page doesn't exist." path="/404" noIndex>
@@ -13,7 +14,7 @@ import CTAButtons from '../components/CTAButtons.astro';
         to the homepage.
       </p>
       <CTAButtons primaryLabel="Get shipment assessed" align="center" />
-      <p><a href="/">← Back to homepage</a></p>
+      <p><a href={withBase('/')}>← Back to homepage</a></p>
     </div>
   </section>
 </BaseLayout>

@@ -11,7 +11,10 @@ export const site = {
   tagline: 'Singapore specialist for special cargo and customs support',
   description:
     'CargoAdvisor.sg helps Singapore businesses handle unusual, urgent, and documentation-heavy cargo: special and oversized shipments, exhibition cargo, fragile equipment, and customs/TradeNet coordination.',
-  url: 'https://cargoadvisor.sg',
+  // Origin only — no base path. Must match `site` in astro.config.mjs.
+  // Currently the GitHub Pages default URL; switch to 'https://cargoadvisor.sg'
+  // once the domain is bought and astro.config.mjs is switched over.
+  url: 'https://lyj898.github.io',
   locale: 'en-SG',
 
   // --- contact ---
@@ -54,7 +57,17 @@ export function mailtoLink(subject: string, body?: string): string {
   return `mailto:${site.email}?${params.toString()}`;
 }
 
+// Prefixes an internal path with Astro's configured `base` (see astro.config.mjs).
+// Use this for every internal href/src instead of a raw "/..." string, so
+// links keep working whether the site is deployed at a domain root or under
+// a GitHub Pages subpath like /cargo.
+export function withBase(path: string): string {
+  const base = import.meta.env.BASE_URL; // e.g. '/' or '/cargo/'
+  const clean = path.replace(/^\/+/, '');
+  return clean ? `${base}${clean}` : base;
+}
+
 export function absoluteUrl(path: string): string {
-  const clean = path.startsWith('/') ? path : `/${path}`;
-  return `${site.url}${clean === '/' ? '' : clean}`;
+  const prefixed = withBase(path);
+  return `${site.url}${prefixed.startsWith('/') ? prefixed : `/${prefixed}`}`;
 }

@@ -7,7 +7,7 @@ import TrustBullets from '../components/TrustBullets.astro';
 import { services } from '../data/services';
 import { situations } from '../data/trust';
 import { homeFaqs } from '../data/faqs';
-import { site } from '../config/site';
+import { site, withBase } from '../config/site';
 
 const title = 'CargoAdvisor.sg — Singapore Specialist for Special Cargo & Customs Support';
 const description =
@@ -88,7 +88,7 @@ const whyUs = [
       <div class="grid grid--3">
         {
           services.map((s) => (
-            <a class="service-card" href={`/${s.slug}`}>
+            <a class="service-card" href={withBase(`/${s.slug}`)}>
               <h3>{s.title}</h3>
               <p>{s.summary}</p>
               <div class="service-card__link">Read more →</div>
@@ -141,7 +141,7 @@ const whyUs = [
         }
       </ol>
       <div>
-        <a class="btn btn--primary btn--lg" href="/enquiry">{site.ctaPrimaryLabel}</a>
+        <a class="btn btn--primary btn--lg" href={withBase('/enquiry')}>{site.ctaPrimaryLabel}</a>
       </div>
     </div>
   </section>

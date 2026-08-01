@@ -1,5 +1,5 @@
 ---
-import { site, whatsappLink } from '../config/site';
+import { site, whatsappLink, withBase } from '../config/site';
 
 export interface Props {
   primaryLabel?: string;
@@ -23,7 +23,7 @@ const sizeClass = size === 'lg' ? 'btn--lg' : '';
 ---
 
 <div class="cluster" style={align === 'center' ? 'justify-content: center;' : undefined}>
-  <a class={`btn btn--primary ${sizeClass}`} href={primaryHref}>{primaryLabel}</a>
+  <a class={`btn btn--primary ${sizeClass}`} href={withBase(primaryHref)}>{primaryLabel}</a>
   <a class={`btn btn--whatsapp ${sizeClass}`} href={whatsappLink(whatsappMessage)} rel="noopener" target="_blank">
     {secondaryLabel}
   </a>

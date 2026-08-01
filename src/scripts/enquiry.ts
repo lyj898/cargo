@@ -472,7 +472,7 @@ function initEnquiryFlow(form: HTMLFormElement) {
     } catch {
       /* ignore */
     }
-    window.location.href = '/enquiry';
+    window.location.href = `${import.meta.env.BASE_URL}enquiry`;
   });
 }
 

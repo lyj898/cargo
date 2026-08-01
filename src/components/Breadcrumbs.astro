@@ -1,5 +1,5 @@
 ---
-import { absoluteUrl } from '../config/site';
+import { absoluteUrl, withBase } from '../config/site';
 
 export interface Props {
   items: { label: string; href: string }[];
@@ -29,7 +29,7 @@ const jsonLd = {
           {i === listItems.length - 1 ? (
             <span aria-current="page">{item.label}</span>
           ) : (
-            <a href={item.href}>{item.label}</a>
+            <a href={withBase(item.href)}>{item.label}</a>
           )}
         </li>
       ))

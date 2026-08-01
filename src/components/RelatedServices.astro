@@ -1,5 +1,6 @@
 ---
 import type { ServiceSummary } from '../data/services';
+import { withBase } from '../config/site';
 
 export interface Props {
   services: ServiceSummary[];
@@ -16,7 +17,7 @@ const { services, heading = 'Related service pages' } = Astro.props;
     <div class="grid grid--3">
       {
         services.map((s) => (
-          <a class="service-card" href={`/${s.slug}`}>
+          <a class="service-card" href={withBase(`/${s.slug}`)}>
             <h3>{s.title}</h3>
             <p>{s.summary}</p>
             <div class="service-card__link">Read more →</div>

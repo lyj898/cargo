@@ -1,4 +1,7 @@
+# Points at the temporary GitHub Pages URL — update to
+# https://cargoadvisor.sg/sitemap-index.xml once the custom domain is live
+# (keep in sync with `site`/`base` in astro.config.mjs).
 User-agent: *
 Allow: /
 
-Sitemap: https://cargoadvisor.sg/sitemap-index.xml
+Sitemap: https://lyj898.github.io/cargo/sitemap-index.xml

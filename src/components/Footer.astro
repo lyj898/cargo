@@ -1,5 +1,5 @@
 ---
-import { site, whatsappLink } from '../config/site';
+import { site, whatsappLink, withBase } from '../config/site';
 import { services } from '../data/services';
 
 const year = new Date().getFullYear();
@@ -22,7 +22,7 @@ const year = new Date().getFullYear();
           {
             services.map((s) => (
               <li>
-                <a href={`/${s.slug}`}>{s.shortLabel}</a>
+                <a href={withBase(`/${s.slug}`)}>{s.shortLabel}</a>
               </li>
             ))
           }
@@ -32,10 +32,10 @@ const year = new Date().getFullYear();
       <div class="footer-col">
         <h3>Company</h3>
         <ul>
-          <li><a href="/case-studies">Case studies</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact</a></li>
-          <li><a href="/enquiry">Start an enquiry</a></li>
+          <li><a href={withBase('/case-studies')}>Case studies</a></li>
+          <li><a href={withBase('/about')}>About</a></li>
+          <li><a href={withBase('/contact')}>Contact</a></li>
+          <li><a href={withBase('/enquiry')}>Start an enquiry</a></li>
           <li><a href={whatsappLink()} rel="noopener" target="_blank">WhatsApp</a></li>
           <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
         </ul>
