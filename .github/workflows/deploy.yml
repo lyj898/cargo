@@ -23,6 +23,13 @@ jobs:
 
       - name: Install, build, and upload your site
         uses: withastro/action@v3
+        with:
+          # No committed lockfile yet (this repo was built without a local
+          # Node.js install) — pin the package manager explicitly so the
+          # action doesn't need to auto-detect one from a lockfile. Once
+          # you run `npm install` locally and commit package-lock.json,
+          # this can be removed and it'll use `npm ci` automatically.
+          package-manager: npm@latest
 
   deploy:
     needs: build
