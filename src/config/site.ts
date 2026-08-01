@@ -62,7 +62,11 @@ export function mailtoLink(subject: string, body?: string): string {
 // links keep working whether the site is deployed at a domain root or under
 // a GitHub Pages subpath like /cargo.
 export function withBase(path: string): string {
-  const base = import.meta.env.BASE_URL; // e.g. '/' or '/cargo/'
+  // import.meta.env.BASE_URL mirrors the `base` config value as-is — it is
+  // NOT guaranteed to have a trailing slash (e.g. base: '/cargo' yields
+  // BASE_URL === '/cargo', not '/cargo/'), so normalize before joining.
+  const rawBase = import.meta.env.BASE_URL || '/';
+  const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
   const clean = path.replace(/^\/+/, '');
   return clean ? `${base}${clean}` : base;
 }

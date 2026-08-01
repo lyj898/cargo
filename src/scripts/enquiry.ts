@@ -1,4 +1,4 @@
-import { site } from '../config/site';
+import { site, withBase } from '../config/site';
 
 const STEP_TITLES: Record<number, string> = {
   1: 'What do you need help with?',
@@ -472,7 +472,7 @@ function initEnquiryFlow(form: HTMLFormElement) {
     } catch {
       /* ignore */
     }
-    window.location.href = `${import.meta.env.BASE_URL}enquiry`;
+    window.location.href = withBase('/enquiry');
   });
 }
 
