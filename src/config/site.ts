@@ -5,20 +5,20 @@
 // ---------------------------------------------------------------------------
 
 export const site = {
-  name: 'CargoAdvisor.sg',
-  shortName: 'CargoAdvisor',
-  legalDisclaimerName: 'CargoAdvisor.sg', // used in disclaimer copy — keep in sync with `name`
+  name: 'SwyftClear.com',
+  shortName: 'SwyftClear',
+  legalDisclaimerName: 'SwyftClear.com', // used in disclaimer copy — keep in sync with `name`
   tagline: 'Singapore specialist for special cargo and customs support',
   description:
-    'CargoAdvisor.sg helps Singapore businesses handle unusual, urgent, and documentation-heavy cargo: special and oversized shipments, exhibition cargo, fragile equipment, and customs/TradeNet coordination.',
+    'SwyftClear.com helps Singapore businesses handle unusual, urgent, and documentation-heavy cargo: special and oversized shipments, exhibition cargo, fragile equipment, and customs/TradeNet coordination.',
   // Origin only — no base path. Must match `site` in astro.config.mjs.
-  // Currently the GitHub Pages default URL; switch to 'https://cargoadvisor.sg'
+  // Currently the GitHub Pages default URL; switch to 'https://swyftclear.com'
   // once the domain is bought and astro.config.mjs is switched over.
   url: 'https://lyj898.github.io',
   locale: 'en-SG',
 
   // --- contact ---
-  email: 'hello@cargoadvisor.sg',
+  email: 'hello@swyftclear.com',
   phoneDisplay: '+65 8123 4567',
   phoneE164: '+6581234567',
   whatsappNumber: '6581234567', // digits only, country code first, no plus/spaces

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CargoAdvisor.sg — design system
+   SwyftClear.com — design system
    Calm, specialist, premium-light. Warm neutrals, one restrained accent,
    a serif for editorial headings, system sans for everything functional.
    ========================================================================== */
@@ -14,15 +14,15 @@
   --color-text: #221f1a;
   --color-text-muted: #625c4d;
   --color-text-faint: #8b8474;
-  --color-accent: #a85327;
-  --color-accent-hover: #8a4420;
-  --color-accent-soft: #f3e0cd;
-  --color-accent-contrast: #fffaf3;
+  --color-accent: #2a5a8c;
+  --color-accent-hover: #1f4670;
+  --color-accent-soft: #e1eaf3;
+  --color-accent-contrast: #fafaf8;
   --color-success: #3f6b4a;
   --color-success-soft: #e5efe4;
   --color-error: #b23a2e;
   --color-error-soft: #f7e6e2;
-  --color-focus-ring: #a85327;
+  --color-focus-ring: #2a5a8c;
 
   /* --- type --- */
   --font-serif: 'Fraunces', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
@@ -68,15 +68,15 @@
   --color-text: #f4efe4;
   --color-text-muted: #bab2a0;
   --color-text-faint: #8a8271;
-  --color-accent: #e2895a;
-  --color-accent-hover: #eda27a;
-  --color-accent-soft: #3a2a1c;
-  --color-accent-contrast: #201207;
+  --color-accent: #6fa8dc;
+  --color-accent-hover: #8cbbe3;
+  --color-accent-soft: #1c2e3e;
+  --color-accent-contrast: #0d1620;
   --color-success: #8fbf9a;
   --color-success-soft: #223228;
   --color-error: #e2897d;
   --color-error-soft: #362320;
-  --color-focus-ring: #e2895a;
+  --color-focus-ring: #6fa8dc;
   color-scheme: dark;
 }
 
@@ -90,15 +90,15 @@
     --color-text: #f4efe4;
     --color-text-muted: #bab2a0;
     --color-text-faint: #8a8271;
-    --color-accent: #e2895a;
-    --color-accent-hover: #eda27a;
-    --color-accent-soft: #3a2a1c;
-    --color-accent-contrast: #201207;
+    --color-accent: #6fa8dc;
+    --color-accent-hover: #8cbbe3;
+    --color-accent-soft: #1c2e3e;
+    --color-accent-contrast: #0d1620;
     --color-success: #8fbf9a;
     --color-success-soft: #223228;
     --color-error: #e2897d;
     --color-error-soft: #362320;
-    --color-focus-ring: #e2895a;
+    --color-focus-ring: #6fa8dc;
     color-scheme: dark;
   }
 }

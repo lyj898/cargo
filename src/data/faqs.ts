@@ -17,8 +17,8 @@ export const homeFaqs: Faq[] = [
     a: 'Yes. One-off and infrequent shipments are a core part of what we handle — exhibitors, SMEs with a single unusual import, and businesses that don’t ship often enough to justify a standing freight contract.',
   },
   {
-    q: 'Is CargoAdvisor.sg a customs broker or Declaring Agent?',
-    a: 'CargoAdvisor.sg helps you prepare, coordinate, and understand what a shipment needs before and during the customs process, and can connect you with the appropriate licensed support where a Declaring Agent is required. See our about page for exactly how this works.',
+    q: 'Is SwyftClear.com a customs broker or Declaring Agent?',
+    a: 'SwyftClear.com helps you prepare, coordinate, and understand what a shipment needs before and during the customs process, and can connect you with the appropriate licensed support where a Declaring Agent is required. See our about page for exactly how this works.',
   },
   {
     q: 'How fast will I hear back after submitting an enquiry?',
@@ -115,7 +115,7 @@ export const faqsBySlug: Record<string, Faq[]> = {
       a: 'A Declaring Agent is a party authorised to submit permit declarations on TradeNet on behalf of an importer or exporter. Many SMEs and first-time importers appoint one rather than applying directly. We can help you understand whether this applies to your shipment and connect you with appropriate support.',
     },
     {
-      q: 'Can CargoAdvisor.sg apply for the permit on my behalf?',
+      q: 'Can SwyftClear.com apply for the permit on my behalf?',
       a: 'We help you prepare and understand what a permit application needs, and can connect you with the appropriate declaring support. Please see our about page for exactly what we do and don’t do.',
     },
   ],

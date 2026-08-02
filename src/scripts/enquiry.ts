@@ -8,7 +8,7 @@ const STEP_TITLES: Record<number, string> = {
   5: 'Contact details',
 };
 const STEP_COUNT = 5;
-const STORAGE_KEY = 'cargoadvisor-enquiry-v1';
+const STORAGE_KEY = 'swyftclear-enquiry-v1';
 const MAX_FILES = 8;
 
 const HELP_LABELS: Record<string, string> = {
@@ -356,7 +356,7 @@ function initEnquiryFlow(form: HTMLFormElement) {
   }
 
   function buildWhatsappSummary(pairs: [string, string][]): string {
-    const lines = ['Hi CargoAdvisor, I just submitted a guided enquiry. Summary:'];
+    const lines = ['Hi SwyftClear, I just submitted a guided enquiry. Summary:'];
     pairs.forEach(([label, value]) => lines.push(`- ${label}: ${value}`));
     return lines.join('\n');
   }
@@ -420,12 +420,12 @@ function initEnquiryFlow(form: HTMLFormElement) {
         if (!res.ok) throw new Error(`Submission failed with status ${res.status}`);
       } else {
         console.info(
-          '[CargoAdvisor] No form endpoint configured (site.formEndpoint in src/config/site.ts). Enquiry was validated but not sent anywhere.'
+          '[SwyftClear] No form endpoint configured (site.formEndpoint in src/config/site.ts). Enquiry was validated but not sent anywhere.'
         );
       }
       showConfirmation(formData);
     } catch (err) {
-      console.error('[CargoAdvisor] Enquiry submission failed', err);
+      console.error('[SwyftClear] Enquiry submission failed', err);
       errorBanner?.classList.add('is-visible');
       errorBanner?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'center' });
       if (continueBtn) {

@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 // Currently configured for the default GitHub Pages URL (no custom domain
 // bought yet): https://lyj898.github.io/cargo
 //
-// Once cargoadvisor.sg is bought and DNS is pointed at GitHub Pages, switch
+// Once swyftclear.com is bought and DNS is pointed at GitHub Pages, switch
 // to the custom-domain block below, restore /public/CNAME (see
 // /public/CNAME.example), and update `site.url` in src/config/site.ts to
 // match `site` here. Every internal link in the codebase goes through
@@ -13,9 +13,9 @@ import sitemap from '@astrojs/sitemap';
 // to change either way.
 // -----------------------------------------------------------------------
 
-// Custom domain (once cargoadvisor.sg DNS is live):
+// Custom domain (once swyftclear.com DNS is live):
 // export default defineConfig({
-//   site: 'https://cargoadvisor.sg',
+//   site: 'https://swyftclear.com',
 //   trailingSlash: 'never',
 //   build: { format: 'directory' },
 //   integrations: [sitemap()],
