@@ -12,9 +12,7 @@ export const site = {
   description:
     'SwyftClear.com helps Singapore businesses handle unusual, urgent, and documentation-heavy cargo: special and oversized shipments, exhibition cargo, fragile equipment, and customs/TradeNet coordination.',
   // Origin only — no base path. Must match `site` in astro.config.mjs.
-  // Currently the GitHub Pages default URL; switch to 'https://swyftclear.com'
-  // once the domain is bought and astro.config.mjs is switched over.
-  url: 'https://lyj898.github.io',
+  url: 'https://swyftclear.com',
   locale: 'en-SG',
 
   // --- contact ---

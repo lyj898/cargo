@@ -1,7 +1,4 @@
-# Points at the temporary GitHub Pages URL — update to
-# https://swyftclear.com/sitemap-index.xml once the custom domain is live
-# (keep in sync with `site`/`base` in astro.config.mjs).
 User-agent: *
 Allow: /
 
-Sitemap: https://lyj898.github.io/cargo/sitemap-index.xml
+Sitemap: https://swyftclear.com/sitemap-index.xml
