@@ -63,14 +63,25 @@ export function mailtoLink(subject: string, body?: string): string {
 // Use this for every internal href/src instead of a raw "/..." string, so
 // links keep working whether the site is deployed at a domain root or under
 // a GitHub Pages subpath like /cargo.
+//
+// Page paths come back with a trailing slash. GitHub Pages serves
+// directory-style URLs and 301s the slashless form to the slashed one, so
+// emitting slashless links meant every internal link, every canonical, and
+// every sitemap entry pointed at a URL that redirects. Matching what the host
+// actually serves removes a redirect hop from all ~119 pages and stops the
+// canonical from disagreeing with the URL that returns 200.
 export function withBase(path: string): string {
   // import.meta.env.BASE_URL mirrors the `base` config value as-is — it is
   // NOT guaranteed to have a trailing slash (e.g. base: '/cargo' yields
   // BASE_URL === '/cargo', not '/cargo/'), so normalize before joining.
   const rawBase = import.meta.env.BASE_URL || '/';
   const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
-  const clean = path.replace(/^\/+/, '');
-  return clean ? `${base}${clean}` : base;
+  const clean = path.replace(/^\/+/, '').replace(/\/+$/, '');
+  if (!clean) return base;
+  // Files (favicon.svg, og-default.svg) are served as-is and must not gain a
+  // trailing slash; only page routes get one.
+  const isFile = /\.[a-z0-9]+$/i.test(clean.split('/').pop() ?? '');
+  return isFile ? `${base}${clean}` : `${base}${clean}/`;
 }
 
 export function absoluteUrl(path: string): string {

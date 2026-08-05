@@ -55,7 +55,11 @@ function changefreqFor(url) {
 
 export default defineConfig({
   site: 'https://swyftclear.com',
-  trailingSlash: 'never',
+  // 'always', not 'never': build.format 'directory' emits page/index.html, and
+  // GitHub Pages 301s /page to /page/. Declaring 'never' meant every canonical
+  // and sitemap entry named a URL that redirects. See withBase() in
+  // src/config/site.ts, which appends the slash to internal links to match.
+  trailingSlash: 'always',
   build: {
     format: 'directory',
   },
@@ -63,6 +67,9 @@ export default defineConfig({
     sitemap({
       filter: (page) => !EXCLUDED.some((re) => re.test(new URL(page).pathname)),
       serialize(item) {
+        // Belt and braces: the sitemap must name the URL that returns 200,
+        // not the one GitHub Pages redirects away from.
+        if (!item.url.endsWith('/')) item.url = `${item.url}/`;
         item.priority = priorityFor(item.url);
         item.changefreq = changefreqFor(item.url);
         // Deliberately NOT `new Date()`. Stamping every URL as modified on
