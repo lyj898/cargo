@@ -7,7 +7,7 @@
 // origin rules and documentation, which the pages state rather than assume.
 
 import type { Faq, Fact, Section, SpokeBase } from './types';
-import { fitTitle } from '../utils/meta';
+import { fitTitle, fitDescription } from '../utils/meta';
 
 export type CountryOrigin = {
   slug: string;
@@ -944,7 +944,10 @@ export function countryToSpoke(c: CountryOrigin): SpokeBase {
       `Shipping from ${c.titleName} to Singapore | Transit & Permits`,
       `Shipping from ${c.titleName} to Singapore`,
     ),
-    metaDescription: `Importing from ${c.titleName} to Singapore: ${c.seaTransit.toLowerCase()}, main ports, permit and documentation requirements, and the problems that hold shipments up on this lane.`,
+    metaDescription: fitDescription(
+      `Importing from ${c.titleName} to Singapore: ${c.seaTransit.toLowerCase()}, main ports, and permit requirements.`,
+      'Plus the problems that recur on this lane.',
+    ),
     h1: `Shipping from ${c.titleName} to Singapore`,
     lede: `Transit expectations, documentation requirements, and the practical problems that come up on the ${c.titleName}–Singapore lane — written for one-off, unusual, and awkward shipments rather than routine container traffic.`,
     summary: `${c.seaTransit} by sea, ${c.airTransit.toLowerCase()} by air. ${c.agreements[0]}.`,

@@ -7,7 +7,7 @@
 // authority or a licensed declaring agent.
 
 import type { Faq, Fact, Section, SpokeBase } from './types';
-import { fitTitle } from '../utils/meta';
+import { fitTitle, fitDescription } from '../utils/meta';
 
 export type CargoType = {
   slug: string;
@@ -1288,7 +1288,7 @@ export function cargoToSpoke(c: CargoType): SpokeBase {
       `Importing ${c.titleName} into Singapore | Permits & Handling`,
       `Importing ${c.titleName} into Singapore`,
     ),
-    metaDescription: `${c.summary} Practical guidance on shipping ${c.name} into Singapore — handling, documentation, and the Competent Authority requirements to check first.`,
+    metaDescription: fitDescription(c.summary, 'Handling, permits, and what to prepare before you ship.'),
     h1: `Importing ${c.titleName.toLowerCase()} into Singapore`,
     lede: c.summary,
     summary: c.summary,

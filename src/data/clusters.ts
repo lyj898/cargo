@@ -29,7 +29,7 @@ export const clusters: ClusterDef[] = [
     hubTitle: 'Singapore import guides',
     hubMetaTitle: 'Singapore Import Guides | Customs, Permits, GST & Documentation',
     hubMetaDescription:
-      'Plain-language guides to importing into Singapore — TradeNet and permits, GST and customs duty, HS codes, certificates of origin, Incoterms, and freight decisions.',
+      'Plain-language guides to importing into Singapore — TradeNet and permits, GST and customs duty, HS codes, Incoterms, and freight decisions.',
     hubH1: 'Singapore import guides',
     hubLede:
       'The things people need to understand before their first shipment, and the things experienced importers still get caught by. Written for the awkward, one-off, documentation-heavy jobs rather than routine container traffic.',
@@ -44,7 +44,7 @@ export const clusters: ClusterDef[] = [
     hubTitle: 'Do you need an import permit?',
     hubMetaTitle: 'Singapore Import Permits by Product | Controlled Goods',
     hubMetaDescription:
-      'Which goods need a permit to enter Singapore, which agency controls them, and which are prohibited outright. Product-by-product answers for food, health products, chemicals, electronics and more.',
+      'Which goods need a permit to enter Singapore, which agency controls them, and which are prohibited outright. Product-by-product answers.',
     hubH1: 'Do you need a permit to import this into Singapore?',
     hubLede:
       'Singapore controls a wide range of goods through agencies other than Customs. These pages tell you which authority regulates what, what is typically required, and which goods cannot be imported at all.',
@@ -59,7 +59,7 @@ export const clusters: ClusterDef[] = [
     hubTitle: 'Shipping by cargo type',
     hubMetaTitle: 'Importing by Cargo Type Into Singapore | Handling & Permits',
     hubMetaDescription:
-      'Practical guidance by category of goods — machinery, laboratory and medical equipment, art, exhibition materials, stone, vehicles and regulated products entering Singapore.',
+      'Practical guidance by category of goods — machinery, lab and medical equipment, art, exhibition materials, stone, vehicles, and regulated products.',
     hubH1: 'Shipping into Singapore by cargo type',
     hubLede:
       'What actually determines whether a shipment arrives usable: the handling it needs, the authority that has an interest in it, and the details worth having ready before you enquire.',
@@ -89,7 +89,7 @@ export const clusters: ClusterDef[] = [
     hubTitle: 'Exhibition logistics by venue',
     hubMetaTitle: 'Singapore Exhibition Venue Logistics | Freight by Venue',
     hubMetaDescription:
-      'Shipping exhibition and event cargo to Singapore venues — Singapore EXPO, Sands Expo, Suntec, Changi Exhibition Centre and more. Access constraints and build-up planning.',
+      'Shipping exhibition and event cargo to Singapore venues — EXPO, Sands Expo, Suntec, Changi and more. Access constraints and build-up planning.',
     hubH1: 'Exhibition and event logistics, by Singapore venue',
     hubLede:
       'Event cargo is defined by a date that cannot move. These pages cover what to plan for at each major Singapore venue — access constraints, build-up timing, and the customs treatment that suits goods which are only visiting.',

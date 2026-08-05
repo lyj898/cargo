@@ -8,6 +8,7 @@
 // number that might be wrong on the day.
 
 import type { Faq, Fact, Section, SpokeBase } from './types';
+import { fitDescription } from '../utils/meta';
 
 export type Venue = {
   slug: string;
@@ -426,7 +427,10 @@ export function venueToSpoke(v: Venue): SpokeBase {
     metaTitle: v.label.includes('Singapore')
       ? `Exhibition Logistics & Freight: ${v.label}`
       : `Exhibition Logistics: ${v.label}, Singapore`,
-    metaDescription: `Shipping exhibition and event cargo to ${v.name}. Access constraints, build-up planning, temporary import options, and what to confirm in the exhibitor manual.`,
+    metaDescription: fitDescription(
+      `Shipping exhibition and event cargo to ${v.label}, Singapore: access constraints, build-up timing, and temporary import options.`,
+      'What to confirm before you ship.',
+    ),
     h1: `Exhibition and event logistics at ${v.name}`,
     lede: `What to plan for when shipping stands, exhibits, and production equipment to ${v.label} — access constraints, timing, and the customs treatment that suits goods which are only visiting.`,
     summary: `${v.venueType}. ${v.nearestMrt.split('(')[0].trim()}.`,

@@ -11,7 +11,7 @@
 //     prohibition is worse than useless.
 
 import type { Faq, Fact, Section, SpokeBase } from './types';
-import { fitTitle } from '../utils/meta';
+import { fitTitle, fitDescription } from '../utils/meta';
 
 export type PermitTopic = {
   slug: string;
@@ -948,7 +948,7 @@ export function permitToSpoke(p: PermitTopic): SpokeBase {
       `Do You Need a Permit to Import ${p.titleName} Into Singapore?`,
       `${p.titleName}: Singapore Import Permits`,
     ),
-    metaDescription: `${p.verdict} Which authority regulates ${p.name} in Singapore, what is typically required, and the mistakes that hold shipments up.`,
+    metaDescription: fitDescription(p.verdict, 'Which Singapore authority regulates it, and what is required.'),
     h1: `Importing ${p.name} into Singapore: what is required?`,
     lede: p.verdict,
     summary: p.verdict,

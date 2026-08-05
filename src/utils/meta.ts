@@ -13,3 +13,19 @@ export const TITLE_BUDGET = 62;
 export function fitTitle(preferred: string, fallback: string, max = TITLE_BUDGET): string {
   return preferred.length <= max ? preferred : fallback;
 }
+
+export const DESCRIPTION_BUDGET = 158;
+
+/**
+ * Builds a meta description as `core` plus an optional `tail`, dropping the
+ * tail when the pair would overrun the budget.
+ *
+ * Truncating mid-sentence is the usual approach and it is worse than useless —
+ * a description cut off at "and the Competent Auth…" reads as broken. Dropping
+ * a whole clause keeps every description a complete sentence, which is the
+ * point of writing one at all.
+ */
+export function fitDescription(core: string, tail: string, max = DESCRIPTION_BUDGET): string {
+  const combined = `${core} ${tail}`;
+  return combined.length <= max ? combined : core;
+}
