@@ -1,0 +1,8 @@
+---
+import ClusterHubLayout from '../../layouts/ClusterHubLayout.astro';
+import { getCluster } from '../../data/clusters';
+
+const cluster = getCluster('exhibitions')!;
+---
+
+<ClusterHubLayout cluster={cluster} />

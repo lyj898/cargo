@@ -1,0 +1,32 @@
+---
+// Compact contents list. Gives long cluster pages a jump menu and gives search
+// engines a set of named anchors into the page's sub-answers.
+import { sectionId } from '../utils/slug';
+
+export interface Props {
+  headings: string[];
+  includeFaq?: boolean;
+}
+
+const { headings, includeFaq = true } = Astro.props;
+---
+
+{
+  headings.length > 1 && (
+    <nav class="toc container" aria-label="On this page">
+      <span class="toc__label">On this page</span>
+      <ul>
+        {headings.map((h) => (
+          <li>
+            <a href={`#${sectionId(h)}`}>{h}</a>
+          </li>
+        ))}
+        {includeFaq && (
+          <li>
+            <a href="#faq">Questions</a>
+          </li>
+        )}
+      </ul>
+    </nav>
+  )
+}

@@ -1,20 +1,38 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CTAButtons from '../components/CTAButtons.astro';
+import LinkGrid from '../components/LinkGrid.astro';
+import { clusters } from '../data/clusters';
 import { withBase } from '../config/site';
+
+// A 404 that only offers "go home" wastes the visit. Most people who land here
+// arrived from a search result or a stale link, so the useful move is to put
+// the section hubs in front of them.
+const hubLinks = clusters.map((c) => ({
+  href: `/${c.base}`,
+  label: c.hubTitle,
+  summary: c.blurb,
+  kind: c.label,
+}));
 ---
 
 <BaseLayout title="Page not found" description="This page doesn't exist." path="/404" noIndex>
-  <section class="section" style="padding-block: var(--space-9);">
+  <section class="section" style="padding-block: var(--space-8);">
     <div class="container stack" style="text-align: center;">
       <div class="eyebrow" style="justify-content: center;">404</div>
       <h1>We couldn't find that page</h1>
       <p class="lede" style="margin-inline: auto;">
-        The page may have moved, or the link may be out of date. Try the guided enquiry, or head back
-        to the homepage.
+        The page may have moved, or the link may be out of date. The sections below cover most of what
+        people come here looking for.
       </p>
       <CTAButtons primaryLabel="Get shipment assessed" align="center" />
-      <p><a href={withBase('/')}>← Back to homepage</a></p>
+      <p>
+        <a href={withBase('/')}>← Back to homepage</a>
+        <span style="color: var(--color-border-strong); margin-inline: var(--space-3);">·</span>
+        <a href={withBase('/sitemap')}>See every page</a>
+      </p>
     </div>
   </section>
+
+  <LinkGrid links={hubLinks} heading="Browse by section" subtle id="hubs" />
 </BaseLayout>

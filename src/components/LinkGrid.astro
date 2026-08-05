@@ -1,0 +1,41 @@
+---
+// The internal-linking workhorse. Every cluster page carries two or three of
+// these, which is what turns ~110 pages into a crawlable mesh rather than a
+// pile of orphans.
+import type { LinkCard } from '../data/clusters';
+import { withBase } from '../config/site';
+
+export interface Props {
+  links: LinkCard[];
+  heading: string;
+  eyebrow?: string;
+  subtle?: boolean;
+  showKind?: boolean;
+  id?: string;
+}
+
+const { links, heading, eyebrow, subtle = false, showKind = false, id = 'links' } = Astro.props;
+
+const sectionClass = ['section', 'section--border-top', subtle ? 'section--subtle' : ''].filter(Boolean).join(' ');
+---
+
+{
+  links.length > 0 && (
+    <section class={sectionClass} aria-labelledby={`${id}-heading`}>
+      <div class="container stack">
+        {eyebrow && <div class="eyebrow">{eyebrow}</div>}
+        <h2 id={`${id}-heading`}>{heading}</h2>
+        <div class="grid grid--3">
+          {links.map((l) => (
+            <a class="service-card" href={withBase(l.href)}>
+              {showKind && <span class="service-card__kind">{l.kind}</span>}
+              <h3>{l.label}</h3>
+              <p>{l.summary}</p>
+              <div class="service-card__link">Read more →</div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

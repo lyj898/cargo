@@ -373,7 +373,10 @@ h4 { font-size: var(--step-1); font-family: var(--font-sans); font-weight: 700; 
   gap: var(--space-6);
 }
 @media (min-width: 720px) {
-  .footer-grid { grid-template-columns: 1.3fr 1fr 1fr; }
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1000px) {
+  .footer-grid { grid-template-columns: 1.4fr 1fr 1fr 1fr; }
 }
 .footer-col h3 { font-size: var(--step-0); font-family: var(--font-sans); font-weight: 700; margin-bottom: var(--space-3); }
 .footer-col ul { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
@@ -855,3 +858,156 @@ fieldset.field { border: none; padding: 0; }
   border-top: 1px solid var(--color-border);
   padding: var(--space-4) var(--space-5);
 }
+
+/* ==========================================================================
+   Programmatic cluster pages (guides, permits, cargo, origins, venues)
+   ========================================================================== */
+
+/* --- key facts table --- */
+.fact-table__heading {
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+/* Wide values (port lists, agreement names) must scroll inside the table,
+   never push the page into a horizontal scroll. */
+.fact-table__scroll { overflow-x: auto; }
+
+.fact-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+  text-align: left;
+}
+.fact-table th,
+.fact-table td {
+  padding: var(--space-4) var(--space-4) var(--space-4) 0;
+  border-top: 1px solid var(--color-border);
+  vertical-align: top;
+}
+.fact-table tr:first-child th,
+.fact-table tr:first-child td { border-top: none; }
+.fact-table th {
+  font-weight: 700;
+  color: var(--color-text-muted);
+  width: 34%;
+  min-width: 11rem;
+  padding-right: var(--space-5);
+}
+.fact-table td { color: var(--color-text); }
+
+/* --- key points callout --- */
+.key-points {
+  background: var(--color-accent-soft);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+  border-radius: var(--radius-md);
+  padding: var(--space-5) var(--space-6);
+  max-width: 46rem;
+}
+.key-points__heading {
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-4);
+}
+.key-points ul { list-style: none; padding: 0; display: grid; gap: var(--space-3); }
+.key-points li {
+  position: relative;
+  padding-left: var(--space-5);
+  font-size: var(--step-0);
+  max-width: none;
+}
+.key-points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 8px; height: 8px;
+  border-radius: 999px;
+  background: var(--color-accent);
+}
+
+/* --- on this page --- */
+.toc { padding-block: var(--space-5) 0; }
+.toc__label {
+  display: block;
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  margin-bottom: var(--space-3);
+}
+.toc ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+}
+.toc a {
+  display: inline-block;
+  font-size: var(--step--1);
+  text-decoration: none;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  background: var(--color-bg-elevated);
+}
+.toc a:hover { color: var(--color-accent); border-color: var(--color-accent); }
+
+/* --- official sources --- */
+.source-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.source-list a {
+  display: inline-block;
+  font-size: var(--step--1);
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--color-accent);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.8rem;
+}
+.source-list a::after { content: ' ↗'; color: var(--color-text-faint); }
+.source-list a:hover { border-color: var(--color-accent); background: var(--color-accent-soft); }
+
+/* --- link grid card eyebrow --- */
+.service-card__kind {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  margin-bottom: var(--space-2);
+}
+
+/* --- HTML sitemap --- */
+.sitemap-group { margin-top: var(--space-6); }
+.sitemap-group h2,
+.sitemap-group h3 {
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  font-weight: 700;
+  margin-bottom: var(--space-3);
+}
+.sitemap-group h2 a { text-decoration: none; color: inherit; }
+.sitemap-group h2 a:hover { color: var(--color-accent); }
+.sitemap-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+@media (min-width: 640px) { .sitemap-list { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px) { .sitemap-list { grid-template-columns: repeat(3, 1fr); } }
+.sitemap-list a { font-size: var(--step--1); color: var(--color-text-muted); text-decoration: none; }
+.sitemap-list a:hover { color: var(--color-accent); text-decoration: underline; }

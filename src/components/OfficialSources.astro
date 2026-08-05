@@ -1,0 +1,37 @@
+---
+// Outbound links to the authorities that actually set the rules. These exist
+// because the honest thing to do on a regulatory page is point at the source —
+// and because a page that cites its authorities is a more trustworthy result
+// than one that asserts requirements without them.
+import type { OfficialSource } from '../data/guides';
+
+export interface Props {
+  sources: OfficialSource[];
+  note?: string;
+}
+
+const { sources, note } = Astro.props;
+---
+
+{
+  sources.length > 0 && (
+    <section class="section section--tight section--border-top" aria-labelledby="sources-heading">
+      <div class="container stack-sm">
+        <h2 id="sources-heading" class="fact-table__heading">Official sources</h2>
+        <p class="text-muted" style="font-size: var(--step--1);">
+          {note ??
+            'Requirements, rates, and thresholds change. These are the authorities that set them — check the current position with them before acting on anything here.'}
+        </p>
+        <ul class="source-list">
+          {sources.map((s) => (
+            <li>
+              <a href={s.url} rel="noopener nofollow" target="_blank">
+                {s.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}

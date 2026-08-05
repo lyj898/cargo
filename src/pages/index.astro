@@ -4,14 +4,16 @@ import CTAButtons from '../components/CTAButtons.astro';
 import FAQSection from '../components/FAQSection.astro';
 import RelatedServices from '../components/RelatedServices.astro';
 import TrustBullets from '../components/TrustBullets.astro';
+import LinkGrid from '../components/LinkGrid.astro';
+import { clusters } from '../data/clusters';
 import { services } from '../data/services';
 import { situations } from '../data/trust';
 import { homeFaqs } from '../data/faqs';
 import { site, withBase } from '../config/site';
 
-const title = 'SwyftClear.com — Singapore Specialist for Special Cargo & Customs Support';
+const title = 'SwyftClear.com | Special Cargo & Customs Support Singapore';
 const description =
-  'We help Singapore businesses handle unusual shipments: special cargo, exhibition and event logistics, oversized or fragile items, one-off imports, and TradeNet/customs coordination.';
+  'Singapore coordination for unusual shipments — special and oversized cargo, exhibition freight, fragile equipment, one-off imports, and TradeNet permit support.';
 
 const howItWorks = [
   {
@@ -31,6 +33,15 @@ const howItWorks = [
     body: 'We review the details and get back to you with what’s involved — usually within one business day.',
   },
 ];
+
+const hubLinks = clusters.map((c) => ({
+  href: `/${c.base}`,
+  label: c.hubTitle,
+  summary: c.blurb,
+  kind: c.label,
+}));
+
+const totalReferencePages = clusters.reduce((n, c) => n + c.spokes.length, 0);
 
 const whyUs = [
   {
@@ -166,6 +177,14 @@ const whyUs = [
 
   <!-- 6. Related service pages -->
   <RelatedServices services={services.slice(0, 6)} heading="Explore by shipment type" />
+
+  <!-- 6b. Reference library — the entry points for the programmatic clusters -->
+  <LinkGrid
+    links={hubLinks}
+    heading="Work out what your shipment needs"
+    eyebrow={`Reference library · ${totalReferencePages} pages`}
+    id="reference"
+  />
 
   <!-- 7. FAQ -->
   <FAQSection faqs={homeFaqs} heading="Frequently asked questions" />

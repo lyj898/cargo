@@ -9,14 +9,41 @@ export interface Props {
   description: string;
   path: string;
   ogImage?: string;
+  ogType?: 'website' | 'article';
   noIndex?: boolean;
   jsonLd?: Record<string, unknown>[];
+  /** ISO date; emitted as dateModified on Article-type pages. */
+  modified?: string;
 }
 
-const { title, description, path, ogImage = '/og-default.svg', noIndex = false, jsonLd = [] } = Astro.props;
+const {
+  title,
+  description,
+  path,
+  ogImage,
+  ogType = 'website',
+  noIndex = false,
+  jsonLd = [],
+  modified,
+} = Astro.props;
 
 const canonical = absoluteUrl(path);
-const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`;
+
+// Brand suffix, but only when it fits. Google shows roughly 60 characters of a
+// title and rewrites anything it truncates — so on the programmatic pages,
+// whose titles are already long and descriptive, the keyword is worth more
+// than the brand. Short titles (home, About, service pages) keep the suffix.
+const BRAND_SUFFIX_BUDGET = 45;
+const fullTitle =
+  title.includes(site.name) || title.length > BRAND_SUFFIX_BUDGET
+    ? title
+    : `${title} | ${site.name}`;
+
+// NOTE: og-default.svg is an SVG, and Facebook, X, and Google Discover do not
+// render SVG social cards — they fall back to no image. Replacing this with a
+// 1200x630 PNG (and adding per-page cards) is the single highest-value social
+// fix outstanding; it needs an image pipeline this build deliberately avoids.
+const ogPath = ogImage ?? '/og-default.svg';
 
 const websiteSchema = {
   '@context': 'https://schema.org',
@@ -24,32 +51,40 @@ const websiteSchema = {
   name: site.name,
   url: site.url,
   description: site.description,
+  inLanguage: 'en-SG',
+  publisher: { '@type': 'Organization', name: site.name, url: site.url },
 };
 
 const businessSchema = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
+  '@id': `${site.url}/#organization`,
   name: site.name,
   description: site.description,
   url: site.url,
   email: site.email,
   telephone: site.phoneE164,
-  areaServed: {
-    '@type': 'Country',
-    name: 'Singapore',
-  },
+  priceRange: '$$',
+  areaServed: { '@type': 'Country', name: 'Singapore' },
   address: {
     '@type': 'PostalAddress',
     addressLocality: site.addressLocality,
     addressCountry: site.addressCountry,
   },
+  knowsAbout: [
+    'Customs clearance Singapore',
+    'TradeNet import permits',
+    'Special and oversized cargo',
+    'Exhibition and event logistics',
+    'Fragile equipment shipping',
+  ],
 };
 
 const allSchemas = [websiteSchema, businessSchema, ...jsonLd];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en-SG">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -57,23 +92,31 @@ const allSchemas = [websiteSchema, businessSchema, ...jsonLd];
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noIndex && <meta name="robots" content="noindex, nofollow" />}
+    {!noIndex && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />}
+    <meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#16140f" media="(prefers-color-scheme: dark)" />
+    <meta name="geo.region" content="SG" />
+    <meta name="geo.placename" content="Singapore" />
 
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={absoluteUrl(ogImage)} />
+    <meta property="og:image" content={absoluteUrl(ogPath)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_SG" />
+    {modified && <meta property="article:modified_time" content={modified} />}
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={absoluteUrl(ogImage)} />
+    <meta name="twitter:image" content={absoluteUrl(ogPath)} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

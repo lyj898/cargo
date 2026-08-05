@@ -1,0 +1,63 @@
+---
+import ClusterPageLayout from '../../layouts/ClusterPageLayout.astro';
+import { venues, venueToSpoke } from '../../data/venues';
+import { site, absoluteUrl } from '../../config/site';
+
+export function getStaticPaths() {
+  return venues.map((venue) => ({
+    params: { slug: venue.slug },
+    props: { venue },
+  }));
+}
+
+const { venue } = Astro.props;
+const spoke = venueToSpoke(venue);
+
+// Place schema for the venue itself, with the service scoped to it. The venue
+// is the subject of the page; we are the provider of the service around it.
+const placeSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Place',
+  name: venue.name,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: venue.address,
+    addressLocality: 'Singapore',
+    postalCode: venue.postalCode.replace('Singapore ', ''),
+    addressCountry: 'SG',
+  },
+  ...(venue.geo
+    ? { geo: { '@type': 'GeoCoordinates', latitude: venue.geo.lat, longitude: venue.geo.lng } }
+    : {}),
+  url: absoluteUrl(`/exhibitions/${venue.slug}`),
+};
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: `Exhibition and event logistics at ${venue.name}`,
+  name: spoke.metaTitle,
+  description: spoke.metaDescription,
+  url: absoluteUrl(`/exhibitions/${venue.slug}`),
+  provider: { '@type': 'ProfessionalService', name: site.name, url: site.url },
+  areaServed: { '@type': 'Country', name: 'Singapore' },
+};
+---
+
+<ClusterPageLayout
+  base="exhibitions"
+  spoke={spoke}
+  jsonLd={[placeSchema, serviceSchema]}
+  factsCaption="Venue details"
+  whatsappMessage={`Hi SwyftClear, I am exhibiting at ${venue.label} and need help with the freight.`}
+>
+  <section class="section section--tight">
+    <div class="container">
+      <p class="text-faint" style="font-size: var(--step--1);">
+        Loading arrangements, delivery windows, lift dimensions, and the appointed on-site handling
+        agent are set per event by the organiser and published in the exhibitor manual. Always treat
+        that manual as the authority for your specific show.
+      </p>
+    </div>
+  </section>
+</ClusterPageLayout>

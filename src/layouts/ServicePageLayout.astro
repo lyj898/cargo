@@ -4,8 +4,10 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import CTAButtons from '../components/CTAButtons.astro';
 import FAQSection from '../components/FAQSection.astro';
 import RelatedServices from '../components/RelatedServices.astro';
+import LinkGrid from '../components/LinkGrid.astro';
 import { site, absoluteUrl } from '../config/site';
-import { relatedServices } from '../data/services';
+import { relatedServices, getService } from '../data/services';
+import { resolveLinks } from '../data/clusters';
 import type { Faq } from '../data/faqs';
 
 export interface Props {
@@ -21,6 +23,10 @@ export interface Props {
 }
 
 const { slug, metaTitle, metaDescription, breadcrumbLabel, eyebrow, h1, lede, faqs, whatsappMessage } = Astro.props;
+
+// Service pages carry the most authority on the site, so they are where the
+// programmatic clusters get their strongest internal links from.
+const clusterLinks = resolveLinks(getService(slug)?.clusterLinks ?? [], 6);
 
 const serviceSchema = {
   '@context': 'https://schema.org',
@@ -58,6 +64,14 @@ const serviceSchema = {
   <slot />
 
   <FAQSection faqs={faqs} heading={`Questions about ${eyebrow.toLowerCase()}`} id="faq" />
+
+  <LinkGrid
+    links={clusterLinks}
+    heading="Work out the details"
+    eyebrow="Reference"
+    showKind
+    id="reference"
+  />
 
   <RelatedServices services={relatedServices(slug)} />
 

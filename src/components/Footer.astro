@@ -1,8 +1,14 @@
 ---
 import { site, whatsappLink, withBase } from '../config/site';
 import { services } from '../data/services';
+import { clusters } from '../data/clusters';
+import { LAST_REVIEWED_DISPLAY } from '../config/content';
 
 const year = new Date().getFullYear();
+
+// Every cluster hub is linked sitewide. On a mostly-programmatic site this is
+// what keeps the deeper pages within two clicks of any entry point.
+const hubs = clusters.filter((c) => c.inNav);
 ---
 
 <footer class="site-footer">
@@ -30,6 +36,20 @@ const year = new Date().getFullYear();
       </div>
 
       <div class="footer-col">
+        <h3>Reference</h3>
+        <ul>
+          {
+            hubs.map((c) => (
+              <li>
+                <a href={withBase(`/${c.base}`)}>{c.label}</a>
+              </li>
+            ))
+          }
+          <li><a href={withBase('/sitemap')}>Site map</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
         <h3>Company</h3>
         <ul>
           <li><a href={withBase('/case-studies')}>Case studies</a></li>
@@ -44,7 +64,11 @@ const year = new Date().getFullYear();
 
     <div class="footer-bottom">
       <p>© {year} {site.name}. All rights reserved.</p>
-      <p>Singapore-focused cargo and customs coordination — not a licensed Declaring Agent unless stated for a specific engagement.</p>
+      <p>
+        Singapore-focused cargo and customs coordination — not a licensed Declaring Agent unless
+        stated for a specific engagement. Reference pages last reviewed {LAST_REVIEWED_DISPLAY};
+        always confirm current requirements with the relevant authority.
+      </p>
     </div>
   </div>
 </footer>

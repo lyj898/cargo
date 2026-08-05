@@ -31,11 +31,15 @@ export const site = {
   formEndpoint: '',
 
   // --- nav ---
+  // Kept to five items so the header stays legible on tablet widths. The two
+  // library hubs (/guides, /permits) earn their place over individual service
+  // pages because they are the entry points for search traffic; every service
+  // page is still one click away via the footer and the homepage grid.
   primaryNav: [
     { label: 'Special cargo', href: '/special-cargo-singapore' },
     { label: 'Customs support', href: '/customs-support-singapore' },
-    { label: 'Exhibition logistics', href: '/exhibition-logistics-singapore' },
-    { label: 'Case studies', href: '/case-studies' },
+    { label: 'Import guides', href: '/guides' },
+    { label: 'Permits', href: '/permits' },
     { label: 'About', href: '/about' },
   ],
 

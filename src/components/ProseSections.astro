@@ -1,0 +1,37 @@
+---
+// Renders the free-form prose blocks of a cluster page. Headings get stable
+// slugified ids so the on-page contents list can link to them and so external
+// links can deep-link to a specific answer.
+import type { Section } from '../data/types';
+import { sectionId } from '../utils/slug';
+
+export interface Props {
+  sections: Section[];
+}
+
+const { sections } = Astro.props;
+
+const rendered = sections.map((s, i) => ({ ...s, id: sectionId(s.heading), alt: i % 2 === 1 }));
+---
+
+{
+  rendered.map((s) => (
+    <section
+      class={`section section--border-top${s.alt ? ' section--subtle' : ''}`}
+      aria-labelledby={s.id}
+      id={s.id}
+    >
+      <div class="container stack">
+        <h2 id={s.id}>{s.heading}</h2>
+        <p class="lede">{s.body}</p>
+        {s.bullets && s.bullets.length > 0 && (
+          <ul class="trust-list">
+            {s.bullets.map((b) => (
+              <li>{b}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+  ))
+}

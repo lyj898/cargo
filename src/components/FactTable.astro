@@ -1,0 +1,36 @@
+---
+// Key-facts table. This is the densest, most scannable part of a cluster page
+// and the main thing that makes each generated page substantively different
+// from its siblings — so it sits high on the page, right after the lede.
+import type { Fact } from '../data/types';
+
+export interface Props {
+  facts: Fact[];
+  caption?: string;
+  id?: string;
+}
+
+const { facts, caption = 'Key facts', id = 'key-facts' } = Astro.props;
+---
+
+{
+  facts.length > 0 && (
+    <section class="section section--tight section--border-top" aria-labelledby={`${id}-heading`}>
+      <div class="container stack-sm">
+        <h2 id={`${id}-heading`} class="fact-table__heading">{caption}</h2>
+        <div class="fact-table__scroll">
+          <table class="fact-table">
+            <tbody>
+              {facts.map((f) => (
+                <tr>
+                  <th scope="row">{f.label}</th>
+                  <td>{f.value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  )
+}

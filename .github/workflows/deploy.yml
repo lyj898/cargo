@@ -31,6 +31,26 @@ jobs:
           # this can be removed and it'll use `npm ci` automatically.
           package-manager: npm@latest
 
+  # Reports SEO problems (dead internal links, duplicate titles/descriptions,
+  # missing canonicals, thin pages) without gating the deploy. Promote this to
+  # a `needs:` dependency of `build` once you're happy it's clean and you want
+  # a regression to block the release instead of just flagging it.
+  seo-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install and build
+        run: npm install --no-audit --no-fund && npm run build
+
+      - name: Check SEO
+        run: npm run check:seo
+
   deploy:
     needs: build
     runs-on: ubuntu-latest

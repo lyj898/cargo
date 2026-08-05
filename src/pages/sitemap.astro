@@ -1,0 +1,76 @@
+---
+// Human-readable sitemap. Two jobs: it gives visitors a way to see the whole
+// site at once, and it gives crawlers a single page that links to every URL —
+// which matters on a site where most pages are three clicks deep.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { clusters } from '../data/clusters';
+import { services } from '../data/services';
+import { withBase } from '../config/site';
+
+const corePages = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/case-studies', label: 'Case studies' },
+  { href: '/contact', label: 'Contact' },
+  { href: '/enquiry', label: 'Start an enquiry' },
+];
+
+const totalPages =
+  corePages.length + services.length + clusters.length + clusters.reduce((n, c) => n + c.spokes.length, 0) + 1;
+---
+
+<BaseLayout
+  title="Site map"
+  description="Every page on SwyftClear.com — services, import guides, permit requirements by product, cargo types, origin countries, and Singapore exhibition venues."
+  path="/sitemap"
+>
+  <Breadcrumbs items={[{ label: 'Site map', href: '/sitemap' }]} />
+
+  <section class="page-hero">
+    <div class="container hero__content">
+      <div class="eyebrow">Site map</div>
+      <h1>Everything on this site</h1>
+      <p class="lede">
+        {totalPages} pages covering Singapore import requirements, cargo handling, origin lanes, and
+        exhibition venues. If you are looking for something specific, this is the fastest way to find it.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--border-top">
+    <div class="container stack">
+      <div class="sitemap-group">
+        <h2>Main pages</h2>
+        <ul class="sitemap-list">
+          {corePages.map((p) => <li><a href={withBase(p.href)}>{p.label}</a></li>)}
+          <li><a href={withBase('/sitemap')}>Site map</a></li>
+        </ul>
+      </div>
+
+      <div class="sitemap-group">
+        <h2>Services</h2>
+        <ul class="sitemap-list">
+          {services.map((s) => <li><a href={withBase(`/${s.slug}`)}>{s.title}</a></li>)}
+        </ul>
+      </div>
+
+      {
+        clusters.map((c) => (
+          <div class="sitemap-group">
+            <h2>
+              <a href={withBase(`/${c.base}`)}>{c.hubTitle}</a>
+            </h2>
+            <ul class="sitemap-list">
+              {c.spokes.map((s) => (
+                <li>
+                  <a href={withBase(`/${c.base}/${s.slug}`)}>{s.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
