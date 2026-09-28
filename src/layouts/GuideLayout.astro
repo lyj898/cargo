@@ -2,6 +2,10 @@
 // Shared layout for every guide. One layout keeps the schema, the disclosure,
 // the sources, and the review line identical across the library, so improving
 // any of them improves all of them at once.
+//
+// On wide screens the article sits beside a sticky rail holding the contents
+// list and the review record; on narrow screens the contents list becomes a
+// row of pills above the article instead.
 import BaseLayout from './BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import KeyPoints from '../components/KeyPoints.astro';
@@ -11,13 +15,13 @@ import HelpBox from '../components/HelpBox.astro';
 import FAQSection from '../components/FAQSection.astro';
 import OfficialSources from '../components/OfficialSources.astro';
 import LinkGrid from '../components/LinkGrid.astro';
+import SectionTag from '../components/SectionTag.astro';
 import type { Guide } from '../data/model';
 import { getHub } from '../data/hubs';
-import { guidePath, resolveLinks } from '../data/library';
+import { guidePath, readingMinutes, resolveLinks } from '../data/library';
 import { site, absoluteUrl } from '../config/site';
 import { LAST_REVIEWED, LAST_REVIEWED_DISPLAY } from '../config/content';
 import { articleNode } from '../utils/schema';
-import { plainInline } from '../utils/inline';
 
 export interface Props {
   guide: Guide;
@@ -29,24 +33,9 @@ if (!hub) throw new Error(`Guide ${guide.slug} points at unknown section "${guid
 
 const path = guidePath(guide);
 const related = resolveLinks(guide.related, 3);
-
-// Reading time from the words actually on the page, at a steady 220 wpm.
-const allText = [
-  guide.lede,
-  ...guide.keyPoints,
-  ...guide.sections.flatMap((s) => [
-    s.heading,
-    ...s.body,
-    ...(s.steps ?? []).flatMap((st) => [st.title, st.body]),
-    ...(s.bullets ?? []),
-    s.note ?? '',
-    ...(s.after ?? []),
-  ]),
-  ...guide.faqs.flatMap((f) => [f.q, f.a]),
-]
-  .map(plainInline)
-  .join(' ');
-const minutes = Math.max(1, Math.round(allText.split(/\s+/).filter(Boolean).length / 220));
+const minutes = readingMinutes(guide);
+const headings = guide.sections.map((s) => s.heading);
+const hasFaqs = guide.faqs.length > 0;
 ---
 
 <BaseLayout
@@ -55,6 +44,7 @@ const minutes = Math.max(1, Math.round(allText.split(/\s+/).filter(Boolean).leng
   path={path}
   ogType="article"
   modified={LAST_REVIEWED}
+  section={hub.slug}
   jsonLd={[
     articleNode({
       url: absoluteUrl(path),
@@ -72,29 +62,48 @@ const minutes = Math.max(1, Math.round(allText.split(/\s+/).filter(Boolean).leng
   />
 
   <article>
-    <header class="page-hero">
-      <div class="container hero__content">
-        <div class="eyebrow">{hub.label}</div>
-        <h1>{guide.h1}</h1>
-        <p class="lede">{guide.lede}</p>
-        <p class="byline">
-          Reviewed <time datetime={LAST_REVIEWED}>{LAST_REVIEWED_DISPLAY}</time> · {minutes} min read
-        </p>
+    <header class="page-hero page-hero--guide">
+      <div class="container">
+        <div class="hero__content">
+          <SectionTag slug={hub.slug} label={hub.label} href={`/${hub.slug}`} />
+          <h1>{guide.h1}</h1>
+          <p class="lede">{guide.lede}</p>
+          <ul class="guide-meta" aria-label="About this guide">
+            <li>Reviewed <time datetime={LAST_REVIEWED}>{LAST_REVIEWED_DISPLAY}</time></li>
+            <li>{minutes} min read</li>
+            {guide.sources.length > 0 && <li><a href="#sources">{guide.sources.length} official sources</a></li>}
+          </ul>
+        </div>
       </div>
     </header>
 
-    <div class="container article-body">
-      <KeyPoints points={guide.keyPoints} />
-      <OnThisPage headings={guide.sections.map((s) => s.heading)} includeFaq={guide.faqs.length > 0} />
-      <GuideBody sections={guide.sections} />
-      <HelpBox help={guide.help} />
-      <FAQSection faqs={guide.faqs} heading="Questions people ask" id="faq" />
-      <OfficialSources sources={guide.sources} />
-      <p class="review-note">
-        Last reviewed {LAST_REVIEWED_DISPLAY}. This is general information about how things usually
-        work in Singapore, not legal advice on your situation. If something here is out of date,
-        please tell us at <a href={`mailto:${site.email}`}>{site.email}</a>.
-      </p>
+    <div class="container guide-layout">
+      <div class="article-body">
+        <KeyPoints points={guide.keyPoints} />
+        <OnThisPage headings={headings} includeFaq={hasFaqs} variant="pills" />
+        <GuideBody sections={guide.sections} />
+        <HelpBox help={guide.help} section={hub.slug} />
+        <FAQSection faqs={guide.faqs} heading="Questions people ask" id="faq" />
+        <OfficialSources sources={guide.sources} />
+        <p class="review-note">
+          Last reviewed {LAST_REVIEWED_DISPLAY}. This is general information about how things
+          usually work in Singapore, not legal advice on your situation. If something here is out of
+          date, please tell us at <a href={`mailto:${site.email}`}>{site.email}</a>.
+        </p>
+      </div>
+
+      <aside class="guide-rail" aria-label="Guide contents">
+        <div class="guide-rail__inner">
+          <OnThisPage headings={headings} includeFaq={hasFaqs} variant="rail" />
+          <div class="guide-rail__record">
+            <span class="toc__label">Checked against</span>
+            <p>
+              {guide.sources.length} official sources, last reviewed {LAST_REVIEWED_DISPLAY}.
+              <a href="#sources">See the list</a>
+            </p>
+          </div>
+        </div>
+      </aside>
     </div>
   </article>
 

@@ -3,6 +3,7 @@
 // Headings get stable slugified ids so the contents list and external links can
 // deep-link to a specific answer.
 import type { Section } from '../data/model';
+import Timeline from './Timeline.astro';
 import { renderInline } from '../utils/inline';
 import { sectionId } from '../utils/slug';
 
@@ -38,6 +39,7 @@ const { sections } = Astro.props;
             ))}
           </ul>
         )}
+        {s.timeline && <Timeline milestones={s.timeline.milestones} caption={s.timeline.caption} />}
         {s.note && (
           <aside class="guide-note">
             <p set:html={renderInline(s.note)} />

@@ -46,6 +46,15 @@ export const handoverGuides: Guide[] = [
           'For an HDB resale, completion is about eight weeks after HDB accepts the resale application. The date in HDB’s acceptance email is the earliest possible, and HDB won’t bring it forward. Pushing it back needs signed confirmation from both parties within a week of the acceptance letter, so check straight away whether the date works for your move.',
           'For a private sale, completion is whatever date the contract sets. There’s no standard period, so confirm the date in the option or the sale and purchase agreement with your lawyer as soon as it’s signed, and plan from that.',
         ],
+        timeline: {
+          caption: 'HDB resale: the dates a seller works to',
+          milestones: [
+            { when: 'Application accepted', what: 'HDB’s acceptance email gives the earliest completion date.' },
+            { when: 'Within a week', what: 'The last chance to defer completion, with both parties’ signed confirmation.' },
+            { when: 'About 8 weeks', what: 'Completion. You’ve moved out, and the keys are handed over.' },
+            { when: 'Up to 3 months after', what: 'Only with HDB’s temporary extension of stay, agreed with the buyers.' },
+          ],
+        },
         note: 'If a seller or buyer dies before completion, the Law Society’s conditions allow completion to be postponed for a reasonable period, up to three months from the death, so that a grant can be obtained. If you’re selling a late relative’s home, our guide to [clearing a late parent’s HDB flat](/estates/clearing-a-parents-hdb-flat) covers HDB’s timelines for the estate.',
       },
       {

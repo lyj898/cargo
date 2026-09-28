@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import FloorPlan from '../components/FloorPlan.astro';
 import LinkGrid from '../components/LinkGrid.astro';
 import { hubs } from '../data/hubs';
 import { withBase } from '../config/site';
@@ -13,24 +14,30 @@ const hubLinks = hubs.map((h) => ({
   label: h.h1,
   summary: h.summary,
   kind: h.label,
+  section: h.slug,
 }));
 ---
 
 <BaseLayout title="Page not found" description="This page doesn't exist." path="/404" noIndex>
-  <section class="section" style="padding-block: var(--space-8);">
-    <div class="container stack" style="text-align: center;">
-      <div class="eyebrow" style="justify-content: center;">404</div>
-      <h1>We couldn't find that page</h1>
-      <p class="lede" style="margin-inline: auto;">
-        The page may have moved, or the link may be out of date. If you were looking for SwyftClear’s
-        old cargo and customs guides, those have been taken down. The site now covers clearing a
-        property you’re responsible for.
-      </p>
-      <p>
-        <a href={withBase('/')}>← Back to homepage</a>
-        <span style="color: var(--color-border-strong); margin-inline: var(--space-3);">·</span>
-        <a href={withBase('/sitemap')}>See every page</a>
-      </p>
+  <section class="section not-found">
+    <div class="container not-found__inner">
+      <div class="not-found__plan">
+        <FloorPlan variant="empty" />
+      </div>
+      <div class="stack">
+        <div class="eyebrow">404</div>
+        <h1>This page has been cleared</h1>
+        <p class="lede">
+          The page may have moved, or the link may be out of date. If you were looking for
+          SwyftClear’s old cargo and customs guides, those have been taken down. The site now covers
+          clearing a property you’re responsible for.
+        </p>
+        <p>
+          <a href={withBase('/')}>← Back to homepage</a>
+          <span class="not-found__sep" aria-hidden="true">·</span>
+          <a href={withBase('/sitemap')}>See every page</a>
+        </p>
+      </div>
     </div>
   </section>
 

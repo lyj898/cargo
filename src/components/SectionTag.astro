@@ -1,0 +1,22 @@
+---
+// A section label in the style of the tags on a floor plan: punched hole,
+// section colour, mono caps. Links to the section hub when href is given.
+import SectionIcon from './SectionIcon.astro';
+import { withBase } from '../config/site';
+
+export interface Props {
+  slug: string;
+  label: string;
+  href?: string;
+  /** Set the section colour on the tag itself, for pages that show several. */
+  scoped?: boolean;
+}
+
+const { slug, label, href, scoped = false } = Astro.props;
+const Tag = href ? 'a' : 'span';
+---
+
+<Tag class="section-tag" href={href ? withBase(href) : undefined} data-section={scoped ? slug : undefined}>
+  <SectionIcon slug={slug} size={16} />
+  <span>{label}</span>
+</Tag>

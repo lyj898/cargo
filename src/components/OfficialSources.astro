@@ -15,7 +15,7 @@ const { sources, note } = Astro.props;
 
 {
   sources.length > 0 && (
-    <section class="sources-block" aria-labelledby="sources-heading">
+    <section class="sources-block" id="sources" aria-labelledby="sources-heading">
       <h2 id="sources-heading" class="fact-table__heading">Official sources</h2>
       <p class="text-muted">
         {note ??

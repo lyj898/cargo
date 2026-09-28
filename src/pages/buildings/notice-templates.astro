@@ -9,6 +9,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import GuideBody from '../../components/GuideBody.astro';
 import HelpBox from '../../components/HelpBox.astro';
 import LinkGrid from '../../components/LinkGrid.astro';
+import SectionTag from '../../components/SectionTag.astro';
 import type { Section } from '../../data/model';
 import { getHub } from '../../data/hubs';
 import { resolveLinks } from '../../data/library';
@@ -46,6 +47,7 @@ const usage: Section[] = [
   path={path}
   ogType="article"
   modified={LAST_REVIEWED}
+  section={hub.slug}
   jsonLd={[
     articleNode({ url: absoluteUrl(path), headline: 'Notice templates for bulky items and common areas', description, sectionName: hub.label }),
   ]}
@@ -58,16 +60,18 @@ const usage: Section[] = [
   />
 
   <header class="page-hero">
-    <div class="container hero__content">
-      <div class="eyebrow">{hub.label} · Tool</div>
-      <h1>Notice templates for bulky items and common areas</h1>
-      <p class="lede">
-        Two notices most managing agents end up writing from scratch. Fill in your development’s
-        details and the text updates as you type. Then copy it or print it.
-      </p>
-      <p class="byline">
-        Reviewed <time datetime={LAST_REVIEWED}>{LAST_REVIEWED_DISPLAY}</time> · Nothing you type leaves this page
-      </p>
+    <div class="container">
+      <div class="hero__content">
+        <SectionTag slug={hub.slug} label={`${hub.label} · Tool`} href={`/${hub.slug}`} />
+        <h1>Notice templates for bulky items and common areas</h1>
+        <p class="lede">
+          Two notices most managing agents end up writing from scratch. Fill in your development’s
+          details and the text updates as you type. Then copy it or print it.
+        </p>
+        <p class="byline">
+          Reviewed <time datetime={LAST_REVIEWED}>{LAST_REVIEWED_DISPLAY}</time> · Nothing you type leaves this page
+        </p>
+      </div>
     </div>
   </header>
 
@@ -99,7 +103,9 @@ const usage: Section[] = [
         <h2 id="bulky-heading">1. How to dispose of bulky items</h2>
         <p class="text-muted">A standing notice for the lift lobby or noticeboard, and for new residents’ welcome packs.</p>
       </div>
-      <pre class="notice__text" id="notice-bulky" tabindex="0" aria-label="Bulky items notice text">{initialBulky}</pre>
+      <div class="notice-board">
+        <pre class="notice__text" id="notice-bulky" tabindex="0" aria-label="Bulky items notice text">{initialBulky}</pre>
+      </div>
       <div class="notice__actions">
         <button type="button" class="btn btn--primary" data-copy="notice-bulky">Copy text</button>
         <button type="button" class="btn btn--secondary" data-print="bulky">Print</button>
@@ -126,7 +132,9 @@ const usage: Section[] = [
           <input type="number" name="days" form="notice-form" min="1" max="60" value="7" />
         </label>
       </div>
-      <pre class="notice__text" id="notice-removal" tabindex="0" aria-label="Removal notice text">{initialRemoval}</pre>
+      <div class="notice-board">
+        <pre class="notice__text" id="notice-removal" tabindex="0" aria-label="Removal notice text">{initialRemoval}</pre>
+      </div>
       <div class="notice__actions">
         <button type="button" class="btn btn--primary" data-copy="notice-removal">Copy text</button>
         <button type="button" class="btn btn--secondary" data-print="removal">Print</button>
@@ -135,7 +143,7 @@ const usage: Section[] = [
     </section>
 
     <GuideBody sections={usage} />
-    <HelpBox help={hub.help} />
+    <HelpBox help={hub.help} section={hub.slug} />
   </div>
 
   <LinkGrid links={related} heading="Related guides" eyebrow="Keep reading" subtle id="related" />

@@ -60,6 +60,15 @@ export const estatesGuides: Guide[] = [
           '**Sole owner, or tenancy-in-common.** The share passes under the will or, without one, under the Intestate Succession Act. Once the grant is issued, the executor or administrator must apply to HDB for transmission of the flat within 6 months. They then have 12 months to transfer it to beneficiaries who are eligible to own it, or to sell it.',
           '**No beneficiary can or wants to keep it.** The flat is sold, and beneficiaries who aren’t eligible to own it still receive their share of the proceeds. Some flats can’t be sold: studio apartments, short-lease 2-room Flexi flats, Community Care Apartments and flats under the Lease Buyback Scheme. For those, the executor writes to HDB to return the flat instead.',
         ],
+        timeline: {
+          caption: 'Sole owner or tenancy-in-common: HDB’s timeline',
+          milestones: [
+            { when: 'After the death', what: 'Secure and search the flat. Nothing needs to leave yet.' },
+            { when: 'Grant issued', what: 'Probate, or letters of administration, from the Family Justice Courts.' },
+            { when: 'Within 6 months', what: 'The executor or administrator applies to HDB for transmission.' },
+            { when: 'Within 12 months after', what: 'The flat is transferred to an eligible beneficiary, or sold. It has to be empty.' },
+          ],
+        },
         note: 'If the flat hadn’t reached its minimum occupation period by the date of death, selling it on the open market needs HDB’s approval. Ask the HDB branch that manages the flat early, because it changes the timeline.',
         after: [
           'For most families, the second timeline is the one that matters. A sale, a transfer or a return all need an empty flat, and a clearing squeezed into the last weeks of a 12-month window is a clearing done under pressure. Our guide to [vacant possession](/handover/vacant-possession) covers what an HDB buyer expects on completion day.',

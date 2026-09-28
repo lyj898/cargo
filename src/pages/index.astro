@@ -1,8 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import FloorPlan from '../components/FloorPlan.astro';
+import SectionIcon from '../components/SectionIcon.astro';
+import SectionTag from '../components/SectionTag.astro';
 import { hubs } from '../data/hubs';
-import { guidesIn, guidePath, toolsIn, tools } from '../data/library';
+import { guides, guidesIn, guidePath, toolsIn, tools } from '../data/library';
 import { site, withBase } from '../config/site';
+import { LAST_REVIEWED_DISPLAY } from '../config/content';
 
 const title = 'SwyftClear | Clearing a Home or Premises in Singapore';
 const description =
@@ -15,6 +19,10 @@ const panels = hubs.map((hub) => ({
     ...toolsIn(hub.slug).map((t) => ({ href: t.href, label: t.label })),
   ],
 }));
+
+// Counted from the guides themselves, so the numbers under the hero can't
+// drift from what the pages actually cite.
+const officialSourceCount = new Set(guides.flatMap((g) => g.sources.map((s) => s.url))).size;
 
 const principles = [
   {
@@ -34,7 +42,7 @@ const principles = [
 
 <BaseLayout title={title} description={description} path="/">
   <section class="hero">
-    <div class="container">
+    <div class="container home-hero">
       <div class="hero__content">
         <div class="eyebrow">Singapore clearance guides</div>
         <h1>Clearing a property you’re responsible for</h1>
@@ -43,7 +51,23 @@ const principles = [
           someone else has set: after a death, at the end of a sale or a tenancy, in a condo’s common
           areas, or when a business lease runs out.
         </p>
+        <div class="hero__chooser" aria-label="Choose your situation">
+          {hubs.map((h) => <SectionTag slug={h.slug} label={h.label} href={`/${h.slug}`} scoped />)}
+        </div>
+        <ul class="hero__facts">
+          <li><strong>{guides.length}</strong> guides</li>
+          <li><strong>{officialSourceCount}</strong> official sources cited</li>
+          <li>Checked <strong>{LAST_REVIEWED_DISPLAY}</strong></li>
+        </ul>
       </div>
+
+      <figure class="plan-frame plan-frame--hero">
+        <FloorPlan
+          variant="sorting"
+          label="Floor plan of a three-bedroom flat, with the furniture tagged keep, donate and clear, and the household shelter tagged check first."
+        />
+        <figcaption>Plan 01 · A three-bedroom flat, sorted before anything leaves</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -54,8 +78,13 @@ const principles = [
       <div class="hub-grid">
         {
           panels.map(({ hub, links }) => (
-            <div class="hub-panel">
-              <span class="hub-panel__audience">{hub.audience}</span>
+            <div class="hub-panel" data-section={hub.slug}>
+              <div class="hub-panel__head">
+                <span class="hub-panel__icon">
+                  <SectionIcon slug={hub.slug} size={22} />
+                </span>
+                <span class="hub-panel__audience">{hub.audience}</span>
+              </div>
               <h3>
                 <a href={withBase(`/${hub.slug}`)}>{hub.h1}</a>
               </h3>
@@ -85,16 +114,19 @@ const principles = [
         <div class="container stack">
           <div class="eyebrow">Tools</div>
           <h2 id="tools-heading">Things you can use straight away</h2>
-          <div class={tools.length > 1 ? 'grid grid--2' : 'grid'}>
-            {tools.map((t) => (
-              <a class="service-card" href={withBase(t.href)}>
+          {tools.map((t) => (
+            <a class="tool-feature" href={withBase(t.href)} data-section={t.section}>
+              <div class="tool-feature__text">
                 <span class="service-card__kind">{t.kind}</span>
                 <h3>{t.label}</h3>
                 <p>{t.summary}</p>
-                <div class="service-card__link">Open it →</div>
-              </a>
-            ))}
-          </div>
+                <span class="tool-feature__cta">Open the templates →</span>
+              </div>
+              <div class="tool-feature__plan">
+                <FloorPlan variant="buildings" />
+              </div>
+            </a>
+          ))}
         </div>
       </section>
     )
@@ -107,7 +139,7 @@ const principles = [
       <div class="principles">
         {
           principles.map((p) => (
-            <div>
+            <div class="principle">
               <h3>{p.title}</h3>
               <p>{p.body}</p>
             </div>

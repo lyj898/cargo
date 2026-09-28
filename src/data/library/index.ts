@@ -5,6 +5,7 @@
 // section hub, sitemap, and link check all read from here.
 
 import type { Guide, LinkCard } from '../model';
+import { plainInline } from '../../utils/inline';
 import { hubs } from '../hubs';
 import { estatesGuides } from './estates';
 import { handoverGuides } from './handover';
@@ -21,6 +22,27 @@ export function guidesIn(hubSlug: string): Guide[] {
   return guides.filter((g) => g.hub === hubSlug);
 }
 
+/** Reading time from the words actually on the page, at a steady 220 wpm. */
+export function readingMinutes(guide: Guide): number {
+  const text = [
+    guide.lede,
+    ...guide.keyPoints,
+    ...guide.sections.flatMap((s) => [
+      s.heading,
+      ...s.body,
+      ...(s.steps ?? []).flatMap((st) => [st.title, st.body]),
+      ...(s.timeline?.milestones ?? []).flatMap((m) => [m.when, m.what]),
+      ...(s.bullets ?? []),
+      s.note ?? '',
+      ...(s.after ?? []),
+    ]),
+    ...guide.faqs.flatMap((f) => [f.q, f.a]),
+  ]
+    .map(plainInline)
+    .join(' ');
+  return Math.max(1, Math.round(text.split(/\s+/).filter(Boolean).length / 220));
+}
+
 /** Pages with their own route rather than a guide record. */
 export type Tool = LinkCard & { hub: string };
 
@@ -31,6 +53,7 @@ export const tools: Tool[] = [
     summary: 'Resident notices for bulky items and things left in common areas, filled in as you type.',
     kind: 'Tool',
     hub: 'buildings',
+    section: 'buildings',
   },
 ];
 
@@ -43,11 +66,14 @@ export function toolsIn(hubSlug: string): Tool[] {
 const hubLabel = (slug: string) => hubs.find((h) => h.slug === slug)?.label ?? slug;
 
 const guideCards: Record<string, LinkCard> = Object.fromEntries(
-  guides.map((g) => [guidePath(g), { href: guidePath(g), label: g.label, summary: g.summary, kind: hubLabel(g.hub) }]),
+  guides.map((g) => [
+    guidePath(g),
+    { href: guidePath(g), label: g.label, summary: g.summary, kind: hubLabel(g.hub), section: g.hub },
+  ]),
 );
 
 const hubCards: Record<string, LinkCard> = Object.fromEntries(
-  hubs.map((h) => [`/${h.slug}`, { href: `/${h.slug}`, label: h.h1, summary: h.summary, kind: 'Section' }]),
+  hubs.map((h) => [`/${h.slug}`, { href: `/${h.slug}`, label: h.h1, summary: h.summary, kind: h.label, section: h.slug }]),
 );
 
 const toolCards: Record<string, LinkCard> = Object.fromEntries(tools.map((t) => [t.href, t]));

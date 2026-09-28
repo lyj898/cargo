@@ -29,7 +29,7 @@ const gridClass = links.length % 3 === 0 ? 'grid grid--3' : links.length === 1 ?
         <h2 id={`${id}-heading`}>{heading}</h2>
         <div class={gridClass}>
           {links.map((l) => (
-            <a class="service-card" href={withBase(l.href)}>
+            <a class="service-card" href={withBase(l.href)} data-section={l.section}>
               {showKind && <span class="service-card__kind">{l.kind}</span>}
               <h3>{l.label}</h3>
               <p>{l.summary}</p>

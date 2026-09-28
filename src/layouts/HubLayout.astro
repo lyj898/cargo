@@ -1,14 +1,17 @@
 ---
 // A section hub: what the situation involves, then every guide and tool in it.
-// The overview prose is what keeps a hub from being a bare list of links.
+// The overview prose is what keeps a hub from being a bare list of links, and
+// the plan beside the heading shows the space the section is about.
 import BaseLayout from './BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import GuideBody from '../components/GuideBody.astro';
 import HelpBox from '../components/HelpBox.astro';
 import LinkGrid from '../components/LinkGrid.astro';
+import FloorPlan, { type PlanVariant } from '../components/FloorPlan.astro';
+import SectionTag from '../components/SectionTag.astro';
 import type { Hub, LinkCard } from '../data/model';
 import { hubs } from '../data/hubs';
-import { guidesIn, guidePath, toolsIn } from '../data/library';
+import { guidesIn, guidePath, readingMinutes, toolsIn } from '../data/library';
 import { absoluteUrl, withBase } from '../config/site';
 import { LAST_REVIEWED } from '../config/content';
 import { collectionNode } from '../utils/schema';
@@ -20,17 +23,31 @@ export interface Props {
 const { hub } = Astro.props;
 const path = `/${hub.slug}`;
 
-const cards: LinkCard[] = [
-  ...guidesIn(hub.slug).map((g) => ({ href: guidePath(g), label: g.label, summary: g.summary, kind: 'Guide' })),
-  ...toolsIn(hub.slug),
+type Card = LinkCard & { meta: string };
+const cards: Card[] = [
+  ...guidesIn(hub.slug).map((g) => ({
+    href: guidePath(g),
+    label: g.label,
+    summary: g.summary,
+    kind: 'Guide',
+    meta: `${readingMinutes(g)} min read`,
+  })),
+  ...toolsIn(hub.slug).map((t) => ({ ...t, meta: 'Fill in and print' })),
 ];
 
 // Match the column count to the number of cards so no row is left half empty.
 const gridClass = cards.length % 3 === 0 ? 'grid grid--3' : 'grid grid--2';
 
+const planFor: Record<string, PlanVariant> = {
+  estates: 'estates',
+  handover: 'handover',
+  buildings: 'buildings',
+  business: 'business',
+};
+
 const otherHubs: LinkCard[] = hubs
   .filter((h) => h.slug !== hub.slug)
-  .map((h) => ({ href: `/${h.slug}`, label: h.h1, summary: h.summary, kind: h.label }));
+  .map((h) => ({ href: `/${h.slug}`, label: h.h1, summary: h.summary, kind: h.label, section: h.slug }));
 ---
 
 <BaseLayout
@@ -38,6 +55,7 @@ const otherHubs: LinkCard[] = hubs
   description={hub.metaDescription}
   path={path}
   modified={LAST_REVIEWED}
+  section={hub.slug}
   jsonLd={[
     collectionNode({
       url: absoluteUrl(path),
@@ -49,11 +67,17 @@ const otherHubs: LinkCard[] = hubs
 >
   <Breadcrumbs items={[{ label: hub.label, href: path }]} />
 
-  <header class="page-hero">
-    <div class="container hero__content">
-      <div class="eyebrow">{hub.audience}</div>
-      <h1>{hub.h1}</h1>
-      <p class="lede">{hub.lede}</p>
+  <header class="page-hero page-hero--hub">
+    <div class="container hub-hero">
+      <div class="hero__content">
+        <SectionTag slug={hub.slug} label={hub.label} />
+        <h1>{hub.h1}</h1>
+        <p class="lede">{hub.lede}</p>
+        <p class="hub-hero__audience">{hub.audience}</p>
+      </div>
+      <div class="plan-frame">
+        <FloorPlan variant={planFor[hub.slug] ?? 'sorting'} />
+      </div>
     </div>
   </header>
 
@@ -63,11 +87,14 @@ const otherHubs: LinkCard[] = hubs
       <div class={gridClass}>
         {
           cards.map((c) => (
-            <a class="service-card" href={withBase(c.href)}>
+            <a class="service-card guide-card" href={withBase(c.href)}>
               <span class="service-card__kind">{c.kind}</span>
               <h3>{c.label}</h3>
               <p>{c.summary}</p>
-              <div class="service-card__link">Read it →</div>
+              <div class="guide-card__foot">
+                <span>{c.meta}</span>
+                <span class="guide-card__arrow" aria-hidden="true">→</span>
+              </div>
             </a>
           ))
         }
@@ -77,7 +104,7 @@ const otherHubs: LinkCard[] = hubs
 
   <div class="container article-body article-body--hub">
     <GuideBody sections={hub.sections} />
-    <HelpBox help={hub.help} />
+    <HelpBox help={hub.help} section={hub.slug} />
   </div>
 
   <LinkGrid links={otherHubs} heading="Other situations" eyebrow="Elsewhere on SwyftClear" subtle id="other-hubs" />

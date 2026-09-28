@@ -3,18 +3,24 @@
 // labelled as such every time, because a guide that recommends its publisher
 // without saying so is exactly the kind of page nobody should trust.
 import type { HelpBox } from '../data/model';
+import SectionIcon from './SectionIcon.astro';
 import { site, withBase } from '../config/site';
 
 export interface Props {
   help: HelpBox;
+  /** Section slug, for the icon beside the heading. */
+  section?: string;
 }
 
-const { help } = Astro.props;
+const { help, section } = Astro.props;
 ---
 
 <aside class="help-box" aria-labelledby="help-heading">
   <p class="help-box__eyebrow">From the company behind SwyftClear</p>
-  <h2 id="help-heading">{help.heading}</h2>
+  <div class="help-box__title">
+    {section && <span class="help-box__icon"><SectionIcon slug={section} size={22} /></span>}
+    <h2 id="help-heading">{help.heading}</h2>
+  </div>
   <p>{help.body}</p>
   <a class="btn btn--primary" href={help.href} rel="noopener" target="_blank">
     {help.linkLabel}

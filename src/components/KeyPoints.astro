@@ -1,6 +1,7 @@
 ---
 // "The short version" callout. Sits directly under the lede on guide pages so
 // a reader (or an AI answer engine) gets the substance without scrolling.
+// Styled as a checklist, because that's how people use it.
 export interface Props {
   points: string[];
   heading?: string;
@@ -15,7 +16,13 @@ const { points, heading = 'The short version' } = Astro.props;
       <h2 class="key-points__heading">{heading}</h2>
       <ul>
         {points.map((p) => (
-          <li>{p}</li>
+          <li>
+            <svg class="key-points__tick" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false">
+              <rect x="1.5" y="1.5" width="17" height="17" rx="4"></rect>
+              <path d="M6 10.5 L8.8 13.2 L14.2 7.2"></path>
+            </svg>
+            <span>{p}</span>
+          </li>
         ))}
       </ul>
     </aside>

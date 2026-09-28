@@ -1,0 +1,355 @@
+---
+// Line-drawn floor plans of the spaces the guides are about: a three-bedroom
+// flat, a condo corridor, an office floor. Drawn from coordinates rather than
+// imported artwork, so they pick up the theme tokens and read in dark mode.
+//
+// Every plan uses the same conventions as a real one: thick walls, doorways
+// as gaps with a leaf and a swing arc, furniture in thin outline, room names
+// in small capitals. Tags are the coloured labels people stick on things
+// when they sort a home. They carry the idea of each section:
+// keep / donate / clear, what stays at handover, a notice in a corridor,
+// what to shred before a lease ends.
+
+export type PlanVariant = 'sorting' | 'estates' | 'handover' | 'buildings' | 'business' | 'empty';
+
+export interface Props {
+  variant: PlanVariant;
+  /** Accessible description. Omit to mark the drawing as decorative. */
+  label?: string;
+  class?: string;
+}
+
+const { variant, label, class: className } = Astro.props;
+
+type Tone = 'sage' | 'amber' | 'teal' | 'plum' | 'accent';
+type Box = { x: number; y: number; w: number; h: number; rx?: number };
+type Seg = { x1: number; y1: number; x2: number; y2: number };
+type Door = { h: [number, number]; l: [number, number]; c: [number, number] };
+type Text = { x: number; y: number; text: string; anchor?: 'start' | 'middle' | 'end' };
+type Tag = { x: number; y: number; text: string; tone: Tone };
+type Shape = { d: string; kind: 'line' | 'wall' | 'accent' | 'solid' | 'dashed' };
+
+type Plan = {
+  outer: Box;
+  walls: Seg[];
+  heavy?: Seg[];
+  doors: Door[];
+  furniture: Box[];
+  circles?: { cx: number; cy: number; r: number }[];
+  dashed?: Box[];
+  shapes?: Shape[];
+  labels: Text[];
+  tags: Tag[];
+};
+
+// --- the three-bedroom flat ---------------------------------------------------
+// Not to scale, but laid out the way an HDB flat is: bedrooms along one side,
+// living and dining open to a small hall, kitchen and service yard at the back,
+// and a household shelter with reinforced walls.
+const flatWalls: Seg[] = [
+  { x1: 30, y1: 170, x2: 530, y2: 170 },
+  { x1: 190, y1: 30, x2: 190, y2: 170 },
+  { x1: 330, y1: 30, x2: 330, y2: 170 },
+  { x1: 330, y1: 250, x2: 330, y2: 390 },
+  { x1: 400, y1: 170, x2: 400, y2: 250 },
+  { x1: 330, y1: 250, x2: 530, y2: 250 },
+  { x1: 460, y1: 250, x2: 460, y2: 390 },
+];
+const shelterWalls: Seg[] = [
+  { x1: 250, y1: 310, x2: 330, y2: 310 },
+  { x1: 250, y1: 310, x2: 250, y2: 390 },
+];
+const flatDoors: Door[] = [
+  { h: [140, 170], l: [140, 135], c: [175, 170] }, // bedroom
+  { h: [280, 170], l: [280, 135], c: [315, 170] }, // bedroom
+  { h: [380, 170], l: [380, 135], c: [345, 170] }, // master bedroom
+  { h: [400, 225], l: [435, 225], c: [400, 190] }, // bath
+  { h: [345, 250], l: [345, 285], c: [380, 250] }, // kitchen
+  { h: [460, 335], l: [495, 335], c: [460, 300] }, // yard
+  { h: [250, 360], l: [215, 360], c: [250, 325] }, // shelter
+  { h: [30, 235], l: [75, 235], c: [30, 190] }, // entrance
+];
+const builtIns: Box[] = [
+  { x: 342, y: 42, w: 40, h: 112 }, // master wardrobe
+  { x: 338, y: 352, w: 115, h: 28 }, // kitchen counter
+  { x: 425, y: 262, w: 28, h: 90 }, // kitchen counter
+];
+const looseFurniture: Box[] = [
+  { x: 55, y: 50, w: 65, h: 95, rx: 3 }, // bed
+  { x: 62, y: 56, w: 51, h: 16, rx: 3 },
+  { x: 215, y: 50, w: 65, h: 95, rx: 3 }, // bed
+  { x: 222, y: 56, w: 51, h: 16, rx: 3 },
+  { x: 405, y: 48, w: 105, h: 100, rx: 3 }, // master bed
+  { x: 413, y: 55, w: 40, h: 16, rx: 3 },
+  { x: 462, y: 55, w: 40, h: 16, rx: 3 },
+  { x: 70, y: 335, w: 130, h: 40, rx: 6 }, // sofa
+  { x: 100, y: 285, w: 75, h: 32, rx: 4 }, // coffee table
+  { x: 225, y: 195, w: 70, h: 44, rx: 4 }, // dining table
+  { x: 232, y: 183, w: 18, h: 9, rx: 2 },
+  { x: 270, y: 183, w: 18, h: 9, rx: 2 },
+  { x: 232, y: 242, w: 18, h: 9, rx: 2 },
+  { x: 270, y: 242, w: 18, h: 9, rx: 2 },
+  { x: 338, y: 262, w: 32, h: 32, rx: 2 }, // fridge
+  { x: 472, y: 262, w: 44, h: 44, rx: 4 }, // washing machine
+  { x: 440, y: 178, w: 30, h: 20, rx: 6 }, // basin
+  { x: 262, y: 344, w: 26, h: 22, rx: 1 }, // boxes in the shelter
+  { x: 294, y: 344, w: 26, h: 22, rx: 1 },
+  { x: 278, y: 366, w: 26, h: 18, rx: 1 },
+];
+const flatCircles = [
+  { cx: 494, cy: 284, r: 13 }, // drum of the washing machine
+  { cx: 505, cy: 208, r: 12 }, // toilet
+];
+const flatLabels: Text[] = [
+  { x: 110, y: 162, text: 'BEDROOM' },
+  { x: 262, y: 162, text: 'BEDROOM' },
+  { x: 457, y: 163, text: 'MASTER BEDROOM' },
+  { x: 135, y: 207, text: 'LIVING · DINING' },
+  { x: 455, y: 240, text: 'BATH' },
+  { x: 385, y: 330, text: 'KITCHEN' },
+  { x: 495, y: 378, text: 'YARD' },
+  { x: 290, y: 330, text: 'SHELTER' },
+];
+
+const flat = (furniture: Box[], tags: Tag[], shapes: Shape[] = [], circles = flatCircles): Plan => ({
+  outer: { x: 30, y: 30, w: 500, h: 360 },
+  walls: flatWalls,
+  heavy: shelterWalls,
+  doors: flatDoors,
+  furniture,
+  circles,
+  shapes,
+  labels: flatLabels,
+  tags,
+});
+
+// A key, drawn at the entrance for the handover plan.
+const key = (x: number, y: number): Shape[] => [
+  { d: `M${x} ${y} m-7 0 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0`, kind: 'accent' },
+  { d: `M${x + 7} ${y} H${x + 34} M${x + 26} ${y} V${y + 7} M${x + 32} ${y} V${y + 9}`, kind: 'accent' },
+];
+
+// --- the condo corridor -------------------------------------------------------
+const corridor: Plan = {
+  outer: { x: 30, y: 40, w: 500, h: 340 },
+  walls: [
+    { x1: 30, y1: 170, x2: 530, y2: 170 },
+    { x1: 30, y1: 250, x2: 280, y2: 250 },
+    { x1: 405, y1: 250, x2: 530, y2: 250 },
+    { x1: 155, y1: 40, x2: 155, y2: 170 },
+    { x1: 280, y1: 40, x2: 280, y2: 170 },
+    { x1: 405, y1: 40, x2: 405, y2: 170 },
+    { x1: 155, y1: 250, x2: 155, y2: 380 },
+    { x1: 280, y1: 250, x2: 280, y2: 380 },
+    { x1: 405, y1: 250, x2: 405, y2: 380 },
+  ],
+  doors: [
+    { h: [60, 170], l: [60, 138], c: [92, 170] },
+    { h: [185, 170], l: [185, 138], c: [217, 170] },
+    { h: [340, 170], l: [340, 138], c: [372, 170] },
+    { h: [465, 170], l: [465, 138], c: [497, 170] },
+    { h: [60, 250], l: [60, 282], c: [92, 250] },
+    { h: [185, 250], l: [185, 282], c: [217, 250] },
+    { h: [455, 250], l: [455, 218], c: [423, 250] }, // fire door to the stairs
+  ],
+  furniture: [
+    { x: 228, y: 176, w: 44, h: 13, rx: 2 }, // shoe rack
+    { x: 300, y: 276, w: 40, h: 40, rx: 2 }, // lift
+    { x: 345, y: 276, w: 40, h: 40, rx: 2 }, // lift
+    { x: 470, y: 186, w: 54, h: 30, rx: 6 }, // the sofa in the corridor
+  ],
+  shapes: [
+    // Lift cars.
+    { d: 'M300 276 L340 316 M340 276 L300 316 M345 276 L385 316 M385 276 L345 316', kind: 'line' },
+    // Stair treads and the direction arrow.
+    {
+      d: Array.from({ length: 9 }, (_, i) => `M420 ${282 + i * 10} H515`).join(' '),
+      kind: 'line',
+    },
+    { d: 'M467 362 V290 M459 300 L467 290 L475 300', kind: 'line' },
+    // Clear-width dimension across the corridor: SCDF's 1.2 m escape passage.
+    { d: 'M120 178 V242 M112 178 H128 M112 242 H128', kind: 'accent' },
+  ],
+  labels: [
+    { x: 92, y: 110, text: '#05-01' },
+    { x: 217, y: 110, text: '#05-02' },
+    { x: 342, y: 110, text: '#05-03' },
+    { x: 467, y: 110, text: '#05-04' },
+    { x: 92, y: 330, text: '#05-05' },
+    { x: 217, y: 330, text: '#05-06' },
+    { x: 342, y: 345, text: 'LIFT LOBBY' },
+    { x: 467, y: 377, text: 'STAIRS' },
+    { x: 134, y: 214, text: 'MIN 1.2 M CLEAR', anchor: 'start' },
+  ],
+  tags: [{ x: 345, y: 190, text: 'NOTICE · 7 DAYS', tone: 'teal' }],
+};
+
+// --- the office floor ---------------------------------------------------------
+// Dashed partitions are the tenant's own fit-out, which reinstatement removes.
+// The solid columns belong to the building and stay.
+const office: Plan = {
+  outer: { x: 30, y: 40, w: 500, h: 340 },
+  walls: [],
+  doors: [{ h: [340, 380], l: [340, 345], c: [380, 380] }],
+  dashed: [
+    { x: 370, y: 52, w: 148, h: 110 }, // meeting room
+    { x: 370, y: 176, w: 148, h: 84 }, // manager's room
+    { x: 42, y: 280, w: 110, h: 88 }, // pantry
+  ],
+  furniture: [
+    // Two desk clusters.
+    { x: 70, y: 70, w: 44, h: 28, rx: 2 },
+    { x: 114, y: 70, w: 44, h: 28, rx: 2 },
+    { x: 70, y: 98, w: 44, h: 28, rx: 2 },
+    { x: 114, y: 98, w: 44, h: 28, rx: 2 },
+    { x: 210, y: 70, w: 44, h: 28, rx: 2 },
+    { x: 254, y: 70, w: 44, h: 28, rx: 2 },
+    { x: 210, y: 98, w: 44, h: 28, rx: 2 },
+    { x: 254, y: 98, w: 44, h: 28, rx: 2 },
+    { x: 400, y: 80, w: 88, h: 50, rx: 12 }, // meeting table
+    { x: 395, y: 196, w: 70, h: 32, rx: 2 }, // manager's desk
+    { x: 190, y: 312, w: 22, h: 44, rx: 1 }, // filing cabinets
+    { x: 214, y: 312, w: 22, h: 44, rx: 1 },
+    { x: 238, y: 312, w: 22, h: 44, rx: 1 },
+    { x: 290, y: 318, w: 34, h: 28, rx: 2 }, // printer
+    { x: 50, y: 290, w: 60, h: 22, rx: 1 }, // pantry counter
+  ],
+  shapes: [
+    // Structural columns: they stay.
+    ...[
+      [180, 170],
+      [340, 170],
+      [180, 262],
+      [340, 262],
+    ].map(([x, y]) => ({ d: `M${x - 7} ${y - 7} h14 v14 h-14 Z`, kind: 'solid' as const })),
+  ],
+  labels: [
+    { x: 444, y: 150, text: 'MEETING' },
+    { x: 444, y: 250, text: 'OFFICE' },
+    { x: 97, y: 360, text: 'PANTRY' },
+    { x: 185, y: 150, text: 'OPEN PLAN' },
+    { x: 262, y: 185, text: 'COLUMNS STAY', anchor: 'middle' },
+  ],
+  tags: [
+    { x: 380, y: 164, text: 'REMOVE', tone: 'amber' },
+    { x: 176, y: 286, text: 'SHRED', tone: 'plum' },
+    { x: 266, y: 292, text: 'WIPE DRIVE', tone: 'teal' },
+  ],
+};
+
+// --- an empty room, for the 404 page -----------------------------------------
+const emptyRoom: Plan = {
+  outer: { x: 110, y: 60, w: 340, h: 300 },
+  walls: [],
+  doors: [{ h: [110, 330], l: [145, 330], c: [110, 295] }],
+  furniture: [],
+  labels: [{ x: 280, y: 215, text: 'NOTHING HERE' }],
+  tags: [{ x: 244, y: 232, text: 'CLEARED', tone: 'accent' }],
+};
+
+const plans: Record<PlanVariant, Plan> = {
+  sorting: flat([...builtIns, ...looseFurniture], [
+    { x: 340, y: 90, text: 'KEEP', tone: 'sage' },
+    { x: 220, y: 96, text: 'DONATE', tone: 'amber' },
+    { x: 96, y: 344, text: 'CLEAR', tone: 'accent' },
+    { x: 226, y: 285, text: 'CHECK FIRST', tone: 'plum' },
+  ]),
+  estates: flat([...builtIns, ...looseFurniture], [
+    { x: 340, y: 90, text: 'KEEP', tone: 'sage' },
+    { x: 216, y: 96, text: 'ASK FAMILY', tone: 'amber' },
+    { x: 226, y: 285, text: 'CHECK FIRST', tone: 'plum' },
+  ]),
+  handover: flat(
+    builtIns,
+    [
+      { x: 336, y: 90, text: 'STAYS', tone: 'sage' },
+      { x: 96, y: 252, text: 'KEYS AT COMPLETION', tone: 'amber' },
+    ],
+    key(52, 262),
+    [],
+  ),
+  buildings: corridor,
+  business: office,
+  empty: emptyRoom,
+};
+
+const plan = plans[variant];
+
+// Door leaf + swing arc. The arc turns from the leaf toward the closed
+// position; which way that is on screen decides the SVG sweep flag.
+function doorPath({ h, l, c }: Door): string {
+  const r = Math.hypot(l[0] - h[0], l[1] - h[1]);
+  const cross = (l[0] - h[0]) * (c[1] - h[1]) - (l[1] - h[1]) * (c[0] - h[0]);
+  const sweep = cross > 0 ? 1 : 0;
+  return `M${h[0]} ${h[1]} L${l[0]} ${l[1]} A${r} ${r} 0 0 ${sweep} ${c[0]} ${c[1]}`;
+}
+
+// The doorway itself: a gap cut through the wall between hinge and closed end.
+function gapRect({ h, c }: Door, thickness: number): Box {
+  if (h[1] === c[1]) return { x: Math.min(h[0], c[0]), y: h[1] - thickness, w: Math.abs(c[0] - h[0]), h: thickness * 2 };
+  return { x: h[0] - thickness, y: Math.min(h[1], c[1]), w: thickness * 2, h: Math.abs(c[1] - h[1]) };
+}
+
+// Tags size themselves to their text: the mono face is ~6.4 units per
+// character at this size, plus room for the punched hole.
+const tagBox = (t: Tag) => ({ ...t, w: Math.round(t.text.length * 6.4 + 26), h: 20 });
+
+const stampText = variant === 'handover';
+---
+
+<svg
+  class:list={['floor-plan', className]}
+  viewBox="0 0 560 420"
+  xmlns="http://www.w3.org/2000/svg"
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+  focusable="false"
+>
+  <rect class="plan-sheet" x="0" y="0" width="560" height="420" rx="14"></rect>
+
+  {plan.furniture.map((f) => <rect class="plan-item" x={f.x} y={f.y} width={f.w} height={f.h} rx={f.rx ?? 2}></rect>)}
+  {plan.circles?.map((c) => <circle class="plan-item" cx={c.cx} cy={c.cy} r={c.r}></circle>)}
+  {plan.dashed?.map((f) => <rect class="plan-partition" x={f.x} y={f.y} width={f.w} height={f.h}></rect>)}
+
+  <rect class="plan-wall plan-wall--outer" x={plan.outer.x} y={plan.outer.y} width={plan.outer.w} height={plan.outer.h}></rect>
+  {plan.walls.map((w) => <line class="plan-wall" x1={w.x1} y1={w.y1} x2={w.x2} y2={w.y2}></line>)}
+  {plan.heavy?.map((w) => <line class="plan-wall plan-wall--heavy" x1={w.x1} y1={w.y1} x2={w.x2} y2={w.y2}></line>)}
+
+  {
+    plan.doors.map((d) => {
+      const g = gapRect(d, 7);
+      return <rect class="plan-gap" x={g.x} y={g.y} width={g.w} height={g.h}></rect>;
+    })
+  }
+  {plan.doors.map((d) => <path class="plan-door" d={doorPath(d)}></path>)}
+
+  {plan.shapes?.map((s) => <path class={`plan-shape plan-shape--${s.kind}`} d={s.d}></path>)}
+  {
+    stampText && (
+      // "Vacant possession" stamped across the empty living room.
+      <g class="plan-stamp" transform="rotate(-7 150 312)">
+        <rect x="55" y="292" width="190" height="40" rx="3"></rect>
+        <text x="150" y="316" text-anchor="middle">VACANT POSSESSION</text>
+      </g>
+    )
+  }
+
+  {
+    plan.labels.map((t) => (
+      <text class="plan-label" x={t.x} y={t.y} text-anchor={t.anchor ?? 'middle'}>
+        {t.text}
+      </text>
+    ))
+  }
+
+  {
+    plan.tags.map(tagBox).map((t) => (
+      <g class={`plan-tag plan-tag--${t.tone}`}>
+        <rect x={t.x} y={t.y} width={t.w} height={t.h} rx="4"></rect>
+        <circle class="plan-tag__hole" cx={t.x + 9} cy={t.y + t.h / 2} r="2.6"></circle>
+        <text x={t.x + 17} y={t.y + t.h / 2 + 3.6}>{t.text}</text>
+      </g>
+    ))
+  }
+</svg>

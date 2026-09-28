@@ -16,6 +16,9 @@ export type OfficialSource = { label: string; url: string };
 
 export type Step = { title: string; body: string };
 
+/** A dated point on a deadline track, e.g. "Within 6 months". */
+export type Milestone = { when: string; what: string };
+
 export type Section = {
   heading: string;
   /** One or more paragraphs. */
@@ -24,6 +27,8 @@ export type Section = {
   steps?: Step[];
   /** Unordered points. */
   bullets?: string[];
+  /** The real deadlines in this part of the guide, drawn as a timeline. */
+  timeline?: { caption?: string; milestones: Milestone[] };
   /** A rule or warning worth isolating, shown as an aside after the lists. */
   note?: string;
   /** Paragraphs that follow the list(s). */
@@ -87,4 +92,6 @@ export type LinkCard = {
   summary: string;
   /** Small eyebrow on the card, e.g. the section name. */
   kind: string;
+  /** Section slug, so the card takes that section's colour. */
+  section?: string;
 };

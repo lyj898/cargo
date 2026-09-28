@@ -1,0 +1,27 @@
+---
+// A deadline track: the dates a guide's reader is actually working to, laid
+// out in order. Horizontal where there's room, a vertical list on phones.
+import type { Milestone } from '../data/model';
+import { renderInline } from '../utils/inline';
+
+export interface Props {
+  milestones: Milestone[];
+  caption?: string;
+}
+
+const { milestones, caption } = Astro.props;
+---
+
+<figure class="timeline" style={`--steps: ${milestones.length}`}>
+  {caption && <figcaption class="timeline__caption">{caption}</figcaption>}
+  <ol class="timeline__track">
+    {
+      milestones.map((m) => (
+        <li class="timeline__stop">
+          <span class="timeline__when">{m.when}</span>
+          <span class="timeline__what" set:html={renderInline(m.what)} />
+        </li>
+      ))
+    }
+  </ol>
+</figure>

@@ -83,6 +83,16 @@ export const businessGuides: Guide[] = [
         heading: 'If your landlord is JTC Corporation or HDB',
         body: [
           'Government landlords publish their own rules, and they’re specific about timing. [JTC Corporation](https://www.jtc.gov.sg/get-help/managing-your-tenancy-or-lease/returning-your-premises-upon-lease-expiry) requires its tenants to reinstate before the lease expires. It arranges a joint site inspection about six months ahead, sets the reinstatement requirements after it, and charges double rent if reinstatement isn’t finished or the tenant stays on.',
+        ],
+        timeline: {
+          caption: 'JTC Corporation: returning premises at lease expiry',
+          milestones: [
+            { when: 'About 6 months before', what: 'Joint site inspection. JTC Corporation then sets the reinstatement requirements.' },
+            { when: 'Before expiry', what: 'Reinstatement finished and the premises handed back.' },
+            { when: 'After expiry', what: 'Double rent if reinstatement isn’t finished, or the tenant stays on.' },
+          ],
+        },
+        after: [
           '[HDB](https://www.hdb.gov.sg/shops-and-offices/managing-an-hdb-shop-or-office/terminate-tenancy) requires tenants of its shops and offices to restore the premises to their original condition and remove their furniture, fixtures and fittings, as the tenancy agreement sets out. If they don’t, HDB does the reinstatement itself and recovers the cost.',
         ],
       },

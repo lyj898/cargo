@@ -1,19 +1,22 @@
 ---
-// Compact contents list. Gives long guides a jump menu and gives search
-// engines a set of named anchors into the page's sub-answers.
+// Contents list. Gives long guides a jump menu and gives search engines a set
+// of named anchors into the page's sub-answers. Two presentations of the same
+// list: pills at the top of the article on narrow screens, and a sticky rail
+// beside it on wide ones.
 import { sectionId } from '../utils/slug';
 
 export interface Props {
   headings: string[];
   includeFaq?: boolean;
+  variant?: 'pills' | 'rail';
 }
 
-const { headings, includeFaq = true } = Astro.props;
+const { headings, includeFaq = true, variant = 'pills' } = Astro.props;
 ---
 
 {
   headings.length > 1 && (
-    <nav class="toc" aria-label="On this page">
+    <nav class={`toc toc--${variant}`} aria-label={variant === 'rail' ? 'On this page (side)' : 'On this page'}>
       <span class="toc__label">On this page</span>
       <ul>
         {headings.map((h) => (
