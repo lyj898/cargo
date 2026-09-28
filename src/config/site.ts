@@ -9,7 +9,7 @@ export const site = {
   shortName: 'SwyftClear',
   tagline: 'Guides for clearing a property you’re responsible for',
   description:
-    'Singapore guides for executors, sellers, landlords, building managers and businesses who have to clear a home or premises by a deadline.',
+    'Singapore guides for sellers, landlords, building managers, businesses and executors who have to clear a home or premises by a deadline.',
   // Origin only — no base path. Must match `site` in astro.config.mjs.
   url: 'https://swyftclear.com',
   locale: 'en-SG',
@@ -36,10 +36,10 @@ export const site = {
   // One item per section, plus About. Kept to five so the header stays legible
   // at tablet widths.
   primaryNav: [
-    { label: 'After a death', href: '/estates' },
     { label: 'Selling or letting', href: '/handover' },
     { label: 'Condos & strata', href: '/buildings' },
     { label: 'Business premises', href: '/business' },
+    { label: 'Inherited homes', href: '/estates' },
     { label: 'About', href: '/about' },
   ],
 };

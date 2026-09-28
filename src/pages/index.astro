@@ -10,7 +10,7 @@ import { LAST_REVIEWED_DISPLAY } from '../config/content';
 
 const title = 'SwyftClear | Clearing a Home or Premises in Singapore';
 const description =
-  'Singapore guides for clearing a property you’re responsible for: a late relative’s home, a sold or rented home, condo common areas, or premises at lease end.';
+  'Singapore guides for clearing a property you’re responsible for: a sold or rented home, condo common areas, premises at lease end, or an inherited home.';
 
 const panels = hubs.map((hub) => ({
   hub,
@@ -48,8 +48,8 @@ const principles = [
         <h1>Clearing a property you’re responsible for</h1>
         <p class="lede">
           Plain guides for when you have to empty a home or premises you don’t live in, by a date
-          someone else has set: after a death, at the end of a sale or a tenancy, in a condo’s common
-          areas, or when a business lease runs out.
+          someone else has set: at the end of a sale or a tenancy, in a condo’s common areas, when a
+          business lease runs out, or when a family home passes to the estate.
         </p>
         <div class="hero__chooser" aria-label="Choose your situation">
           {hubs.map((h) => <SectionTag slug={h.slug} label={h.label} href={`/${h.slug}`} scoped />)}

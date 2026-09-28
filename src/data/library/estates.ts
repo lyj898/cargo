@@ -2,7 +2,7 @@ import type { Guide } from '../model';
 import { junkToClear, homeToClean } from '../links';
 import { sources } from '../sources';
 
-// After a death. The reader is grieving, often exhausted, sometimes abroad,
+// Inherited homes: clearing a home after a death. The reader is grieving, often exhausted, sometimes abroad,
 // and usually being told by someone that the flat "needs to be cleared". The
 // guides slow that down: authority and paperwork first, clearing last.
 //

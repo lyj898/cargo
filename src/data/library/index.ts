@@ -12,7 +12,8 @@ import { handoverGuides } from './handover';
 import { buildingsGuides } from './buildings';
 import { businessGuides } from './business';
 
-export const guides: Guide[] = [...estatesGuides, ...handoverGuides, ...buildingsGuides, ...businessGuides];
+// Same order as the sections in hubs.ts.
+export const guides: Guide[] = [...handoverGuides, ...buildingsGuides, ...businessGuides, ...estatesGuides];
 
 export function guidePath(guide: Guide): string {
   return `/${guide.hub}/${guide.slug}`;

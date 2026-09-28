@@ -21,49 +21,6 @@ import { junkToClear } from './links';
 
 export const hubs: Hub[] = [
   {
-    slug: 'estates',
-    label: 'After a death',
-    h1: 'Clearing the home of someone who has died',
-    metaTitle: 'Clearing a Late Relative’s Home in Singapore',
-    metaDescription:
-      'What to do, and in what order, when you have to clear the home of a parent or relative who has died in Singapore: authority, HDB rules, what to keep and timing.',
-    lede: 'Clearing a parent’s or relative’s home is one of the hardest jobs a family takes on, and the order you do it in matters more than the speed. These guides cover who has the authority to decide, what to find before anything leaves the home, and how the estate and HDB rules shape the timeline.',
-    audience: 'For executors, administrators and families',
-    summary: 'Who can decide, what to find first, and how the estate and HDB rules set the timeline.',
-    sections: [
-      {
-        heading: 'Authority comes before clearing',
-        body: [
-          'Everything in the home belongs to the estate, from the furniture to the photographs. Authority over it lies with the executor named in the will or, if there’s no will, an administrator, and the Family Justice Courts confirm that authority with a Grant of Probate or Letters of Administration. The family can and should secure the home and search it straight away. Decisions about giving things away, selling them or clearing them belong to whoever will hold the grant.',
-        ],
-      },
-      {
-        heading: 'The order that avoids regret',
-        body: ['Every family’s situation is different, but the order rarely is:'],
-        steps: [
-          { title: 'Secure the home', body: 'Lock it, keep the keys with one or two people, and photograph each room as it is.' },
-          { title: 'Search it', body: 'For the will, the papers that lead to money and property, valuables, and the things only the family can judge.' },
-          { title: 'Settle who decides', body: 'The executor or administrator, with the grant in hand or applied for.' },
-          { title: 'Check what the home needs', body: 'For an HDB flat, how it was owned decides whether it’s kept, transferred, sold or returned, and by when.' },
-          { title: 'Let the family choose', body: 'Give everyone who should have a say a fair chance to ask for things, including relatives abroad.' },
-          { title: 'Then clear', body: 'Free routes first, then a clearance for what’s left, booked well before any sale or handover date.' },
-        ],
-      },
-      {
-        heading: 'Where the deadline comes from',
-        body: [
-          'Usually from the home itself. When a sole owner or tenant-in-common of an HDB flat dies, HDB expects the executor or administrator to apply for transmission within six months of the grant, and to transfer the flat to an eligible beneficiary or sell it within the following twelve months. A surviving joint owner simply keeps the flat. For a rented home, the tenancy sets the date. Our guide to [clearing a late parent’s HDB flat](/estates/clearing-a-parents-hdb-flat) covers each case.',
-        ],
-      },
-    ],
-    help: {
-      heading: 'When the family would rather not do the clearing',
-      body: 'Junk To Clear clears whole homes, including furniture, appliances and general junk. It says it donates or recycles what can be reused and sends the rest to NEA-authorised incineration plants. It doesn’t take hazardous waste such as paint, solvents or chemicals. Quotes are based on what there is and where it is.',
-      href: junkToClear.residential,
-      linkLabel: 'See Junk To Clear’s home clearance',
-    },
-  },
-  {
     slug: 'handover',
     label: 'Selling or letting',
     h1: 'Handing over a home you’ve sold or let',
@@ -156,6 +113,49 @@ export const hubs: Hub[] = [
       body: 'Junk To Clear clears offices and commercial units: furniture, e-waste, renovation debris and documents for destruction. It gives commercial clients a certificate of disposal on request, and it also takes on renovation and reinstatement work.',
       href: junkToClear.business,
       linkLabel: 'See Junk To Clear’s commercial disposal',
+    },
+  },
+  {
+    slug: 'estates',
+    label: 'Inherited homes',
+    h1: 'Clearing a loved one’s home',
+    metaTitle: 'Clearing a Late Relative’s Home in Singapore',
+    metaDescription:
+      'What to do, and in what order, when you have to clear the home of a parent or relative who has died in Singapore: authority, HDB rules, what to keep and timing.',
+    lede: 'Clearing a parent’s or relative’s home is one of the hardest jobs a family takes on, and the order you do it in matters more than the speed. These guides cover who has the authority to decide, what to find before anything leaves the home, and how the estate and HDB rules shape the timeline.',
+    audience: 'For executors, administrators and families',
+    summary: 'Who can decide, what to find first, and how the estate and HDB rules set the timeline.',
+    sections: [
+      {
+        heading: 'Authority comes before clearing',
+        body: [
+          'Everything in the home belongs to the estate, from the furniture to the photographs. Authority over it lies with the executor named in the will or, if there’s no will, an administrator, and the Family Justice Courts confirm that authority with a Grant of Probate or Letters of Administration. The family can and should secure the home and search it straight away. Decisions about giving things away, selling them or clearing them belong to whoever will hold the grant.',
+        ],
+      },
+      {
+        heading: 'The order that avoids regret',
+        body: ['Every family’s situation is different, but the order rarely is:'],
+        steps: [
+          { title: 'Secure the home', body: 'Lock it, keep the keys with one or two people, and photograph each room as it is.' },
+          { title: 'Search it', body: 'For the will, the papers that lead to money and property, valuables, and the things only the family can judge.' },
+          { title: 'Settle who decides', body: 'The executor or administrator, with the grant in hand or applied for.' },
+          { title: 'Check what the home needs', body: 'For an HDB flat, how it was owned decides whether it’s kept, transferred, sold or returned, and by when.' },
+          { title: 'Let the family choose', body: 'Give everyone who should have a say a fair chance to ask for things, including relatives abroad.' },
+          { title: 'Then clear', body: 'Free routes first, then a clearance for what’s left, booked well before any sale or handover date.' },
+        ],
+      },
+      {
+        heading: 'Where the deadline comes from',
+        body: [
+          'Usually from the home itself. When a sole owner or tenant-in-common of an HDB flat dies, HDB expects the executor or administrator to apply for transmission within six months of the grant, and to transfer the flat to an eligible beneficiary or sell it within the following twelve months. A surviving joint owner simply keeps the flat. For a rented home, the tenancy sets the date. Our guide to [clearing a late parent’s HDB flat](/estates/clearing-a-parents-hdb-flat) covers each case.',
+        ],
+      },
+    ],
+    help: {
+      heading: 'When the family would rather not do the clearing',
+      body: 'Junk To Clear clears whole homes, including furniture, appliances and general junk. It says it donates or recycles what can be reused and sends the rest to NEA-authorised incineration plants. It doesn’t take hazardous waste such as paint, solvents or chemicals. Quotes are based on what there is and where it is.',
+      href: junkToClear.residential,
+      linkLabel: 'See Junk To Clear’s home clearance',
     },
   },
 ];

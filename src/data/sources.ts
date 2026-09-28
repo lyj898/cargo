@@ -11,7 +11,7 @@ import type { OfficialSource } from './model';
 const src = (label: string, url: string): OfficialSource => ({ label, url });
 
 export const sources = {
-  // --- after a death ---
+  // --- inherited homes ---
   myLegacyDeath: src('My Legacy: when death happens', 'https://mylegacy.life.gov.sg/when-death-happens/'),
   myLegacyWills: src('My Legacy: wills and inheritance', 'https://mylegacy.life.gov.sg/when-death-happens/wills-and-inheritance/'),
   myLegacyProperty: src('My Legacy: settling property inheritance', 'https://mylegacy.life.gov.sg/when-death-happens/settle-property-inheritance/'),
