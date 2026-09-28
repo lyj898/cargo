@@ -25,7 +25,7 @@ async function htmlFiles(dir) {
   return out;
 }
 
-/** dist/guides/what-is-tradenet/index.html -> /guides/what-is-tradenet */
+/** dist/estates/clearing-from-overseas/index.html -> /estates/clearing-from-overseas */
 function routeFor(file) {
   const rel = relative(DIST, file).split(sep).join('/');
   const withoutIndex = rel.replace(/(^|\/)index\.html$/, '');

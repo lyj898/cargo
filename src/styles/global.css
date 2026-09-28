@@ -392,27 +392,6 @@ h4 { font-size: var(--step-1); font-family: var(--font-sans); font-weight: 700; 
 .hero__content { max-width: 42rem; }
 .hero h1 { margin-top: var(--space-4); }
 .hero .lede { margin-top: var(--space-5); }
-.hero__ctas { margin-top: var(--space-6); }
-.hero__meta {
-  margin-top: var(--space-7);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3) var(--space-6);
-}
-.hero__meta-item {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-2);
-  font-size: var(--step--1);
-  color: var(--color-text-muted);
-}
-.hero__meta-item::before {
-  content: '';
-  width: 6px; height: 6px;
-  border-radius: 999px;
-  background: var(--color-accent);
-  align-self: center;
-}
 
 /* --- page hero (service pages) --- */
 .page-hero {
@@ -420,28 +399,9 @@ h4 { font-size: var(--step-1); font-family: var(--font-sans); font-weight: 700; 
   border-bottom: 1px solid var(--color-border);
 }
 .page-hero .lede { margin-top: var(--space-4); }
-.page-hero__ctas { margin-top: var(--space-6); }
 
-/* --- trust bullets --- */
-.trust-list { list-style: none; padding: 0; display: grid; gap: var(--space-4); }
-.trust-list li {
-  display: flex;
-  gap: var(--space-3);
-  align-items: flex-start;
-  font-size: var(--step-0);
-}
-.trust-list li::before {
-  content: '';
-  flex-shrink: 0;
-  width: 18px; height: 18px;
-  margin-top: 0.35em;
-  border-radius: 999px;
-  background: var(--color-accent-soft);
-  border: 1.5px solid var(--color-accent);
-}
-
-/* --- situation / service cards --- */
-.situation-card, .service-card {
+/* --- link cards --- */
+.service-card {
   display: block;
   text-decoration: none;
   color: inherit;
@@ -451,33 +411,14 @@ h4 { font-size: var(--step-1); font-family: var(--font-sans); font-weight: 700; 
   padding: var(--space-5);
   transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
-.situation-card:hover, .service-card:hover {
+.service-card:hover {
   border-color: var(--color-accent);
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
-.situation-card h3, .service-card h3 { font-size: var(--step-1); }
-.situation-card p, .service-card p { margin-top: var(--space-2); color: var(--color-text-muted); font-size: var(--step--1); }
+.service-card h3 { font-size: var(--step-1); }
+.service-card p { margin-top: var(--space-2); color: var(--color-text-muted); font-size: var(--step--1); }
 .service-card__link { margin-top: var(--space-4); font-size: var(--step--1); font-weight: 700; color: var(--color-accent); }
-
-/* --- steps (how it works) --- */
-.steps-list { list-style: none; padding: 0; display: grid; gap: var(--space-6); counter-reset: step; }
-@media (min-width: 720px) { .steps-list { grid-template-columns: repeat(4, 1fr); } }
-.steps-list li { counter-increment: step; }
-.steps-list .step-num {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem; height: 2.25rem;
-  border-radius: 999px;
-  background: var(--color-accent-soft);
-  color: var(--color-accent);
-  font-family: var(--font-serif);
-  font-weight: 600;
-  margin-bottom: var(--space-3);
-}
-.steps-list h3 { font-size: var(--step-0); font-family: var(--font-sans); font-weight: 700; }
-.steps-list p { font-size: var(--step--1); color: var(--color-text-muted); margin-top: var(--space-2); }
 
 /* --- FAQ --- */
 .faq-list { display: grid; gap: var(--space-3); max-width: 46rem; }
@@ -509,32 +450,6 @@ h4 { font-size: var(--step-1); font-family: var(--font-sans); font-weight: 700; 
 .faq-item[open] summary::after { transform: rotate(45deg); }
 .faq-item__body { padding: 0 var(--space-5) var(--space-5); color: var(--color-text-muted); }
 
-/* --- case studies --- */
-.case-card {
-  display: block;
-  background: var(--color-bg-elevated);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-}
-.case-card .eyebrow { margin-bottom: var(--space-3); }
-.case-card dl { display: grid; grid-template-columns: auto 1fr; gap: var(--space-2) var(--space-4); margin-top: var(--space-5); font-size: var(--step--1); }
-.case-card dt { color: var(--color-text-faint); }
-.case-card dd { color: var(--color-text); font-weight: 600; }
-
-/* --- CTA band --- */
-.cta-band {
-  background: var(--color-text);
-  color: var(--color-bg);
-  border-radius: var(--radius-lg);
-  padding: var(--space-7) var(--space-6);
-  text-align: center;
-}
-.cta-band h2 { color: var(--color-bg); }
-.cta-band .lede { color: color-mix(in srgb, var(--color-bg) 75%, transparent); margin-inline: auto; }
-.cta-band .btn--primary { background: var(--color-accent); border-color: var(--color-accent); }
-.cta-band__ctas { margin-top: var(--space-6); display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center; }
-
 /* --- breadcrumbs --- */
 .breadcrumbs { padding-block: var(--space-4); font-size: var(--step--1); }
 .breadcrumbs ol { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); color: var(--color-text-faint); }
@@ -542,24 +457,11 @@ h4 { font-size: var(--step-1); font-family: var(--font-sans); font-weight: 700; 
 .breadcrumbs a:hover { color: var(--color-accent); }
 .breadcrumbs li:not(:last-child)::after { content: '/'; margin-left: var(--space-2); color: var(--color-border-strong); }
 
-/* --- what to prepare --- */
-.prepare-grid { list-style: none; padding: 0; display: grid; gap: var(--space-3); }
-@media (min-width: 640px) { .prepare-grid { grid-template-columns: repeat(2, 1fr); } }
-.prepare-grid li {
-  display: flex;
-  gap: var(--space-3);
-  padding: var(--space-4);
-  background: var(--color-bg-subtle);
-  border-radius: var(--radius-sm);
-  font-size: var(--step--1);
-}
-.prepare-grid .num { font-family: var(--font-serif); color: var(--color-accent); font-weight: 600; }
-
 /* ==========================================================================
    Reference blocks: key points, contents, sources
    ========================================================================== */
 
-/* --- key facts table --- */
+/* --- small uppercase section label --- */
 .fact-table__heading {
   font-family: var(--font-sans);
   font-size: var(--step-0);
@@ -569,32 +471,6 @@ h4 { font-size: var(--step-1); font-family: var(--font-sans); font-weight: 700; 
   color: var(--color-text-faint);
 }
 
-/* Wide values (port lists, agreement names) must scroll inside the table,
-   never push the page into a horizontal scroll. */
-.fact-table__scroll { overflow-x: auto; }
-
-.fact-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--step--1);
-  text-align: left;
-}
-.fact-table th,
-.fact-table td {
-  padding: var(--space-4) var(--space-4) var(--space-4) 0;
-  border-top: 1px solid var(--color-border);
-  vertical-align: top;
-}
-.fact-table tr:first-child th,
-.fact-table tr:first-child td { border-top: none; }
-.fact-table th {
-  font-weight: 700;
-  color: var(--color-text-muted);
-  width: 34%;
-  min-width: 11rem;
-  padding-right: var(--space-5);
-}
-.fact-table td { color: var(--color-text); }
 
 /* --- key points callout --- */
 .key-points {
