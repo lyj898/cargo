@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
 // Central, editable site configuration.
-// Change contact details, links, and the form submission endpoint here —
-// nothing else in the codebase should need to change.
+// Change contact details and links here — nothing else in the codebase
+// should need to change.
 // ---------------------------------------------------------------------------
 
 export const site = {
@@ -17,18 +17,8 @@ export const site = {
 
   // --- contact ---
   email: 'hello@swyftclear.com',
-  phoneDisplay: '+65 8123 4567',
-  phoneE164: '+6581234567',
-  whatsappNumber: '6581234567', // digits only, country code first, no plus/spaces
   addressLocality: 'Singapore',
   addressCountry: 'SG',
-
-  // --- form submission ---
-  // Point this at a Formspree / Basin / Netlify Forms proxy / Zapier catch hook /
-  // Google Apps Script Web App URL. Leave empty to keep the enquiry flow in
-  // "demo mode" (it validates, stores state, and shows the confirmation
-  // screen, but does not send data anywhere but WhatsApp/email fallback).
-  formEndpoint: '',
 
   // --- nav ---
   // Kept to five items so the header stays legible on tablet widths. The two
@@ -42,22 +32,7 @@ export const site = {
     { label: 'Permits', href: '/permits' },
     { label: 'About', href: '/about' },
   ],
-
-  ctaPrimaryLabel: 'Get shipment assessed',
-  ctaSecondaryLabel: 'Chat on WhatsApp',
 };
-
-export function whatsappLink(prefilledMessage?: string): string {
-  const base = `https://wa.me/${site.whatsappNumber}`;
-  if (!prefilledMessage) return base;
-  return `${base}?text=${encodeURIComponent(prefilledMessage)}`;
-}
-
-export function mailtoLink(subject: string, body?: string): string {
-  const params = new URLSearchParams({ subject });
-  if (body) params.set('body', body);
-  return `mailto:${site.email}?${params.toString()}`;
-}
 
 // Prefixes an internal path with Astro's configured `base` (see astro.config.mjs).
 // Use this for every internal href/src instead of a raw "/..." string, so

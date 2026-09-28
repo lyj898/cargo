@@ -20,9 +20,8 @@ import sitemap from '@astrojs/sitemap';
 //   integrations: [sitemap({ ... })],
 // });
 
-// Pages that should never appear in the sitemap: the enquiry flow is a
-// conversion surface with no search intent of its own, and 404 is not a page.
-const EXCLUDED = [/\/404\/?$/, /\/enquiry\/?$/];
+// Pages that should never appear in the sitemap: 404 is not a page.
+const EXCLUDED = [/\/404\/?$/];
 
 // Mirrors LAST_REVIEWED in src/config/content.ts. Duplicated because this file
 // is plain .mjs and cannot import the TypeScript config module.

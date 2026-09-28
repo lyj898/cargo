@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import CTAButtons from '../components/CTAButtons.astro';
 import LinkGrid from '../components/LinkGrid.astro';
 import { clusters } from '../data/clusters';
 import { withBase } from '../config/site';
@@ -25,7 +24,6 @@ const hubLinks = clusters.map((c) => ({
         The page may have moved, or the link may be out of date. The sections below cover most of what
         people come here looking for.
       </p>
-      <CTAButtons primaryLabel="Get shipment assessed" align="center" />
       <p>
         <a href={withBase('/')}>← Back to homepage</a>
         <span style="color: var(--color-border-strong); margin-inline: var(--space-3);">·</span>

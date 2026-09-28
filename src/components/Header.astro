@@ -22,8 +22,6 @@ const currentPath = Astro.url.pathname;
     </nav>
 
     <div class="header-ctas">
-      <a class="btn btn--secondary" href={withBase('/contact')}>Contact</a>
-      <a class="btn btn--primary" href={withBase('/enquiry')}>{site.ctaPrimaryLabel}</a>
       <button
         type="button"
         class="mobile-nav-toggle"
@@ -45,8 +43,6 @@ const currentPath = Astro.url.pathname;
           </li>
         ))
       }
-      <li><a href={withBase('/contact')}>Contact</a></li>
-      <li><a href={withBase('/enquiry')}>{site.ctaPrimaryLabel}</a></li>
     </ul>
   </nav>
 </header>

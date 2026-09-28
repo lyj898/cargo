@@ -1,5 +1,5 @@
 ---
-import { site, whatsappLink, withBase } from '../config/site';
+import { site, withBase } from '../config/site';
 import { services } from '../data/services';
 import { clusters } from '../data/clusters';
 import { LAST_REVIEWED_DISPLAY } from '../config/content';
@@ -54,9 +54,6 @@ const hubs = clusters.filter((c) => c.inNav);
         <ul>
           <li><a href={withBase('/case-studies')}>Case studies</a></li>
           <li><a href={withBase('/about')}>About</a></li>
-          <li><a href={withBase('/contact')}>Contact</a></li>
-          <li><a href={withBase('/enquiry')}>Start an enquiry</a></li>
-          <li><a href={whatsappLink()} rel="noopener" target="_blank">WhatsApp</a></li>
           <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
         </ul>
       </div>

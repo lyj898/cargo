@@ -5,7 +5,6 @@
 // improving any of them improves all of them at once.
 import BaseLayout from './BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import CTAButtons from '../components/CTAButtons.astro';
 import FAQSection from '../components/FAQSection.astro';
 import FactTable from '../components/FactTable.astro';
 import KeyPoints from '../components/KeyPoints.astro';
@@ -84,9 +83,6 @@ const headings = spoke.sections.map((s) => s.heading);
       <div class="eyebrow">{cluster?.label ?? base}</div>
       <h1>{spoke.h1}</h1>
       <p class="lede">{spoke.lede}</p>
-      <div class="page-hero__ctas">
-        <CTAButtons whatsappMessage={whatsappMessage} />
-      </div>
     </div>
   </section>
 
@@ -117,19 +113,4 @@ const headings = spoke.sections.map((s) => s.heading);
     showKind
     id="related"
   />
-
-  <section class="section">
-    <div class="container">
-      <div class="cta-band">
-        <h2>Have a shipment that fits this?</h2>
-        <p class="lede">
-          Start the guided enquiry and describe it in plain terms. We will tell you what is involved —
-          including if the answer is that you do not need us.
-        </p>
-        <div class="cta-band__ctas">
-          <CTAButtons whatsappMessage={whatsappMessage} align="center" />
-        </div>
-      </div>
-    </div>
-  </section>
 </BaseLayout>

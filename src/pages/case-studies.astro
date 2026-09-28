@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import CaseStudyCard from '../components/CaseStudyCard.astro';
-import CTAButtons from '../components/CTAButtons.astro';
 import { caseStudies } from '../data/caseStudies';
 
 const title = 'Case Studies | SwyftClear.com';
@@ -29,18 +28,6 @@ const description =
     <div class="container">
       <div class="grid" style="gap: var(--space-6);">
         {caseStudies.map((study) => <CaseStudyCard study={study} />)}
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--subtle section--border-top">
-    <div class="container">
-      <div class="cta-band">
-        <h2>Have a shipment with a similar shape?</h2>
-        <p class="lede">Start the guided enquiry and tell us the details — we'll assess it the same way.</p>
-        <div class="cta-band__ctas">
-          <CTAButtons align="center" />
-        </div>
       </div>
     </div>
   </section>

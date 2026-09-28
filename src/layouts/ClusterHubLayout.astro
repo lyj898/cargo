@@ -3,7 +3,6 @@
 // schema so the set is legible as a collection rather than a wall of links.
 import BaseLayout from './BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import CTAButtons from '../components/CTAButtons.astro';
 import LinkGrid from '../components/LinkGrid.astro';
 import type { ClusterDef } from '../data/clusters';
 import { clusters } from '../data/clusters';
@@ -67,9 +66,6 @@ const otherClusters = clusters
       <div class="hero__meta">
         <span class="hero__meta-item">{cluster.spokes.length} pages in this section</span>
       </div>
-      <div class="page-hero__ctas">
-        <CTAButtons />
-      </div>
     </div>
   </section>
 
@@ -102,19 +98,4 @@ const otherClusters = clusters
     subtle
     id="other-clusters"
   />
-
-  <section class="section">
-    <div class="container">
-      <div class="cta-band">
-        <h2>Not finding your situation?</h2>
-        <p class="lede">
-          Most of what we handle does not fit a category neatly. Start the guided enquiry and describe
-          the shipment in plain terms — working out where it fits is part of the job.
-        </p>
-        <div class="cta-band__ctas">
-          <CTAButtons align="center" />
-        </div>
-      </div>
-    </div>
-  </section>
 </BaseLayout>

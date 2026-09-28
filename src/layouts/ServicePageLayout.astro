@@ -1,7 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import CTAButtons from '../components/CTAButtons.astro';
 import FAQSection from '../components/FAQSection.astro';
 import RelatedServices from '../components/RelatedServices.astro';
 import LinkGrid from '../components/LinkGrid.astro';
@@ -55,9 +54,6 @@ const serviceSchema = {
       <div class="eyebrow">{eyebrow}</div>
       <h1>{h1}</h1>
       <p class="lede">{lede}</p>
-      <div class="page-hero__ctas">
-        <CTAButtons whatsappMessage={whatsappMessage} />
-      </div>
     </div>
   </section>
 
@@ -74,16 +70,4 @@ const serviceSchema = {
   />
 
   <RelatedServices services={relatedServices(slug)} />
-
-  <section class="section">
-    <div class="container">
-      <div class="cta-band">
-        <h2>Not sure if this is the right page?</h2>
-        <p class="lede">Start the guided enquiry — it takes a few minutes and helps place your shipment in the right category.</p>
-        <div class="cta-band__ctas">
-          <CTAButtons whatsappMessage={whatsappMessage} align="center" />
-        </div>
-      </div>
-    </div>
-  </section>
 </BaseLayout>
