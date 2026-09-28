@@ -2,18 +2,21 @@
 import { site, withBase } from '../config/site';
 
 const currentPath = Astro.url.pathname;
+
+// A nav item is current on its own page and on every guide inside it.
+const isCurrent = (href: string) => currentPath === href || currentPath.startsWith(href);
 ---
 
 <header class="site-header">
   <div class="container site-header__bar">
-    <a href={withBase('/')} class="brand">Swyft<span>Clear</span>.com</a>
+    <a href={withBase('/')} class="brand">Swyft<span>Clear</span></a>
 
     <nav class="main-nav" aria-label="Primary">
       {
         site.primaryNav.map((item) => {
           const href = withBase(item.href);
           return (
-            <a href={href} aria-current={currentPath === href ? 'page' : undefined}>
+            <a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>
               {item.label}
             </a>
           );

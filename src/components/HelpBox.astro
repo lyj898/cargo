@@ -1,0 +1,27 @@
+---
+// The one place on a page where the publisher's own service is offered. It is
+// labelled as such every time, because a guide that recommends its publisher
+// without saying so is exactly the kind of page nobody should trust.
+import type { HelpBox } from '../data/model';
+import { site, withBase } from '../config/site';
+
+export interface Props {
+  help: HelpBox;
+}
+
+const { help } = Astro.props;
+---
+
+<aside class="help-box" aria-labelledby="help-heading">
+  <p class="help-box__eyebrow">From the company behind SwyftClear</p>
+  <h2 id="help-heading">{help.heading}</h2>
+  <p>{help.body}</p>
+  <a class="btn btn--primary" href={help.href} rel="noopener" target="_blank">
+    {help.linkLabel}
+    <span aria-hidden="true">↗</span>
+  </a>
+  <p class="help-box__disclosure">
+    SwyftClear is published by {site.publisher.legalName}, which runs {site.publisher.brand}.
+    <a href={withBase('/about')}>What that means for these guides</a>.
+  </p>
+</aside>

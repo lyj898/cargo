@@ -1,5 +1,5 @@
 ---
-// Compact contents list. Gives long cluster pages a jump menu and gives search
+// Compact contents list. Gives long guides a jump menu and gives search
 // engines a set of named anchors into the page's sub-answers.
 import { sectionId } from '../utils/slug';
 
@@ -13,7 +13,7 @@ const { headings, includeFaq = true } = Astro.props;
 
 {
   headings.length > 1 && (
-    <nav class="toc container" aria-label="On this page">
+    <nav class="toc" aria-label="On this page">
       <span class="toc__label">On this page</span>
       <ul>
         {headings.map((h) => (

@@ -1,0 +1,208 @@
+---
+// Notice templates for MCSTs and managing agents. The wording lives in
+// src/utils/notices.ts: it's rendered here at build time, so the full text is
+// in the HTML, and re-rendered in the browser as the user fills in the fields.
+// Nothing a user types leaves the page: there is no form submission, no
+// storage, and no analytics on the inputs.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import GuideBody from '../../components/GuideBody.astro';
+import HelpBox from '../../components/HelpBox.astro';
+import LinkGrid from '../../components/LinkGrid.astro';
+import type { Section } from '../../data/model';
+import { getHub } from '../../data/hubs';
+import { resolveLinks } from '../../data/library';
+import { absoluteUrl } from '../../config/site';
+import { LAST_REVIEWED, LAST_REVIEWED_DISPLAY } from '../../config/content';
+import { articleNode } from '../../utils/schema';
+import { bulkyNotice, removalNotice, emptyFields } from '../../utils/notices';
+
+const hub = getHub('buildings')!;
+const path = '/buildings/notice-templates';
+const title = 'Condo Notice Templates: Bulky Items and Common Areas';
+const description =
+  'Free notice templates for MCSTs and managing agents: how residents should dispose of bulky items, and a removal notice for things left in common areas.';
+
+const initialBulky = bulkyNotice(emptyFields);
+const initialRemoval = removalNotice(emptyFields);
+
+const related = resolveLinks(['/buildings/bulky-waste-in-condos', '/buildings/items-left-in-common-areas'], 3);
+
+const usage: Section[] = [
+  {
+    heading: 'Before you put a notice up',
+    body: [
+      'Check the wording against your own by-laws. The notices follow the prescribed by-laws that apply automatically to MCSTs constituted on or after 1 April 2005: owners and occupiers must not obstruct common property, or leave rubbish or discarded items on it without the MCST’s written approval. If your development is older, it may run on a different set, so check which one yours uses.',
+      'Neither the Building (Strata Management) Act nor the prescribed by-laws gives an MCST an explicit power to remove or dispose of items, which is why the notices say the Management will act “under the by-laws” rather than promising to throw things away. If items left in common areas are a recurring problem, consider adopting an additional by-law. BCA’s [guide to by-laws](https://isomer-user-content.by.gov.sg/338/7d4deffc-98fe-4267-a29c-acc41b8a88b3/smg10-by-laws.pdf) has a sample that lets an MCST charge up to S$200 to recover removal costs, and our guide to [items left in common areas](/buildings/items-left-in-common-areas) explains the rest of the process.',
+      'Keep a record for every removal notice: photos of the items where they were found, the date the notice went up, and where it was posted. If an owner disputes a removal later, that record is what shows the process was fair.',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  ogType="article"
+  modified={LAST_REVIEWED}
+  jsonLd={[
+    articleNode({ url: absoluteUrl(path), headline: 'Notice templates for bulky items and common areas', description, sectionName: hub.label }),
+  ]}
+>
+  <Breadcrumbs
+    items={[
+      { label: hub.label, href: `/${hub.slug}` },
+      { label: 'Notice templates', href: path },
+    ]}
+  />
+
+  <header class="page-hero">
+    <div class="container hero__content">
+      <div class="eyebrow">{hub.label} · Tool</div>
+      <h1>Notice templates for bulky items and common areas</h1>
+      <p class="lede">
+        Two notices most managing agents end up writing from scratch. Fill in your development’s
+        details and the text updates as you type. Then copy it or print it.
+      </p>
+      <p class="byline">
+        Reviewed <time datetime={LAST_REVIEWED}>{LAST_REVIEWED_DISPLAY}</time> · Nothing you type leaves this page
+      </p>
+    </div>
+  </header>
+
+  <div class="container article-body">
+    <form class="notice-form" id="notice-form" aria-labelledby="details-heading" onsubmit="return false">
+      <h2 id="details-heading" class="fact-table__heading">Your development</h2>
+      <div class="notice-form__grid">
+        <label class="notice-field">
+          <span>Development name</span>
+          <input type="text" name="development" placeholder="e.g. The Example Residences" autocomplete="off" />
+        </label>
+        <label class="notice-field">
+          <span>MCST plan number</span>
+          <input type="text" name="mcst" placeholder="e.g. 1234" inputmode="numeric" autocomplete="off" />
+        </label>
+        <label class="notice-field">
+          <span>Management office contact</span>
+          <input type="text" name="contact" placeholder="e.g. 6123 4567 or office@example.com" autocomplete="off" />
+        </label>
+        <label class="notice-field">
+          <span>Date of notice</span>
+          <input type="date" name="date" />
+        </label>
+      </div>
+    </form>
+
+    <section class="notice" aria-labelledby="bulky-heading" data-notice="bulky">
+      <div class="notice__head">
+        <h2 id="bulky-heading">1. How to dispose of bulky items</h2>
+        <p class="text-muted">A standing notice for the lift lobby or noticeboard, and for new residents’ welcome packs.</p>
+      </div>
+      <pre class="notice__text" id="notice-bulky" tabindex="0" aria-label="Bulky items notice text">{initialBulky}</pre>
+      <div class="notice__actions">
+        <button type="button" class="btn btn--primary" data-copy="notice-bulky">Copy text</button>
+        <button type="button" class="btn btn--secondary" data-print="bulky">Print</button>
+        <span class="notice__status" role="status" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <section class="notice" aria-labelledby="removal-heading" data-notice="removal">
+      <div class="notice__head">
+        <h2 id="removal-heading">2. Removal notice for items left on common property</h2>
+        <p class="text-muted">Posted on or beside the items, with a photo kept for your records.</p>
+      </div>
+      <div class="notice-form__grid" role="group" aria-label="Details for this notice">
+        <label class="notice-field">
+          <span>Where the items are</span>
+          <input type="text" name="location" form="notice-form" placeholder="e.g. Block 12, level 5 corridor" autocomplete="off" />
+        </label>
+        <label class="notice-field">
+          <span>What the items are</span>
+          <input type="text" name="items" form="notice-form" placeholder="e.g. a brown two-seater sofa and three boxes" autocomplete="off" />
+        </label>
+        <label class="notice-field">
+          <span>Days to remove them</span>
+          <input type="number" name="days" form="notice-form" min="1" max="60" value="7" />
+        </label>
+      </div>
+      <pre class="notice__text" id="notice-removal" tabindex="0" aria-label="Removal notice text">{initialRemoval}</pre>
+      <div class="notice__actions">
+        <button type="button" class="btn btn--primary" data-copy="notice-removal">Copy text</button>
+        <button type="button" class="btn btn--secondary" data-print="removal">Print</button>
+        <span class="notice__status" role="status" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <GuideBody sections={usage} />
+    <HelpBox help={hub.help} />
+  </div>
+
+  <LinkGrid links={related} heading="Related guides" eyebrow="Keep reading" subtle id="related" />
+</BaseLayout>
+
+<script>
+  import { bulkyNotice, removalNotice, type NoticeFields } from '../../utils/notices';
+
+  const bulkyEl = document.getElementById('notice-bulky');
+  const removalEl = document.getElementById('notice-removal');
+  const inputs = document.querySelectorAll<HTMLInputElement>('.notice-field input');
+
+  const field = (name: string): string =>
+    document.querySelector<HTMLInputElement>(`[name="${name}"]`)?.value.trim() ?? '';
+
+  // Today in the browser's own timezone, as YYYY-MM-DD, for an empty date field.
+  const today = (): string => {
+    const d = new Date();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  };
+
+  function render(): void {
+    const fields: NoticeFields = {
+      development: field('development'),
+      mcst: field('mcst'),
+      contact: field('contact'),
+      date: field('date') || today(),
+      location: field('location'),
+      items: field('items'),
+      days: Number(field('days')) || 7,
+    };
+    if (bulkyEl) bulkyEl.textContent = bulkyNotice(fields);
+    if (removalEl) removalEl.textContent = removalNotice(fields);
+  }
+
+  inputs.forEach((el) => el.addEventListener('input', render));
+  render();
+
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const target = document.getElementById(btn.dataset.copy ?? '');
+      const status = btn.parentElement?.querySelector('.notice__status');
+      if (!target) return;
+      try {
+        await navigator.clipboard.writeText(target.textContent ?? '');
+        if (status) status.textContent = 'Copied.';
+      } catch {
+        // Clipboard access can be refused (older browsers, some embedded
+        // views). Select the text instead so the user can copy it themselves.
+        const range = document.createRange();
+        range.selectNodeContents(target);
+        const sel = window.getSelection();
+        sel?.removeAllRanges();
+        sel?.addRange(range);
+        if (status) status.textContent = 'Selected. Press Ctrl+C or ⌘C to copy.';
+      }
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('[data-print]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.body.dataset.printing = btn.dataset.print;
+      window.print();
+    });
+  });
+  window.addEventListener('afterprint', () => {
+    delete document.body.dataset.printing;
+  });
+</script>

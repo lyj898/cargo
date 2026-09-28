@@ -1,0 +1,84 @@
+---
+// A section hub: what the situation involves, then every guide and tool in it.
+// The overview prose is what keeps a hub from being a bare list of links.
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import GuideBody from '../components/GuideBody.astro';
+import HelpBox from '../components/HelpBox.astro';
+import LinkGrid from '../components/LinkGrid.astro';
+import type { Hub, LinkCard } from '../data/model';
+import { hubs } from '../data/hubs';
+import { guidesIn, guidePath, toolsIn } from '../data/library';
+import { absoluteUrl, withBase } from '../config/site';
+import { LAST_REVIEWED } from '../config/content';
+import { collectionNode } from '../utils/schema';
+
+export interface Props {
+  hub: Hub;
+}
+
+const { hub } = Astro.props;
+const path = `/${hub.slug}`;
+
+const cards: LinkCard[] = [
+  ...guidesIn(hub.slug).map((g) => ({ href: guidePath(g), label: g.label, summary: g.summary, kind: 'Guide' })),
+  ...toolsIn(hub.slug),
+];
+
+// Match the column count to the number of cards so no row is left half empty.
+const gridClass = cards.length % 3 === 0 ? 'grid grid--3' : 'grid grid--2';
+
+const otherHubs: LinkCard[] = hubs
+  .filter((h) => h.slug !== hub.slug)
+  .map((h) => ({ href: `/${h.slug}`, label: h.h1, summary: h.summary, kind: h.label }));
+---
+
+<BaseLayout
+  title={hub.metaTitle}
+  description={hub.metaDescription}
+  path={path}
+  modified={LAST_REVIEWED}
+  jsonLd={[
+    collectionNode({
+      url: absoluteUrl(path),
+      name: hub.h1,
+      description: hub.metaDescription,
+      items: cards.map((c) => ({ name: c.label, url: absoluteUrl(c.href) })),
+    }),
+  ]}
+>
+  <Breadcrumbs items={[{ label: hub.label, href: path }]} />
+
+  <header class="page-hero">
+    <div class="container hero__content">
+      <div class="eyebrow">{hub.audience}</div>
+      <h1>{hub.h1}</h1>
+      <p class="lede">{hub.lede}</p>
+    </div>
+  </header>
+
+  <section class="section section--tight" aria-labelledby="in-this-section">
+    <div class="container stack">
+      <h2 id="in-this-section" class="fact-table__heading">In this section</h2>
+      <div class={gridClass}>
+        {
+          cards.map((c) => (
+            <a class="service-card" href={withBase(c.href)}>
+              <span class="service-card__kind">{c.kind}</span>
+              <h3>{c.label}</h3>
+              <p>{c.summary}</p>
+              <div class="service-card__link">Read it →</div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <div class="container article-body article-body--hub">
+    <GuideBody sections={hub.sections} />
+    <HelpBox help={hub.help} />
+  </div>
+
+  <LinkGrid links={otherHubs} heading="Other situations" eyebrow="Elsewhere on SwyftClear" subtle id="other-hubs" />
+</BaseLayout>

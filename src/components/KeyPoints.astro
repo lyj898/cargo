@@ -11,17 +11,13 @@ const { points, heading = 'The short version' } = Astro.props;
 
 {
   points.length > 0 && (
-    <section class="section section--tight">
-      <div class="container">
-        <aside class="key-points" aria-label={heading}>
-          <h2 class="key-points__heading">{heading}</h2>
-          <ul>
-            {points.map((p) => (
-              <li>{p}</li>
-            ))}
-          </ul>
-        </aside>
-      </div>
-    </section>
+    <aside class="key-points" aria-label={heading}>
+      <h2 class="key-points__heading">{heading}</h2>
+      <ul>
+        {points.map((p) => (
+          <li>{p}</li>
+        ))}
+      </ul>
+    </aside>
   )
 }

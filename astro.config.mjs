@@ -25,30 +25,28 @@ const EXCLUDED = [/\/404\/?$/];
 
 // Mirrors LAST_REVIEWED in src/config/content.ts. Duplicated because this file
 // is plain .mjs and cannot import the TypeScript config module.
-const LAST_REVIEWED = '2026-08-05';
+const LAST_REVIEWED = '2026-09-28';
 
-// Priority is a hint, not a ranking factor — but it does help large sites
-// signal which URLs matter when crawl budget is finite, which is exactly the
-// situation a ~110-page programmatic site is in.
+// Priority is a hint, not a ranking factor. On a small site it mostly says
+// which pages are the entry points: home, then the four section hubs.
 function priorityFor(url) {
   const path = new URL(url).pathname.replace(/\/$/, '');
   if (path === '') return 1.0;
   const depth = path.split('/').filter(Boolean).length;
-  // Cluster hubs
-  if (depth === 1 && ['/guides', '/permits', '/cargo', '/shipping-from', '/exhibitions'].includes(path)) {
+  // Section hubs
+  if (depth === 1 && ['/estates', '/handover', '/buildings', '/business'].includes(path)) {
     return 0.9;
   }
-  // Core service pages and other top-level pages
-  if (depth === 1) return 0.8;
-  // Cluster spokes
-  if (depth === 2) return 0.7;
+  // Other top-level pages (about, sitemap)
+  if (depth === 1) return 0.5;
+  // Guides and tools
+  if (depth === 2) return 0.8;
   return 0.5;
 }
 
 function changefreqFor(url) {
   const path = new URL(url).pathname.replace(/\/$/, '');
   if (path === '') return 'weekly';
-  if (path.startsWith('/guides') || path.startsWith('/permits')) return 'monthly';
   return 'monthly';
 }
 

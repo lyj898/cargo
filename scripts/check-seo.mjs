@@ -52,6 +52,10 @@ for (const file of files) {
   const h1s = [...html.matchAll(/<h1[^>]*>([\s\S]*?)<\/h1>/g)];
   const noindex = /content="noindex/.test(html);
 
+  // Guide data is drafted with [[VERIFY …]] markers where a fact is still being
+  // checked against an official source. None of them may ship.
+  if (html.includes('[[VERIFY')) errors.push(`${route}: unverified [[VERIFY]] marker in the page`);
+
   if (!title) errors.push(`${route}: missing <title>`);
   if (!canonical) errors.push(`${route}: missing canonical`);
   if (h1s.length === 0) errors.push(`${route}: no <h1>`);
@@ -75,8 +79,7 @@ for (const file of files) {
       if (desc.length < 70) warnings.push(`${route}: description is only ${desc.length} chars`);
     }
 
-    // Thin-content guard. Programmatic pages are the ones most at risk of
-    // being thin, so this is the check worth having.
+    // Thin-content guard. A guide that falls under this is not doing its job.
     const text = html
       .replace(/<script[\s\S]*?<\/script>/g, ' ')
       .replace(/<style[\s\S]*?<\/style>/g, ' ')

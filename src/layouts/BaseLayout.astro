@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site, absoluteUrl, withBase } from '../config/site';
+import { pageGraph, type JsonLdNode } from '../utils/schema';
 import '../styles/global.css';
 
 export interface Props {
@@ -11,8 +12,9 @@ export interface Props {
   ogImage?: string;
   ogType?: 'website' | 'article';
   noIndex?: boolean;
-  jsonLd?: Record<string, unknown>[];
-  /** ISO date; emitted as dateModified on Article-type pages. */
+  /** Page-level schema nodes, merged into the page's single @graph. */
+  jsonLd?: JsonLdNode[];
+  /** ISO date; emitted as article:modified_time on guide pages. */
   modified?: string;
 }
 
@@ -30,9 +32,8 @@ const {
 const canonical = absoluteUrl(path);
 
 // Brand suffix, but only when it fits. Google shows roughly 60 characters of a
-// title and rewrites anything it truncates — so on the programmatic pages,
-// whose titles are already long and descriptive, the keyword is worth more
-// than the brand. Short titles (home, About, service pages) keep the suffix.
+// title and rewrites anything it truncates, so on the guides, whose titles are
+// already long and descriptive, the question is worth more than the brand.
 const BRAND_SUFFIX_BUDGET = 45;
 const fullTitle =
   title.includes(site.name) || title.length > BRAND_SUFFIX_BUDGET
@@ -40,46 +41,13 @@ const fullTitle =
     : `${title} | ${site.name}`;
 
 // NOTE: og-default.svg is an SVG, and Facebook, X, and Google Discover do not
-// render SVG social cards — they fall back to no image. Replacing this with a
-// 1200x630 PNG (and adding per-page cards) is the single highest-value social
-// fix outstanding; it needs an image pipeline this build deliberately avoids.
+// render SVG social cards — they fall back to no image. Replacing it with a
+// 1200x630 PNG is the highest-value social fix outstanding; it needs an image
+// pipeline this build deliberately avoids.
 const ogPath = ogImage ?? '/og-default.svg';
 
-const websiteSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: site.name,
-  url: site.url,
-  description: site.description,
-  inLanguage: 'en-SG',
-  publisher: { '@type': 'Organization', name: site.name, url: site.url },
-};
-
-const businessSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
-  '@id': `${site.url}/#organization`,
-  name: site.name,
-  description: site.description,
-  url: site.url,
-  email: site.email,
-  priceRange: '$$',
-  areaServed: { '@type': 'Country', name: 'Singapore' },
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: site.addressLocality,
-    addressCountry: site.addressCountry,
-  },
-  knowsAbout: [
-    'Customs clearance Singapore',
-    'TradeNet import permits',
-    'Special and oversized cargo',
-    'Exhibition and event logistics',
-    'Fragile equipment shipping',
-  ],
-};
-
-const allSchemas = [websiteSchema, businessSchema, ...jsonLd];
+const graph = pageGraph(jsonLd);
+const gaId = site.ga4MeasurementId;
 ---
 
 <!doctype html>
@@ -94,8 +62,6 @@ const allSchemas = [websiteSchema, businessSchema, ...jsonLd];
     {!noIndex && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />}
     <meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#16140f" media="(prefers-color-scheme: dark)" />
-    <meta name="geo.region" content="SG" />
-    <meta name="geo.placename" content="Singapore" />
 
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
 
@@ -124,10 +90,22 @@ const allSchemas = [websiteSchema, businessSchema, ...jsonLd];
       rel="stylesheet"
     />
 
+    <script type="application/ld+json" set:html={JSON.stringify(graph)} />
+
     {
-      allSchemas.map((schema) => (
-        <script type="application/ld+json" set:html={JSON.stringify(schema)} />
-      ))
+      gaId && (
+        <>
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+          <script is:inline define:vars={{ gaId }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', gaId);
+          </script>
+        </>
+      )
     }
   </head>
   <body>

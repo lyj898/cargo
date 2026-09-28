@@ -1,17 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LinkGrid from '../components/LinkGrid.astro';
-import { clusters } from '../data/clusters';
+import { hubs } from '../data/hubs';
 import { withBase } from '../config/site';
 
 // A 404 that only offers "go home" wastes the visit. Most people who land here
-// arrived from a search result or a stale link, so the useful move is to put
-// the section hubs in front of them.
-const hubLinks = clusters.map((c) => ({
-  href: `/${c.base}`,
-  label: c.hubTitle,
-  summary: c.blurb,
-  kind: c.label,
+// arrived from a search result or an old link, and until late 2026 many of
+// those will be links to the cargo guide this domain used to carry, so say so
+// plainly and put the sections in front of them.
+const hubLinks = hubs.map((h) => ({
+  href: `/${h.slug}`,
+  label: h.h1,
+  summary: h.summary,
+  kind: h.label,
 }));
 ---
 
@@ -21,8 +22,9 @@ const hubLinks = clusters.map((c) => ({
       <div class="eyebrow" style="justify-content: center;">404</div>
       <h1>We couldn't find that page</h1>
       <p class="lede" style="margin-inline: auto;">
-        The page may have moved, or the link may be out of date. The sections below cover most of what
-        people come here looking for.
+        The page may have moved, or the link may be out of date. If you were looking for SwyftClear’s
+        old cargo and customs guides, those have been taken down. The site now covers clearing a
+        property you’re responsible for.
       </p>
       <p>
         <a href={withBase('/')}>← Back to homepage</a>
@@ -32,5 +34,5 @@ const hubLinks = clusters.map((c) => ({
     </div>
   </section>
 
-  <LinkGrid links={hubLinks} heading="Browse by section" subtle id="hubs" />
+  <LinkGrid links={hubLinks} heading="Browse by situation" subtle id="hubs" />
 </BaseLayout>

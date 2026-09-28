@@ -1,40 +1,37 @@
 ---
-// Human-readable sitemap. Two jobs: it gives visitors a way to see the whole
-// site at once, and it gives crawlers a single page that links to every URL —
-// which matters on a site where most pages are three clicks deep.
+// Human-readable sitemap. It gives visitors a way to see the whole site at
+// once, and gives crawlers a single page that links to every URL.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import { clusters } from '../data/clusters';
-import { services } from '../data/services';
+import { hubs } from '../data/hubs';
+import { guides, guidesIn, guidePath, toolsIn, tools } from '../data/library';
 import { withBase } from '../config/site';
 
 const corePages = [
   { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/case-studies', label: 'Case studies' },
+  { href: '/about', label: 'Who publishes SwyftClear' },
 ];
 
-const totalPages =
-  corePages.length + services.length + clusters.length + clusters.reduce((n, c) => n + c.spokes.length, 0) + 1;
+const totalPages = corePages.length + hubs.length + guides.length + tools.length + 1;
 ---
 
 <BaseLayout
   title="Site map"
-  description="Every page on SwyftClear.com — services, import guides, permit requirements by product, cargo types, origin countries, and Singapore exhibition venues."
+  description="Every page on SwyftClear: guides for clearing a late relative’s home, handing over a sold or rented home, condo bulky waste, and business premises."
   path="/sitemap"
 >
   <Breadcrumbs items={[{ label: 'Site map', href: '/sitemap' }]} />
 
-  <section class="page-hero">
+  <header class="page-hero">
     <div class="container hero__content">
       <div class="eyebrow">Site map</div>
       <h1>Everything on this site</h1>
       <p class="lede">
-        {totalPages} pages covering Singapore import requirements, cargo handling, origin lanes, and
-        exhibition venues. If you are looking for something specific, this is the fastest way to find it.
+        {totalPages} pages, grouped by the situation they’re written for. If you’re looking for
+        something specific, this is the fastest way to find it.
       </p>
     </div>
-  </section>
+  </header>
 
   <section class="section section--border-top">
     <div class="container stack">
@@ -46,23 +43,21 @@ const totalPages =
         </ul>
       </div>
 
-      <div class="sitemap-group">
-        <h2>Services</h2>
-        <ul class="sitemap-list">
-          {services.map((s) => <li><a href={withBase(`/${s.slug}`)}>{s.title}</a></li>)}
-        </ul>
-      </div>
-
       {
-        clusters.map((c) => (
+        hubs.map((h) => (
           <div class="sitemap-group">
             <h2>
-              <a href={withBase(`/${c.base}`)}>{c.hubTitle}</a>
+              <a href={withBase(`/${h.slug}`)}>{h.h1}</a>
             </h2>
             <ul class="sitemap-list">
-              {c.spokes.map((s) => (
+              {guidesIn(h.slug).map((g) => (
                 <li>
-                  <a href={withBase(`/${c.base}/${s.slug}`)}>{s.label}</a>
+                  <a href={withBase(guidePath(g))}>{g.label}</a>
+                </li>
+              ))}
+              {toolsIn(h.slug).map((t) => (
+                <li>
+                  <a href={withBase(t.href)}>{t.label}</a>
                 </li>
               ))}
             </ul>

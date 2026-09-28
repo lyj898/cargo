@@ -1,0 +1,15 @@
+---
+import GuideLayout from '../../layouts/GuideLayout.astro';
+import { guides } from '../../data/library';
+
+export function getStaticPaths() {
+  return guides.map((guide) => ({
+    params: { hub: guide.hub, guide: guide.slug },
+    props: { guide },
+  }));
+}
+
+const { guide } = Astro.props;
+---
+
+<GuideLayout guide={guide} />

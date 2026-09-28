@@ -1,0 +1,102 @@
+---
+// Shared layout for every guide. One layout keeps the schema, the disclosure,
+// the sources, and the review line identical across the library, so improving
+// any of them improves all of them at once.
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import KeyPoints from '../components/KeyPoints.astro';
+import OnThisPage from '../components/OnThisPage.astro';
+import GuideBody from '../components/GuideBody.astro';
+import HelpBox from '../components/HelpBox.astro';
+import FAQSection from '../components/FAQSection.astro';
+import OfficialSources from '../components/OfficialSources.astro';
+import LinkGrid from '../components/LinkGrid.astro';
+import type { Guide } from '../data/model';
+import { getHub } from '../data/hubs';
+import { guidePath, resolveLinks } from '../data/library';
+import { site, absoluteUrl } from '../config/site';
+import { LAST_REVIEWED, LAST_REVIEWED_DISPLAY } from '../config/content';
+import { articleNode } from '../utils/schema';
+import { plainInline } from '../utils/inline';
+
+export interface Props {
+  guide: Guide;
+}
+
+const { guide } = Astro.props;
+const hub = getHub(guide.hub);
+if (!hub) throw new Error(`Guide ${guide.slug} points at unknown section "${guide.hub}"`);
+
+const path = guidePath(guide);
+const related = resolveLinks(guide.related, 3);
+
+// Reading time from the words actually on the page, at a steady 220 wpm.
+const allText = [
+  guide.lede,
+  ...guide.keyPoints,
+  ...guide.sections.flatMap((s) => [
+    s.heading,
+    ...s.body,
+    ...(s.steps ?? []).flatMap((st) => [st.title, st.body]),
+    ...(s.bullets ?? []),
+    s.note ?? '',
+    ...(s.after ?? []),
+  ]),
+  ...guide.faqs.flatMap((f) => [f.q, f.a]),
+]
+  .map(plainInline)
+  .join(' ');
+const minutes = Math.max(1, Math.round(allText.split(/\s+/).filter(Boolean).length / 220));
+---
+
+<BaseLayout
+  title={guide.metaTitle}
+  description={guide.metaDescription}
+  path={path}
+  ogType="article"
+  modified={LAST_REVIEWED}
+  jsonLd={[
+    articleNode({
+      url: absoluteUrl(path),
+      headline: guide.h1,
+      description: guide.metaDescription,
+      sectionName: hub.label,
+    }),
+  ]}
+>
+  <Breadcrumbs
+    items={[
+      { label: hub.label, href: `/${hub.slug}` },
+      { label: guide.label, href: path },
+    ]}
+  />
+
+  <article>
+    <header class="page-hero">
+      <div class="container hero__content">
+        <div class="eyebrow">{hub.label}</div>
+        <h1>{guide.h1}</h1>
+        <p class="lede">{guide.lede}</p>
+        <p class="byline">
+          Reviewed <time datetime={LAST_REVIEWED}>{LAST_REVIEWED_DISPLAY}</time> · {minutes} min read
+        </p>
+      </div>
+    </header>
+
+    <div class="container article-body">
+      <KeyPoints points={guide.keyPoints} />
+      <OnThisPage headings={guide.sections.map((s) => s.heading)} includeFaq={guide.faqs.length > 0} />
+      <GuideBody sections={guide.sections} />
+      <HelpBox help={guide.help} />
+      <FAQSection faqs={guide.faqs} heading="Questions people ask" id="faq" />
+      <OfficialSources sources={guide.sources} />
+      <p class="review-note">
+        Last reviewed {LAST_REVIEWED_DISPLAY}. This is general information about how things usually
+        work in Singapore, not legal advice on your situation. If something here is out of date,
+        please tell us at <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+    </div>
+  </article>
+
+  <LinkGrid links={related} heading="Related guides" eyebrow="Keep reading" subtle id="related" />
+</BaseLayout>

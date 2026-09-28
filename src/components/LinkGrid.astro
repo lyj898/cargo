@@ -1,8 +1,7 @@
 ---
-// The internal-linking workhorse. Every cluster page carries two or three of
-// these, which is what turns ~110 pages into a crawlable mesh rather than a
-// pile of orphans.
-import type { LinkCard } from '../data/clusters';
+// Card grid for internal links: related guides, the guides in a section, the
+// other sections. Every page carries at least one, so no guide is an orphan.
+import type { LinkCard } from '../data/model';
 import { withBase } from '../config/site';
 
 export interface Props {
@@ -17,6 +16,9 @@ export interface Props {
 const { links, heading, eyebrow, subtle = false, showKind = false, id = 'links' } = Astro.props;
 
 const sectionClass = ['section', 'section--border-top', subtle ? 'section--subtle' : ''].filter(Boolean).join(' ');
+
+// Match the column count to the number of cards so no row is left half empty.
+const gridClass = links.length % 3 === 0 ? 'grid grid--3' : links.length === 1 ? 'grid' : 'grid grid--2';
 ---
 
 {
@@ -25,7 +27,7 @@ const sectionClass = ['section', 'section--border-top', subtle ? 'section--subtl
       <div class="container stack">
         {eyebrow && <div class="eyebrow">{eyebrow}</div>}
         <h2 id={`${id}-heading`}>{heading}</h2>
-        <div class="grid grid--3">
+        <div class={gridClass}>
           {links.map((l) => (
             <a class="service-card" href={withBase(l.href)}>
               {showKind && <span class="service-card__kind">{l.kind}</span>}

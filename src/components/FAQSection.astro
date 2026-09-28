@@ -1,43 +1,48 @@
 ---
-import type { Faq } from '../data/faqs';
+// FAQ accordion. The questions are for readers, not for rich results: Google
+// stopped showing FAQ rich results for sites like this one, so FAQPage schema
+// is opt-in rather than stamped on every page.
+import type { Faq } from '../data/model';
+import { renderInline, plainInline } from '../utils/inline';
 
 export interface Props {
   faqs: Faq[];
   heading?: string;
   id?: string;
+  schema?: boolean;
 }
 
-const { faqs, heading = 'Frequently asked questions', id = 'faq' } = Astro.props;
+const { faqs, heading = 'Frequently asked questions', id = 'faq', schema = false } = Astro.props;
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: faqs.map((faq) => ({
     '@type': 'Question',
-    name: faq.q,
+    name: plainInline(faq.q),
     acceptedAnswer: {
       '@type': 'Answer',
-      text: faq.a,
+      text: plainInline(faq.a),
     },
   })),
 };
 ---
 
-<section class="section section--border-top" id={id} aria-labelledby={`${id}-heading`}>
-  <div class="container stack">
-    <h2 id={`${id}-heading`}>{heading}</h2>
-    <div class="faq-list">
-      {
-        faqs.map((faq, i) => (
+{
+  faqs.length > 0 && (
+    <section class="faq-block" id={id} aria-labelledby={`${id}-heading`}>
+      <h2 id={`${id}-heading`}>{heading}</h2>
+      <div class="faq-list">
+        {faqs.map((faq, i) => (
           <details class="faq-item" name={`${id}-group`}>
             <summary id={`${id}-q-${i}`}>{faq.q}</summary>
             <div class="faq-item__body">
-              <p>{faq.a}</p>
+              <p set:html={renderInline(faq.a)} />
             </div>
           </details>
-        ))
-      }
-    </div>
-  </div>
-</section>
-<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+        ))}
+      </div>
+    </section>
+  )
+}
+{schema && faqs.length > 0 && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}

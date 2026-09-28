@@ -1,35 +1,45 @@
 // ---------------------------------------------------------------------------
 // Central, editable site configuration.
-// Change contact details and links here — nothing else in the codebase
-// should need to change.
+// Change the publisher details, links, and analytics ID here — nothing else in
+// the codebase should need to change.
 // ---------------------------------------------------------------------------
 
 export const site = {
-  name: 'SwyftClear.com',
+  name: 'SwyftClear',
   shortName: 'SwyftClear',
-  legalDisclaimerName: 'SwyftClear.com', // used in disclaimer copy — keep in sync with `name`
-  tagline: 'Singapore specialist for special cargo and customs support',
+  tagline: 'Guides for clearing a property you’re responsible for',
   description:
-    'SwyftClear.com helps Singapore businesses handle unusual, urgent, and documentation-heavy cargo: special and oversized shipments, exhibition cargo, fragile equipment, and customs/TradeNet coordination.',
+    'Singapore guides for executors, sellers, landlords, building managers and businesses who have to clear a home or premises by a deadline.',
   // Origin only — no base path. Must match `site` in astro.config.mjs.
   url: 'https://swyftclear.com',
   locale: 'en-SG',
 
-  // --- contact ---
+  // Corrections and questions about the guides. This is a guide site with no
+  // enquiry form of its own: every "get it done" link goes to Junk To Clear,
+  // so enquiries land in one funnel where they can be measured.
   email: 'hello@swyftclear.com',
-  addressLocality: 'Singapore',
-  addressCountry: 'SG',
+
+  // GA4 measurement ID (G-XXXXXXXXXX). Empty means no analytics tag is emitted
+  // at all, which is the honest default until a property exists.
+  ga4MeasurementId: '',
+
+  // Who publishes the site. Disclosed on every guide and on /about, because a
+  // guide that links to its own publisher's service should say so plainly.
+  publisher: {
+    legalName: 'SKAP Waste Management Pte Ltd',
+    brand: 'Junk To Clear',
+    url: 'https://junktoclear.com.sg/',
+    foundingYear: 2009,
+  },
 
   // --- nav ---
-  // Kept to five items so the header stays legible on tablet widths. The two
-  // library hubs (/guides, /permits) earn their place over individual service
-  // pages because they are the entry points for search traffic; every service
-  // page is still one click away via the footer and the homepage grid.
+  // One item per section, plus About. Kept to five so the header stays legible
+  // at tablet widths.
   primaryNav: [
-    { label: 'Special cargo', href: '/special-cargo-singapore' },
-    { label: 'Customs support', href: '/customs-support-singapore' },
-    { label: 'Import guides', href: '/guides' },
-    { label: 'Permits', href: '/permits' },
+    { label: 'After a death', href: '/estates' },
+    { label: 'Selling or letting', href: '/handover' },
+    { label: 'Condos & strata', href: '/buildings' },
+    { label: 'Business premises', href: '/business' },
     { label: 'About', href: '/about' },
   ],
 };
@@ -43,7 +53,7 @@ export const site = {
 // directory-style URLs and 301s the slashless form to the slashed one, so
 // emitting slashless links meant every internal link, every canonical, and
 // every sitemap entry pointed at a URL that redirects. Matching what the host
-// actually serves removes a redirect hop from all ~119 pages and stops the
+// actually serves removes a redirect hop from every page and stops the
 // canonical from disagreeing with the URL that returns 200.
 export function withBase(path: string): string {
   // import.meta.env.BASE_URL mirrors the `base` config value as-is — it is
@@ -51,12 +61,15 @@ export function withBase(path: string): string {
   // BASE_URL === '/cargo', not '/cargo/'), so normalize before joining.
   const rawBase = import.meta.env.BASE_URL || '/';
   const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
-  const clean = path.replace(/^\/+/, '').replace(/\/+$/, '');
-  if (!clean) return base;
+  // Keep any #fragment out of the slash logic and re-attach it at the end.
+  const [pathOnly, fragment] = path.split('#');
+  const hash = fragment ? `#${fragment}` : '';
+  const clean = pathOnly.replace(/^\/+/, '').replace(/\/+$/, '');
+  if (!clean) return `${base}${hash}`;
   // Files (favicon.svg, og-default.svg) are served as-is and must not gain a
   // trailing slash; only page routes get one.
   const isFile = /\.[a-z0-9]+$/i.test(clean.split('/').pop() ?? '');
-  return isFile ? `${base}${clean}` : `${base}${clean}/`;
+  return isFile ? `${base}${clean}${hash}` : `${base}${clean}/${hash}`;
 }
 
 export function absoluteUrl(path: string): string {

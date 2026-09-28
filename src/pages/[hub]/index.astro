@@ -1,0 +1,15 @@
+---
+import HubLayout from '../../layouts/HubLayout.astro';
+import { hubs } from '../../data/hubs';
+
+export function getStaticPaths() {
+  return hubs.map((hub) => ({
+    params: { hub: hub.slug },
+    props: { hub },
+  }));
+}
+
+const { hub } = Astro.props;
+---
+
+<HubLayout hub={hub} />

@@ -1,81 +1,81 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import TrustBullets from '../components/TrustBullets.astro';
+import GuideBody from '../components/GuideBody.astro';
+import type { Section } from '../data/model';
+import { site } from '../config/site';
+import { LAST_REVIEWED_DISPLAY } from '../config/content';
 
-const title = 'About SwyftClear.com | Singapore Special Cargo Specialists';
+const title = 'About SwyftClear: Who Publishes These Guides';
 const description =
-  'SwyftClear.com focuses on unusual, time-sensitive, and documentation-heavy cargo situations in Singapore — what we do, what we don\'t claim to be, and how we work.';
+  'SwyftClear is published by SKAP Waste Management Pte Ltd, the company behind Junk To Clear. Why the site exists, how the guides are written, and what we won’t do.';
+
+const { legalName, brand, foundingYear } = site.publisher;
+
+const sections: Section[] = [
+  {
+    heading: 'Who publishes this site',
+    body: [
+      `SwyftClear is published by **${legalName}**, a Singapore company established in ${foundingYear}. The same company runs [${brand}](${site.publisher.url}), a disposal and clearance service, and the HomeToClean and HomeToMoved brands.`,
+      'We say this first because it matters for how you read everything else. A clearance company has an obvious interest in you hiring a clearance company. You should know that before you take our word on when you need one.',
+    ],
+  },
+  {
+    heading: 'Why it exists',
+    body: [
+      'Most of the hard questions in a clearance have nothing to do with the lorry. Who is allowed to decide what goes? What has to be gone by completion day? Can the management remove a sofa from the corridor, and what notice should it give? What happens to the data on the office laptops?',
+      'Those questions tend to come up late, when the deadline is close and the answer is harder to act on. SwyftClear answers them earlier, for the four situations where someone has to clear a property they don’t live in: after a death, when a home is sold or let, in a condo or strata building, and at the end of a business lease.',
+    ],
+  },
+  {
+    heading: 'How the guides handle who we are',
+    body: ['These are the rules every guide follows:'],
+    bullets: [
+      `Each guide has **one** box about ${brand}’s services, near the end, and it is always labelled as coming from the company behind this site.`,
+      `Inside the guides, we link to ${brand} only where you would actually need a clearance at that point. There are no links to it in the site’s header or footer.`,
+      'Free routes come first. Where a town council removal, an e-waste collection point, a donation or a resale would do the job, the guide says so before it mentions paying anyone.',
+      'We don’t rank or review disposal companies, including our own, and we don’t publish testimonials.',
+    ],
+  },
+  {
+    heading: 'How the guides are written and checked',
+    body: [
+      'Anything that depends on a rule, such as HDB’s requirements after a death, what the courts need before an estate can be dealt with, NEA’s e-waste arrangements, or the PDPC’s expectations for disposing of personal data, links to the official page it comes from. Where an official source doesn’t cover something, the guide says it’s general practice rather than a rule.',
+      `Every guide shows the date it was last reviewed against those sources. The current review date is ${LAST_REVIEWED_DISPLAY}. Rules change, and when they do, the official source is right and we are out of date.`,
+    ],
+  },
+  {
+    heading: 'What SwyftClear is not',
+    body: [
+      'It isn’t legal advice. Estates, sale contracts, tenancy agreements and leases turn on their own wording, and where there is a dispute or a lot of money at stake, you should speak to a lawyer. It isn’t a government site, and it isn’t a directory or a comparison site.',
+    ],
+  },
+  {
+    heading: 'Corrections',
+    body: [
+      `If something in a guide is wrong or out of date, email [${site.email}](mailto:${site.email}). We would rather hear it from you than have someone act on it.`,
+      'Until September 2026 this address carried a cargo and customs guide. That site has closed, and its pages have been taken down rather than redirected here, because they covered a different subject.',
+    ],
+  },
+];
 ---
 
 <BaseLayout title={title} description={description} path="/about">
   <Breadcrumbs items={[{ label: 'About', href: '/about' }]} />
 
-  <section class="page-hero">
+  <header class="page-hero">
     <div class="container hero__content">
       <div class="eyebrow">About</div>
-      <h1>A focused practice, not a general logistics provider</h1>
+      <h1>Who publishes SwyftClear, and why</h1>
       <p class="lede">
-        SwyftClear.com exists for one kind of problem: cargo that doesn't fit the standard freight
-        process. We focus narrowly so we can be genuinely useful on the jobs that matter most to get
-        right — the unusual, the urgent, and the paperwork-heavy.
+        SwyftClear is a set of Singapore guides for people who have to clear a property they’re
+        responsible for. It’s published by the company behind {brand}, and this page explains what
+        that means for the guides.
       </p>
     </div>
-  </section>
+  </header>
 
-  <section class="section section--border-top" aria-labelledby="focus-heading">
-    <div class="container stack">
-      <div class="eyebrow">What we focus on</div>
-      <h2 id="focus-heading">Singapore coordination for cargo that needs more thought</h2>
-      <p class="lede">
-        Special and one-off cargo, exhibition and event materials, oversized or fragile items, and
-        the customs and TradeNet questions that come with all of the above. If a shipment is easy to
-        categorise and a generalist forwarder would handle it well, we're probably not the right fit —
-        and we'll say so.
-      </p>
-      <TrustBullets />
-    </div>
-  </section>
-
-  <section class="section section--subtle section--border-top" aria-labelledby="honest-heading">
-    <div class="container stack">
-      <div class="eyebrow">To be clear about what we are</div>
-      <h2 id="honest-heading">What SwyftClear.com does — and doesn't — claim to be</h2>
-      <div class="grid grid--2">
-        <div class="card card--elevated">
-          <h3 style="font-size: var(--step-0); font-family: var(--font-sans); font-weight: 700;">What we do</h3>
-          <ul class="trust-list" style="margin-top: var(--space-3);">
-            <li>Help you understand what category your shipment falls into.</li>
-            <li>Help you prepare the information a customs declaration is likely to need.</li>
-            <li>Coordinate delivery, timing, packing, and site access around your shipment.</li>
-            <li>Connect you with appropriate, appropriately licensed support where required — for
-              example, a Declaring Agent for a TradeNet submission.</li>
-          </ul>
-        </div>
-        <div class="card card--elevated">
-          <h3 style="font-size: var(--step-0); font-family: var(--font-sans); font-weight: 700;">What we don't claim</h3>
-          <ul class="trust-list" style="margin-top: var(--space-3);">
-            <li>We don't present ourselves as a licensed Declaring Agent unless that's explicitly true
-              for a specific engagement.</li>
-            <li>We don't provide legal or regulatory advice — for binding requirements, we point you to
-              Singapore Customs or a licensed professional.</li>
-            <li>We don't claim to be the cheapest option — our value is clarity and coordination on
-              jobs that are hard to get right.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--border-top" aria-labelledby="who-heading">
-    <div class="container stack">
-      <div class="eyebrow">Who this is for</div>
-      <h2 id="who-heading">SME teams, exhibitors, and first-time importers</h2>
-      <p class="lede">
-        Most people who reach out are ops staff or business owners handling a shipment that isn't part
-        of their everyday work — an exhibition, a one-off import, a piece of equipment that needs to
-        get somewhere fragile-side-up and on time.
-      </p>
-    </div>
-  </section>
+  <div class="container article-body">
+    <GuideBody sections={sections} />
+  </div>
 </BaseLayout>

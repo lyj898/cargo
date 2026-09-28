@@ -1,0 +1,52 @@
+---
+// Renders a guide's (or hub's) prose sections as one continuous reading column.
+// Headings get stable slugified ids so the contents list and external links can
+// deep-link to a specific answer.
+import type { Section } from '../data/model';
+import { renderInline } from '../utils/inline';
+import { sectionId } from '../utils/slug';
+
+export interface Props {
+  sections: Section[];
+}
+
+const { sections } = Astro.props;
+---
+
+<div class="prose">
+  {
+    sections.map((s) => (
+      <section aria-labelledby={sectionId(s.heading)}>
+        <h2 id={sectionId(s.heading)}>{s.heading}</h2>
+        {s.body.map((p) => (
+          <p set:html={renderInline(p)} />
+        ))}
+        {s.steps && s.steps.length > 0 && (
+          <ol class="guide-steps">
+            {s.steps.map((step) => (
+              <li>
+                <h3>{step.title}</h3>
+                <p set:html={renderInline(step.body)} />
+              </li>
+            ))}
+          </ol>
+        )}
+        {s.bullets && s.bullets.length > 0 && (
+          <ul class="guide-list">
+            {s.bullets.map((b) => (
+              <li set:html={renderInline(b)} />
+            ))}
+          </ul>
+        )}
+        {s.note && (
+          <aside class="guide-note">
+            <p set:html={renderInline(s.note)} />
+          </aside>
+        )}
+        {s.after?.map((p) => (
+          <p set:html={renderInline(p)} />
+        ))}
+      </section>
+    ))
+  }
+</div>
