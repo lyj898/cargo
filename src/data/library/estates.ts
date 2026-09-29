@@ -140,9 +140,9 @@ export const estatesGuides: Guide[] = [
     related: ['/estates/before-you-throw-anything-out', '/estates/clearing-from-overseas', '/handover/vacant-possession'],
     help: {
       heading: 'When the family would rather not do the clearing',
-      body: 'Once the family has taken what it’s keeping, Junk To Clear can clear the rest of the flat: furniture, appliances and general household items. It says it donates or recycles what can be reused and sends the rest to NEA-authorised incineration plants. It doesn’t take hazardous waste such as paint, solvents or chemicals.',
+      body: 'Once the family has taken what it’s keeping, Junk to Clear can clear the rest of the flat: furniture, appliances and general household items. It says it donates or recycles what can be reused and sends the rest to NEA-authorised incineration plants. It doesn’t take hazardous waste such as paint, solvents or chemicals.',
       href: junkToClear.residential,
-      linkLabel: 'See Junk To Clear’s home clearance',
+      linkLabel: 'See Junk to Clear’s home clearance',
     },
   },
   {
@@ -246,9 +246,9 @@ export const estatesGuides: Guide[] = [
     related: ['/estates/clearing-a-parents-hdb-flat', '/estates/clearing-from-overseas', '/business/disposing-of-records-and-devices'],
     help: {
       heading: 'When the search is done',
-      body: 'Once the family has taken what it wants to keep, Junk To Clear can clear the rest: furniture, appliances and general household items. It says it donates or recycles what can be reused. It doesn’t take hazardous waste such as paint, solvents or chemicals.',
+      body: 'Once the family has taken what it wants to keep, Junk to Clear can clear the rest: furniture, appliances and general household items. It says it donates or recycles what can be reused. It doesn’t take hazardous waste such as paint, solvents or chemicals.',
       href: junkToClear.residential,
-      linkLabel: 'See Junk To Clear’s home clearance',
+      linkLabel: 'See Junk to Clear’s home clearance',
     },
   },
   {
@@ -341,9 +341,9 @@ export const estatesGuides: Guide[] = [
     related: ['/estates/clearing-a-parents-hdb-flat', '/estates/before-you-throw-anything-out', '/handover/vacant-possession'],
     help: {
       heading: 'When you can’t be there for the clearing',
-      body: 'Junk To Clear clears homes across Singapore, and its team calls 15 to 30 minutes before arriving, so the person holding your keys knows when to be there. Ask for the scope to be agreed in writing and for photos of the empty rooms when the job is done. It doesn’t take hazardous waste such as paint, solvents or chemicals.',
+      body: 'Junk to Clear clears homes across Singapore, and the crew calls 15 to 30 minutes before arriving, so the person holding your keys knows when to be there. Ask for the scope to be agreed in writing and for photos of the empty rooms when the job is done. It doesn’t take hazardous waste such as paint, solvents or chemicals.',
       href: junkToClear.residential,
-      linkLabel: 'See Junk To Clear’s home clearance',
+      linkLabel: 'See Junk to Clear’s home clearance',
     },
   },
 ];

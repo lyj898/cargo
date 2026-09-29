@@ -36,7 +36,7 @@ export type Section = {
 };
 
 /**
- * The box that says what Junk To Clear — the company that publishes this
+ * The box that says what Junk to Clear — the company that publishes this
  * site — can do in this situation. Exactly one per page, near the end, and
  * always labelled as coming from the publisher.
  */

@@ -1,7 +1,7 @@
 // JSON-LD. One @graph per page, emitted by BaseLayout.
 //
 // The model is deliberately plain: SwyftClear is a WebSite, and its publisher
-// is the company that runs Junk To Clear. Page nodes (Article, CollectionPage)
+// is the company that runs Junk to Clear. Page nodes (Article, CollectionPage)
 // reference both by @id rather than repeating them, so there is one
 // authoritative description of each entity on the site.
 //

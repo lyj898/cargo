@@ -15,12 +15,12 @@ export const site = {
   locale: 'en-SG',
 
   // Corrections and questions about the guides. This is a guide site with no
-  // enquiry form of its own: every "get it done" link goes to Junk To Clear,
+  // enquiry form of its own: every "get it done" link goes to Junk to Clear,
   // so enquiries land in one funnel where they can be measured.
   email: 'hello@swyftclear.com',
 
   // GA4 measurement ID. The "SwyftClear" property sits in the Junktoclear
-  // Analytics account, beside Junk To Clear's own property. Empty means no
+  // Analytics account, beside Junk to Clear's own property. Empty means no
   // analytics tag is emitted at all.
   ga4MeasurementId: 'G-DJDZ60W1D0',
 
@@ -28,7 +28,7 @@ export const site = {
   // guide that links to its own publisher's service should say so plainly.
   publisher: {
     legalName: 'SKAP Waste Management Pte Ltd',
-    brand: 'Junk To Clear',
+    brand: 'Junk to Clear',
     url: 'https://junktoclear.com.sg/',
     foundingYear: 2009,
   },

@@ -12,7 +12,7 @@
 //     international movers won't take all belong there.
 //   - SwyftClear: a property you're responsible for but don't live in.
 // So don't write guides here for someone clearing their own home or leaving the
-// country, and don't target Junk To Clear's own service searches either. An
+// country, and don't target Junk to Clear's own service searches either. An
 // executor who lives abroad is still SwyftClear's reader: the property is the
 // estate's, not theirs.
 
@@ -47,9 +47,9 @@ export const hubs: Hub[] = [
     ],
     help: {
       heading: 'When the deadline is close',
-      body: 'Junk To Clear removes furniture, appliances and general junk from homes, and quotes upfront based on what there is and where it is. It recommends booking as early as you can, and its team calls 15 to 30 minutes before arriving.',
+      body: 'Junk to Clear removes furniture, appliances and general junk from homes, and quotes upfront based on what there is and where it is. It recommends booking as early as you can, and the crew calls 15 to 30 minutes before arriving.',
       href: junkToClear.residential,
-      linkLabel: 'See Junk To Clear’s home clearance',
+      linkLabel: 'See Junk to Clear’s home clearance',
     },
   },
   {
@@ -79,9 +79,9 @@ export const hubs: Hub[] = [
     ],
     help: {
       heading: 'When the bin centre needs clearing',
-      body: 'Junk To Clear clears bulky waste for condos and commercial buildings: furniture, appliances, renovation debris and general junk. It gives commercial clients a certificate of disposal on request, which is useful when a council has to account for the cost. It doesn’t take hazardous waste.',
+      body: 'Junk to Clear clears bulky waste for condos and commercial buildings: furniture, appliances, renovation debris and general junk. It gives commercial clients a certificate of disposal on request, which is useful when a council has to account for the cost. It doesn’t take hazardous waste.',
       href: junkToClear.business,
-      linkLabel: 'See Junk To Clear’s commercial disposal',
+      linkLabel: 'See Junk to Clear’s commercial disposal',
     },
   },
   {
@@ -110,9 +110,9 @@ export const hubs: Hub[] = [
     ],
     help: {
       heading: 'When the unit has to be empty by a date',
-      body: 'Junk To Clear clears offices and commercial units: furniture, e-waste, renovation debris and documents for destruction. It gives commercial clients a certificate of disposal on request, and it also takes on renovation and reinstatement work.',
+      body: 'Junk to Clear clears offices and commercial units: furniture, e-waste, renovation debris and documents for destruction. It gives commercial clients a certificate of disposal on request, and it also takes on renovation and reinstatement work.',
       href: junkToClear.business,
-      linkLabel: 'See Junk To Clear’s commercial disposal',
+      linkLabel: 'See Junk to Clear’s commercial disposal',
     },
   },
   {
@@ -153,9 +153,9 @@ export const hubs: Hub[] = [
     ],
     help: {
       heading: 'When the family would rather not do the clearing',
-      body: 'Junk To Clear clears whole homes, including furniture, appliances and general junk. It says it donates or recycles what can be reused and sends the rest to NEA-authorised incineration plants. It doesn’t take hazardous waste such as paint, solvents or chemicals. Quotes are based on what there is and where it is.',
+      body: 'Junk to Clear clears whole homes, including furniture, appliances and general junk. It says it donates or recycles what can be reused and sends the rest to NEA-authorised incineration plants. It doesn’t take hazardous waste such as paint, solvents or chemicals. Quotes are based on what there is and where it is.',
       href: junkToClear.residential,
-      linkLabel: 'See Junk To Clear’s home clearance',
+      linkLabel: 'See Junk to Clear’s home clearance',
     },
   },
 ];

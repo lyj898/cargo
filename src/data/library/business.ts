@@ -4,7 +4,7 @@ import { sources } from '../sources';
 
 // "JTC" in these guides would be ambiguous: in Singapore it means JTC
 // Corporation, the government's industrial landlord. Always write "JTC
-// Corporation" for the landlord and "Junk To Clear" for the publisher.
+// Corporation" for the landlord and "Junk to Clear" for the publisher.
 
 // Business premises at the end of a lease. The reader is an office manager or
 // a facilities manager with a lease end date, a landlord's inspection, and a
@@ -139,9 +139,9 @@ export const businessGuides: Guide[] = [
     related: ['/business/disposing-of-records-and-devices', '/buildings/bulky-waste-in-condos'],
     help: {
       heading: 'When the unit has to be empty and reinstated by a date',
-      body: 'Junk To Clear clears offices and commercial units, including furniture, e-waste and renovation debris, and gives commercial clients a certificate of disposal on request. It also arranges reinstatement works through vetted contractors: you share photos, a floor plan and your requirements, and it reviews the scope before quoting.',
+      body: 'Junk to Clear clears offices and commercial units, including furniture, e-waste and renovation debris, and gives commercial clients a certificate of disposal on request. It also arranges reinstatement works through vetted contractors: you share photos, a floor plan and your requirements, and it reviews the scope before quoting.',
       href: junkToClear.renovation,
-      linkLabel: 'See Junk To Clear’s reinstatement works',
+      linkLabel: 'See Junk to Clear’s reinstatement works',
     },
   },
   {
@@ -210,7 +210,7 @@ export const businessGuides: Guide[] = [
           'For larger equipment there’s a free route. Since July 2021, producers of regulated non-consumer electronics, such as servers, network switches, printers over 20 kg and industrial batteries, have had to collect units they supplied when a customer asks. They can’t charge for collection or disposal, though they may charge for dismantling. [NEA’s e-waste page](https://www.nea.gov.sg/our-services/waste-management/3r-programmes-and-resources/e-waste-management/extended-producer-responsibility-%28epr%29-system-for-e-waste-management-system) lists the products covered.',
           'Household channels don’t cover offices. ALBA’s free doorstep collection of large appliances is for homes only.',
         ],
-        note: 'Chemicals and anything classed as toxic industrial waste can only go to a toxic industrial waste collector licensed by NEA. General clearance companies, Junk To Clear included, don’t take them.',
+        note: 'Chemicals and anything classed as toxic industrial waste can only go to a toxic industrial waste collector licensed by NEA. General clearance companies, Junk to Clear included, don’t take them.',
       },
       {
         heading: 'Keep the paperwork',
@@ -250,9 +250,9 @@ export const businessGuides: Guide[] = [
     related: ['/business/reinstatement', '/estates/before-you-throw-anything-out'],
     help: {
       heading: 'When you need proof it was destroyed',
-      body: 'Junk To Clear’s secure disposal service covers document shredding and product destruction. It says every job comes with video or photo proof and a destruction certificate, which is the record worth keeping on file.',
+      body: 'Junk to Clear’s secure disposal service covers document shredding and product destruction. It says every job comes with video or photo proof and a destruction certificate, which is the record worth keeping on file.',
       href: junkToClear.secure,
-      linkLabel: 'See Junk To Clear’s secure disposal',
+      linkLabel: 'See Junk to Clear’s secure disposal',
     },
   },
 ];

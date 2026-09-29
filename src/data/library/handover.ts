@@ -104,9 +104,9 @@ export const handoverGuides: Guide[] = [
     related: ['/handover/tenant-left-belongings', '/estates/clearing-a-parents-hdb-flat'],
     help: {
       heading: 'When completion is close and the home isn’t empty',
-      body: 'Junk To Clear removes furniture, appliances and general household items, and quotes upfront based on what there is and where it is. It recommends booking as early as you can, so don’t leave it to completion week. It doesn’t take hazardous waste such as paint, solvents or chemicals.',
+      body: 'Junk to Clear removes furniture, appliances and general household items, and quotes upfront based on what there is and where it is. It recommends booking as early as you can, so don’t leave it to completion week. It doesn’t take hazardous waste such as paint, solvents or chemicals.',
       href: junkToClear.residential,
-      linkLabel: 'See Junk To Clear’s home clearance',
+      linkLabel: 'See Junk to Clear’s home clearance',
     },
   },
   {
@@ -188,9 +188,9 @@ export const handoverGuides: Guide[] = [
     related: ['/handover/vacant-possession', '/buildings/items-left-in-common-areas'],
     help: {
       heading: 'When the flat needs clearing before the next tenant',
-      body: 'Once the tenant’s deadline has passed, Junk To Clear can remove furniture, appliances and general household items, with an upfront quote based on what there is and where it is. It doesn’t take hazardous waste such as paint, solvents or chemicals.',
+      body: 'Once the tenant’s deadline has passed, Junk to Clear can remove furniture, appliances and general household items, with an upfront quote based on what there is and where it is. It doesn’t take hazardous waste such as paint, solvents or chemicals.',
       href: junkToClear.residential,
-      linkLabel: 'See Junk To Clear’s home clearance',
+      linkLabel: 'See Junk to Clear’s home clearance',
     },
   },
 ];
