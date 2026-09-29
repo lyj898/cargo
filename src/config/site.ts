@@ -19,9 +19,10 @@ export const site = {
   // so enquiries land in one funnel where they can be measured.
   email: 'hello@swyftclear.com',
 
-  // GA4 measurement ID (G-XXXXXXXXXX). Empty means no analytics tag is emitted
-  // at all, which is the honest default until a property exists.
-  ga4MeasurementId: '',
+  // GA4 measurement ID. The "SwyftClear" property sits in the Junktoclear
+  // Analytics account, beside Junk To Clear's own property. Empty means no
+  // analytics tag is emitted at all.
+  ga4MeasurementId: 'G-DJDZ60W1D0',
 
   // Who publishes the site. Disclosed on every guide and on /about, because a
   // guide that links to its own publisher's service should say so plainly.
