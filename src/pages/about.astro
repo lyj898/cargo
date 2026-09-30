@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import GuideBody from '../components/GuideBody.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
 import type { Section } from '../data/model';
 import { site } from '../config/site';
 import { LAST_REVIEWED_DISPLAY } from '../config/content';
@@ -31,7 +32,7 @@ const sections: Section[] = [
     heading: 'How the guides handle who we are',
     body: ['These are the rules every guide follows:'],
     bullets: [
-      `Each guide has **one** box about ${brand}’s services, near the end, and it is always labelled as coming from the company behind this site.`,
+      `Each guide has **one** box about ${brand}’s services, near the end, and it is always labelled as coming from the company behind this site. The box is also where you can ask for a quote.`,
       `Inside the guides, we link to ${brand} only where you would actually need a clearance at that point. There are no links to it in the site’s header or footer.`,
       'Free routes come first. Where a town council removal, an e-waste collection point, a donation or a resale would do the job, the guide says so before it mentions paying anyone.',
       'We don’t rank or review disposal companies, including our own, and we don’t publish testimonials.',
@@ -50,11 +51,17 @@ const sections: Section[] = [
       'It isn’t legal advice. Estates, sale contracts, tenancy agreements and leases turn on their own wording, and where there is a dispute or a lot of money at stake, you should speak to a lawyer. It isn’t a government site, and it isn’t a directory or a comparison site.',
     ],
   },
+];
+
+// After the enquiry box, so the notice on what happens to an enquiry follows
+// the form it describes.
+const afterEnquiry: Section[] = [
   {
     heading: 'Privacy and analytics',
     body: [
-      'SwyftClear uses Google Analytics to count visits and see which guides get read, so we know what to improve. It sets cookies and records things like the pages you view, the device and browser you use, roughly where you’re browsing from, and the links you click, including links to Junk to Clear.',
-      'It doesn’t record anything you type into the notice templates, and the site has no forms that collect your name or contact details. You can block analytics cookies in your browser settings, or install Google’s [Analytics opt-out add-on](https://tools.google.com/dlpage/gaoptout).',
+      `The enquiry form is the only place the site asks for your details. What you enter, with the page you sent it from, is emailed to the team behind ${brand} at ${legalName} through FormSubmit, a form-to-email service. The team uses it only for your enquiry: it passes your details to the partner who’ll quote, whether that’s ${brand} or a partner for cleaning, moving, repairs, pest control or aircon. To see, correct or delete what you sent, or to withdraw your consent, email [${site.email}](mailto:${site.email}).`,
+      'SwyftClear uses Google Analytics to count visits and see which guides get read, so we know what to improve. It sets cookies and records things like the pages you view, the device and browser you use, roughly where you’re browsing from, and the links you click, including links to Junk to Clear. When you send an enquiry, it records that one was sent, but not what you wrote.',
+      'Nothing you type into the notice templates leaves your browser. You can block analytics cookies in your browser settings, or install Google’s [Analytics opt-out add-on](https://tools.google.com/dlpage/gaoptout).',
     ],
   },
   {
@@ -86,5 +93,16 @@ const sections: Section[] = [
 
   <div class="container article-body">
     <GuideBody sections={sections} />
+    <aside class="help-box" aria-labelledby="ask-for-a-quote">
+      <p class="help-box__eyebrow">From the company behind SwyftClear</p>
+      <h2 id="ask-for-a-quote">Ask for a quote</h2>
+      <p>
+        If you’d rather hand the job over, tell us what you need. The team behind {brand} reads
+        every enquiry and passes it to the partner who’ll quote: {brand} for clearing and disposal,
+        or a partner for cleaning, moving, repairs, pest control or aircon.
+      </p>
+      <EnquiryForm page={{ label: 'About', path: '/about' }} section="about" />
+    </aside>
+    <GuideBody sections={afterEnquiry} />
   </div>
 </BaseLayout>

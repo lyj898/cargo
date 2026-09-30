@@ -104,7 +104,7 @@ const otherHubs: LinkCard[] = hubs
 
   <div class="container article-body article-body--hub">
     <GuideBody sections={hub.sections} />
-    <HelpBox help={hub.help} section={hub.slug} />
+    <HelpBox help={hub.help} section={hub.slug} page={{ label: hub.label, path }} />
   </div>
 
   <LinkGrid links={otherHubs} heading="Other situations" eyebrow="Elsewhere on SwyftClear" subtle id="other-hubs" />

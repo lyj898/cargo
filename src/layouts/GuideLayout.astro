@@ -82,7 +82,7 @@ const hasFaqs = guide.faqs.length > 0;
         <KeyPoints points={guide.keyPoints} />
         <OnThisPage headings={headings} includeFaq={hasFaqs} variant="pills" />
         <GuideBody sections={guide.sections} />
-        <HelpBox help={guide.help} section={hub.slug} />
+        <HelpBox help={guide.help} section={hub.slug} page={{ label: guide.label, path }} />
         <FAQSection faqs={guide.faqs} heading="Questions people ask" id="faq" />
         <OfficialSources sources={guide.sources} />
         <p class="review-note">

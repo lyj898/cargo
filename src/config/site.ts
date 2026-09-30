@@ -14,10 +14,23 @@ export const site = {
   url: 'https://swyftclear.com',
   locale: 'en-SG',
 
-  // Corrections and questions about the guides. This is a guide site with no
-  // enquiry form of its own: every "get it done" link goes to Junk to Clear,
-  // so enquiries land in one funnel where they can be measured.
+  // Corrections and questions about the guides.
   email: 'hello@swyftclear.com',
+
+  // The enquiry form in each help box and on /about. Every family site takes
+  // enquiries on its own FormSubmit form (family rule, 30 Sep 2026), and the
+  // user passes each one to Junk to Clear or the partner who'll quote. This is
+  // the same inbox as HomeToClean's form. The subject names the site and the
+  // page, so enquiries can be counted per site and per page.
+  //
+  // FormSubmit can hold a new form until the link in its activation email is
+  // clicked. Until then it refuses submissions, and the form shows an error
+  // rather than a false "sent". Once it's active, swap the address for the
+  // hashed alias FormSubmit provides, so the inbox is no longer in page source.
+  enquiries: {
+    endpoint: 'https://formsubmit.co/lyj898@gmail.com',
+    subject: 'SwyftClear enquiry',
+  },
 
   // GA4 measurement ID. The "SwyftClear" property sits in the Junktoclear
   // Analytics account, beside Junk to Clear's own property. Empty means no

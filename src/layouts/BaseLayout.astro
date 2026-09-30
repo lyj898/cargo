@@ -104,6 +104,9 @@ const gaId = site.ga4MeasurementId;
             function gtag() {
               dataLayer.push(arguments);
             }
+            // define:vars wraps this script in a function, so gtag has to be
+            // put on window for the enquiry form's event to reach it.
+            window.gtag = gtag;
             gtag('js', new Date());
             gtag('config', gaId);
           </script>

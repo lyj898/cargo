@@ -1,18 +1,23 @@
 ---
-// The one place on a page where the publisher's own service is offered. It is
-// labelled as such every time, because a guide that recommends its publisher
-// without saying so is exactly the kind of page nobody should trust.
+// The one place on a page where the publisher's own service is offered: what
+// Junk to Clear does in this situation, a link to its page, and the enquiry
+// form. It is labelled as such every time, because a guide that recommends
+// its publisher without saying so is exactly the kind of page nobody should
+// trust.
 import type { HelpBox } from '../data/model';
 import SectionIcon from './SectionIcon.astro';
+import EnquiryForm from './EnquiryForm.astro';
 import { site, withBase } from '../config/site';
 
 export interface Props {
   help: HelpBox;
+  /** The page the box is on, named in the enquiry's subject line. */
+  page: { label: string; path: string };
   /** Section slug, for the icon beside the heading. */
   section?: string;
 }
 
-const { help, section } = Astro.props;
+const { help, page, section } = Astro.props;
 ---
 
 <aside class="help-box" aria-labelledby="help-heading">
@@ -22,10 +27,12 @@ const { help, section } = Astro.props;
     <h2 id="help-heading">{help.heading}</h2>
   </div>
   <p>{help.body}</p>
-  <a class="btn btn--primary" href={help.href} rel="noopener" target="_blank">
+  <a class="btn btn--secondary" href={help.href} rel="noopener" target="_blank">
     {help.linkLabel}
     <span aria-hidden="true">↗</span>
   </a>
+  {/* Every help box is about a clearance, so that need starts ticked. */}
+  <EnquiryForm page={page} section={section} preselect={['Clearing and disposal']} heading="Ask for a quote" />
   <p class="help-box__disclosure">
     SwyftClear is published by {site.publisher.legalName}, which runs {site.publisher.brand}.
     <a href={withBase('/about')}>What that means for these guides</a>.

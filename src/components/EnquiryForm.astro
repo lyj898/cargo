@@ -1,0 +1,344 @@
+---
+// The enquiry form. It sits in each page's help box, the one place a page
+// offers the publisher's service, and on /about.
+//
+// It sends to FormSubmit (see site.enquiries) with fetch, and only says "sent"
+// once FormSubmit says it accepted the enquiry: an inactive form still answers
+// 200, with success "false", so the HTTP status alone proves nothing. With
+// JavaScript off, the form posts natively and FormSubmit sends the reader back
+// to #enquiry-sent on the same page.
+//
+// The GA4 key event, generate_lead, fires only on that confirmed success. It
+// carries no personal data: what the reader types goes to the inbox only.
+import { site, absoluteUrl, withBase } from '../config/site';
+
+export interface Props {
+  /** The page the form is on. Named in the subject, so enquiries can be counted per page. */
+  page: { label: string; path: string };
+  /** Section slug, sent with the GA4 event. */
+  section?: string;
+  /** Needs already ticked when the page loads. */
+  preselect?: string[];
+  /** Heading above the fields. Leave it out when the surrounding box already names the form. */
+  heading?: string;
+}
+
+const { page, section = 'site', preselect = [], heading } = Astro.props;
+
+const needs = [
+  'Clearing and disposal',
+  'Cleaning',
+  'Moving',
+  'Repairs or handyman',
+  'Pest control',
+  'Aircon servicing',
+];
+const propertyTypes = [
+  'HDB flat',
+  'Condo or apartment',
+  'Landed house',
+  'Office or shop',
+  'Industrial unit or warehouse',
+  'Common areas of a building',
+  'Something else',
+];
+const timings = [
+  'As soon as possible',
+  'Within two weeks',
+  'Within a month',
+  'In one to three months',
+  'No fixed date yet',
+];
+
+const { brand, legalName } = site.publisher;
+const pageUrl = absoluteUrl(page.path);
+const subject = `${site.enquiries.subject}: ${page.label} (${withBase(page.path)})`;
+const endpoint = site.enquiries.endpoint;
+// FormSubmit serves the same inbox at /ajax/…, which answers with JSON
+// instead of redirecting.
+const ajaxEndpoint = endpoint.replace('https://formsubmit.co/', 'https://formsubmit.co/ajax/');
+---
+
+<div class="enquiry">
+  <form
+    class="enquiry__form"
+    method="post"
+    action={endpoint}
+    novalidate
+    data-enquiry
+    data-endpoint={ajaxEndpoint}
+    data-ga-section={section}
+    data-fallback-email={site.email}
+    aria-labelledby={heading ? 'enquiry-heading' : undefined}
+    aria-label={heading ? undefined : 'Ask for a quote'}
+  >
+    {
+      heading && (
+        <div class="enquiry__head">
+          <h3 id="enquiry-heading">{heading}</h3>
+          <p>Tell us about the job, and we’ll pass it to the right partner to quote.</p>
+        </div>
+      )
+    }
+
+    <input type="hidden" name="_subject" value={subject} />
+    <input type="hidden" name="_template" value="table" />
+    <input type="hidden" name="_captcha" value="false" />
+    <input type="hidden" name="_next" value={`${pageUrl}#enquiry-sent`} />
+    <input type="hidden" name="Page" value={pageUrl} />
+    {/* Honeypot: people never see it, and most bots fill it in. */}
+    <div class="enquiry__trap" aria-hidden="true">
+      <label>Leave this empty <input type="text" name="_honey" tabindex="-1" autocomplete="off" /></label>
+    </div>
+
+    <fieldset class="enquiry__needs" data-needs>
+      <legend>What do you need?</legend>
+      <div class="enquiry__chips">
+        {
+          needs.map((n) => (
+            <label class="enquiry-chip">
+              <input type="checkbox" name="What they need" value={n} checked={preselect.includes(n)} />
+              <span>{n}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <div class="enquiry__grid">
+      <label class="enquiry-field">
+        <span>Property type</span>
+        <select name="Property type" required>
+          <option value="">Choose one</option>
+          {propertyTypes.map((p) => <option>{p}</option>)}
+        </select>
+      </label>
+      <label class="enquiry-field">
+        <span>Area</span>
+        <input type="text" name="Area" required placeholder="e.g. Tampines" />
+      </label>
+      <label class="enquiry-field">
+        <span>When does it need doing?</span>
+        <select name="Timing" required>
+          <option value="">Choose one</option>
+          {timings.map((t) => <option>{t}</option>)}
+        </select>
+      </label>
+      <label class="enquiry-field">
+        <span>Anything else? <em>Optional</em></span>
+        <input type="text" name="Notes" placeholder="e.g. 4-room flat, handover on 15 Nov" />
+      </label>
+      <label class="enquiry-field">
+        <span>Your name</span>
+        <input type="text" name="Name" autocomplete="name" required />
+      </label>
+      <label class="enquiry-field">
+        <span>Phone or WhatsApp</span>
+        <input
+          type="tel"
+          name="Phone or WhatsApp"
+          autocomplete="tel"
+          inputmode="tel"
+          required
+          placeholder="e.g. 8123 4567"
+        />
+      </label>
+    </div>
+
+    <div class="enquiry__actions">
+      <button type="submit" class="btn btn--primary">Send enquiry</button>
+      <p class="enquiry__status" role="status" aria-live="polite" data-enquiry-status></p>
+    </div>
+
+    <p class="enquiry__notice">
+      Your details go to the team behind {brand} at {legalName}, which passes them to the partner
+      who’ll quote. They’re used only for this enquiry.
+      <a href={withBase('/about#privacy-and-analytics')}>How we handle them</a>.
+    </p>
+  </form>
+
+  <div class="enquiry-sent" id="enquiry-sent" tabindex="-1" hidden data-enquiry-sent>
+    <h3>Thanks. Your enquiry is on its way.</h3>
+    <p>
+      The team behind {brand} will pass it to the partner who’ll quote, and they’ll contact you on
+      the number you gave.
+    </p>
+    <button type="button" class="btn btn--secondary" hidden data-enquiry-again>Send another enquiry</button>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var forms = document.querySelectorAll('form[data-enquiry]:not([data-ready])');
+    Array.prototype.forEach.call(forms, function (form) {
+      form.setAttribute('data-ready', '');
+      var el = form.elements;
+      var sent = form.parentNode.querySelector('[data-enquiry-sent]');
+      var again = sent.querySelector('[data-enquiry-again]');
+      var status = form.querySelector('[data-enquiry-status]');
+      var needsBox = form.querySelector('[data-needs]');
+      var button = form.querySelector('button[type="submit"]');
+      var label = button.textContent;
+      var tried = false;
+
+      function say(text, tone) {
+        status.textContent = text;
+        if (tone) status.setAttribute('data-tone', tone);
+        else status.removeAttribute('data-tone');
+      }
+
+      function list(items) {
+        if (items.length < 2) return items.join('');
+        return items.slice(0, -1).join(', ') + ' and ' + items[items.length - 1];
+      }
+
+      function ticked() {
+        var boxes = form.querySelectorAll('input[name="What they need"]');
+        return Array.prototype.filter
+          .call(boxes, function (b) { return b.checked; })
+          .map(function (b) { return b.value; });
+      }
+
+      function mark(node, bad) {
+        if (bad) node.setAttribute('aria-invalid', 'true');
+        else node.removeAttribute('aria-invalid');
+        return bad;
+      }
+
+      function check() {
+        var missing = [];
+        var first = null;
+        var needs = ticked();
+        if (needs.length === 0) {
+          needsBox.setAttribute('data-invalid', '');
+          missing.push('what you need');
+          first = needsBox.querySelector('input');
+        } else {
+          needsBox.removeAttribute('data-invalid');
+        }
+        [
+          ['Property type', 'the property type'],
+          ['Area', 'the area'],
+          ['Timing', 'when it needs doing'],
+          ['Name', 'your name'],
+        ].forEach(function (f) {
+          var control = el[f[0]];
+          if (mark(control, !control.value.trim())) {
+            missing.push(f[1]);
+            first = first || control;
+          }
+        });
+        // At least eight digits, so a Singapore mobile or an overseas number
+        // both pass, and nothing but digits, spaces, brackets, dashes and +.
+        var phone = el['Phone or WhatsApp'];
+        var value = phone.value.trim();
+        if (mark(phone, value.replace(/\D/g, '').length < 8 || /[^\d\s()+-]/.test(value))) {
+          missing.push('a phone number we can reach you on');
+          first = first || phone;
+        }
+        return { missing: missing, first: first, needs: needs };
+      }
+
+      function report(result) {
+        if (result.missing.length) say('Please add ' + list(result.missing) + '.', 'error');
+        else say('');
+      }
+
+      // After a failed attempt, clear each problem as soon as it's fixed.
+      function recheck() {
+        if (tried) report(check());
+      }
+      form.addEventListener('input', recheck);
+      form.addEventListener('change', recheck);
+
+      function reset() {
+        button.disabled = false;
+        button.textContent = label;
+      }
+
+      function showSent() {
+        form.reset();
+        reset();
+        say('');
+        tried = false;
+        form.hidden = true;
+        sent.hidden = false;
+        sent.focus();
+      }
+
+      again.hidden = false;
+      again.addEventListener('click', function () {
+        sent.hidden = true;
+        form.hidden = false;
+        var first = form.querySelector('input[name="What they need"]');
+        if (first) first.focus();
+      });
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (button.disabled) return;
+
+        // Bots fill the honeypot. Look as if it worked, and send nothing.
+        if (el['_honey'].value) {
+          showSent();
+          return;
+        }
+
+        var result = check();
+        if (result.missing.length) {
+          tried = true;
+          report(result);
+          result.first.focus();
+          return;
+        }
+
+        button.disabled = true;
+        button.textContent = 'Sending…';
+        say('');
+
+        var payload = {
+          _subject: el['_subject'].value,
+          _template: 'table',
+          'What they need': result.needs.join(', '),
+          'Property type': el['Property type'].value,
+          Area: el['Area'].value.trim(),
+          Timing: el['Timing'].value,
+          Name: el['Name'].value.trim(),
+          'Phone or WhatsApp': el['Phone or WhatsApp'].value.trim(),
+          Notes: el['Notes'].value.trim() || '-',
+          Page: el['Page'].value,
+        };
+
+        fetch(form.getAttribute('data-endpoint'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(payload),
+        })
+          .then(function (res) {
+            return res.json();
+          })
+          .then(function (data) {
+            // FormSubmit answers 200 even when it refuses an enquiry, for
+            // example before the form is activated. Only success "true" means
+            // it will be delivered, so only that shows "sent" or counts in GA4.
+            if (!data || String(data.success) !== 'true') throw new Error('refused');
+            if (typeof window.gtag === 'function') {
+              window.gtag('event', 'generate_lead', {
+                lead_source: 'enquiry_form',
+                form_section: form.getAttribute('data-ga-section'),
+              });
+            }
+            showSent();
+          })
+          .catch(function () {
+            reset();
+            say(
+              'Sorry, that didn’t go through. Please try again in a moment, or email ' +
+                form.getAttribute('data-fallback-email') + '.',
+              'error'
+            );
+          });
+      });
+    });
+  })();
+</script>

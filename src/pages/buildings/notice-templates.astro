@@ -2,7 +2,7 @@
 // Notice templates for MCSTs and managing agents. The wording lives in
 // src/utils/notices.ts: it's rendered here at build time, so the full text is
 // in the HTML, and re-rendered in the browser as the user fills in the fields.
-// Nothing a user types leaves the page: there is no form submission, no
+// Nothing typed into the templates leaves the page: they have no submission, no
 // storage, and no analytics on the inputs.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
@@ -69,7 +69,7 @@ const usage: Section[] = [
           details and the text updates as you type. Then copy it or print it.
         </p>
         <p class="byline">
-          Reviewed <time datetime={LAST_REVIEWED}>{LAST_REVIEWED_DISPLAY}</time> · Nothing you type leaves this page
+          Reviewed <time datetime={LAST_REVIEWED}>{LAST_REVIEWED_DISPLAY}</time> · Nothing you type in the templates leaves this page
         </p>
       </div>
     </div>
@@ -143,7 +143,7 @@ const usage: Section[] = [
     </section>
 
     <GuideBody sections={usage} />
-    <HelpBox help={hub.help} section={hub.slug} />
+    <HelpBox help={hub.help} section={hub.slug} page={{ label: 'Notice templates', path }} />
   </div>
 
   <LinkGrid links={related} heading="Related guides" eyebrow="Keep reading" subtle id="related" />
