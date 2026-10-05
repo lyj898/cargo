@@ -68,7 +68,6 @@ const ajaxEndpoint = endpoint.replace('https://formsubmit.co/', 'https://formsub
     data-enquiry
     data-endpoint={ajaxEndpoint}
     data-ga-section={section}
-    data-fallback-email={site.email}
     aria-labelledby={heading ? 'enquiry-heading' : undefined}
     aria-label={heading ? undefined : 'Ask for a quote'}
   >
@@ -332,11 +331,9 @@ const ajaxEndpoint = endpoint.replace('https://formsubmit.co/', 'https://formsub
           })
           .catch(function () {
             reset();
-            say(
-              'Sorry, that didn’t go through. Please try again in a moment, or email ' +
-                form.getAttribute('data-fallback-email') + '.',
-              'error'
-            );
+            // Family rule (2 Oct 2026): say it failed and keep what they typed,
+            // but show no contact details.
+            say('Sorry, that didn’t go through. What you typed is still here, so please try again in a moment.', 'error');
           });
       });
     });
