@@ -1,0 +1,59 @@
+---
+// The site's contact page: the same enquiry form as the help boxes, for
+// readers who come looking for a way to get in touch rather than reaching it
+// at the end of a guide (the user's choice, 5 Oct 2026). Corrections to the
+// guides go to the About page, where they always have.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import { site, withBase } from '../config/site';
+
+const title = 'Contact SwyftClear: Ask for a Quote';
+const description =
+  'Ask for a quote to clear a home, a condo’s common areas or business premises in Singapore. Your details go to the team behind Junk to Clear.';
+
+const { brand, legalName } = site.publisher;
+---
+
+<BaseLayout title={title} description={description} path="/contact">
+  <Breadcrumbs items={[{ label: 'Contact', href: '/contact' }]} />
+
+  <header class="page-hero">
+    <div class="container">
+      <div class="hero__content">
+        <div class="eyebrow">Contact</div>
+        <h1>Ask for a quote</h1>
+        <p class="lede">
+          If you’d rather hand the job over, tell us what you need. The team behind {brand} reads
+          every enquiry and passes it to the partner who’ll quote.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <div class="container article-body">
+    <aside class="help-box" aria-labelledby="ask-for-a-quote">
+      <p class="help-box__eyebrow">From the company behind SwyftClear</p>
+      <h2 id="ask-for-a-quote">Tell us about the job</h2>
+      <p>
+        {brand} quotes for clearing and disposal. For cleaning, moving, repairs, pest control,
+        aircon or renovation, the team passes your enquiry to a partner who does that work, and
+        they contact you on the number you give.
+      </p>
+      <EnquiryForm page={{ label: 'Contact', path: '/contact' }} section="contact" />
+    </aside>
+
+    <div class="prose">
+      <section aria-labelledby="who-reads-it">
+        <h2 id="who-reads-it">Who reads your enquiry</h2>
+        <p>
+          SwyftClear is published by {legalName}, the company behind {brand}.
+          <a href={withBase('/about')}>What that means for these guides</a>.
+        </p>
+        <p>
+          Spotted a mistake in a guide? <a href={withBase('/about#corrections')}>Here’s how to tell us</a>.
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
