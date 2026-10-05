@@ -15,7 +15,7 @@ import { site, absoluteUrl, withBase } from '../config/site';
 export interface Props {
   /** The page the form is on. Named in the subject, so enquiries can be counted per page. */
   page: { label: string; path: string };
-  /** Section slug, sent with the GA4 event. */
+  /** Section slug: sent with the GA4 event, and it picks the situation that starts selected. */
   section?: string;
   /** Needs already ticked when the page loads. */
   preselect?: string[];
@@ -32,6 +32,7 @@ const needs = [
   'Repairs or handyman',
   'Pest control',
   'Aircon servicing',
+  'Renovation',
 ];
 const propertyTypes = [
   'HDB flat',
@@ -42,6 +43,22 @@ const propertyTypes = [
   'Common areas of a building',
   'Something else',
 ];
+// SwyftClear's four situations, one per section, so a help box starts with its
+// own already chosen.
+const situations = [
+  'Inherited home',
+  'Letting or selling',
+  'Condo or strata building',
+  'Business premises',
+  'Something else',
+];
+const situationFor: Record<string, string> = {
+  estates: 'Inherited home',
+  handover: 'Letting or selling',
+  buildings: 'Condo or strata building',
+  business: 'Business premises',
+};
+const presetSituation = situationFor[section] ?? '';
 const timings = [
   'As soon as possible',
   'Within two weeks',
@@ -106,6 +123,13 @@ const ajaxEndpoint = endpoint.replace('https://formsubmit.co/', 'https://formsub
 
     <div class="enquiry__grid">
       <label class="enquiry-field">
+        <span>What’s the situation?</span>
+        <select name="Situation" required>
+          <option value="" selected={!presetSituation}>Choose one</option>
+          {situations.map((o) => <option selected={o === presetSituation}>{o}</option>)}
+        </select>
+      </label>
+      <label class="enquiry-field">
         <span>Property type</span>
         <select name="Property type" required>
           <option value="">Choose one</option>
@@ -124,10 +148,6 @@ const ajaxEndpoint = endpoint.replace('https://formsubmit.co/', 'https://formsub
         </select>
       </label>
       <label class="enquiry-field">
-        <span>Anything else? <em>Optional</em></span>
-        <input type="text" name="Notes" placeholder="e.g. 4-room flat, handover on 15 Nov" />
-      </label>
-      <label class="enquiry-field">
         <span>Your name</span>
         <input type="text" name="Name" autocomplete="name" required />
       </label>
@@ -141,6 +161,10 @@ const ajaxEndpoint = endpoint.replace('https://formsubmit.co/', 'https://formsub
           required
           placeholder="e.g. 8123 4567"
         />
+      </label>
+      <label class="enquiry-field enquiry-field--wide">
+        <span>Anything else? <em>Optional</em></span>
+        <input type="text" name="Notes" placeholder="e.g. 4-room flat, handover on 15 Nov" />
       </label>
     </div>
 
@@ -216,6 +240,7 @@ const ajaxEndpoint = endpoint.replace('https://formsubmit.co/', 'https://formsub
           needsBox.removeAttribute('data-invalid');
         }
         [
+          ['Situation', 'the situation'],
           ['Property type', 'the property type'],
           ['Area', 'the area'],
           ['Timing', 'when it needs doing'],
@@ -299,6 +324,7 @@ const ajaxEndpoint = endpoint.replace('https://formsubmit.co/', 'https://formsub
           _subject: el['_subject'].value,
           _template: 'table',
           'What they need': result.needs.join(', '),
+          Situation: el['Situation'].value,
           'Property type': el['Property type'].value,
           Area: el['Area'].value.trim(),
           Timing: el['Timing'].value,
