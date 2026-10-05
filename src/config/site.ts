@@ -19,16 +19,17 @@ export const site = {
 
   // The enquiry form in each help box and on /about. Every family site takes
   // enquiries on its own FormSubmit form (family rule, 30 Sep 2026), and the
-  // user passes each one to Junk to Clear or the partner who'll quote. This is
-  // the same inbox as HomeToClean's form. The subject names the site and the
-  // page, so enquiries can be counted per site and per page.
+  // user passes each one to Junk to Clear or the partner who'll quote. The
+  // subject names the site and the page, so enquiries can be counted per site
+  // and per page.
   //
-  // FormSubmit can hold a new form until the link in its activation email is
-  // clicked. Until then it refuses submissions, and the form shows an error
-  // rather than a false "sent". Once it's active, swap the address for the
-  // hashed alias FormSubmit provides, so the inbox is no longer in page source.
+  // The endpoint is FormSubmit's alias for the family inbox, which every family
+  // site posts to (the user chose it for SwyftClear on 5 Oct 2026), so no email
+  // address appears in page source. FormSubmit can hold a new form until the
+  // link in its activation email is clicked; until then the form shows an error
+  // rather than a false "sent".
   enquiries: {
-    endpoint: 'https://formsubmit.co/lyj898@gmail.com',
+    endpoint: 'https://formsubmit.co/1aacc4903352135bb0fa38c3987d3abd',
     subject: 'SwyftClear enquiry',
   },
 
