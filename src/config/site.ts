@@ -33,8 +33,9 @@ export const site = {
     subject: 'SwyftClear enquiry',
   },
 
-  // GA4 measurement ID. The "SwyftClear" property sits in the Junktoclear
-  // Analytics account, beside Junk to Clear's own property. Empty means no
+  // GA4 measurement ID. The "SwyftClear" property (556462966) sits in the
+  // OurKampung account (403279198), with the rest of the family's sites; the
+  // user moved it out of the Junktoclear account on 6 Oct 2026. Empty means no
   // analytics tag is emitted at all.
   ga4MeasurementId: 'G-DJDZ60W1D0',
 
