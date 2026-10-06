@@ -1,9 +1,11 @@
 // Where the guides send a reader who would rather hand the job over.
 //
-// Every URL here is a page on the publisher's own sites (see site.publisher and
-// /about). They are linked from one help box per page and from the prose only
-// where the reader needs a service at that moment, never sitewide, and never
-// with keyword-stuffed anchor text.
+// Junk to Clear is a separate company the family refers disposal, clearance
+// and renovation jobs to (see site.partner and /about); HomeToClean and
+// HomeToMoved are family sites run by the same team. Each is linked from one
+// help box per page and from the prose only where the reader needs that
+// service at that moment, never sitewide, and never with keyword-stuffed
+// anchor text.
 
 const JUNK_TO_CLEAR = 'https://junktoclear.com.sg';
 
@@ -17,8 +19,9 @@ export const junkToClear = {
   officeChecklist: `${JUNK_TO_CLEAR}/blogs/office-clearance-singapore-moving-disposal-checklist/`,
 };
 
-// Sister brands run by the same company. Linked only where the reader needs
-// that service (a move-out clean before handover, say), never as a set.
+// Family sites run by the same team. Linked only where the reader needs that
+// service (a move-out clean before handover, say), never as a set, and always
+// with "run by the same team" in the same sentence.
 export const homeToClean = {
   moveOut: 'https://hometoclean.com/cleaning/move-out-cleaning/',
 };

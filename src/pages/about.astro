@@ -9,16 +9,16 @@ import { LAST_REVIEWED_DISPLAY } from '../config/content';
 
 const title = 'About SwyftClear: Who Publishes These Guides';
 const description =
-  'SwyftClear is published by SKAP Waste Management Pte Ltd, the company behind Junk to Clear. Why the site exists, how the guides are written, and what we won’t do.';
+  'SwyftClear is run by the OurKampung team, part of a family of independent Singapore home sites. Why it exists, how the guides are written, and how we refer jobs.';
 
-const { legalName, brand, foundingYear } = site.publisher;
+const partner = site.partner.name;
 
 const sections: Section[] = [
   {
-    heading: 'Who publishes this site',
+    heading: 'Who runs this site',
     body: [
-      `SwyftClear is published by **${legalName}**, a Singapore company established in ${foundingYear}. The same company runs [${brand}](${site.publisher.url}), a disposal and clearance service, and the HomeToClean and HomeToMoved brands. SwyftClear is also part of OurKampung, a family of Singapore guide and service sites run by the same team, and OurKampung keeps [a list of every site and what it covers](https://ourkampung.com/our-sites/).`,
-      'We say this first because it matters for how you read everything else. A clearance company has an obvious interest in you hiring a clearance company. You should know that before you take our word on when you need one.',
+      `SwyftClear is run by ${site.team}, as part of OurKampung, a family of independent Singapore home sites. The same team runs the family’s other guides and its sites for moving, cleaning, pest control, aircon and repairs, and OurKampung keeps [a list of every site and what it covers](https://ourkampung.com/our-sites/).`,
+      `For disposal, clearance and renovation, we refer jobs to ${partner}, a renovation and disposal company. It’s a separate business: it doesn’t run this site, and it pays no referral fees. We say this up front because it matters for how you read everything else. A site that refers clearance jobs has an interest in you booking one, and you should know that before you take our word on when you need one.`,
     ],
   },
   {
@@ -29,13 +29,13 @@ const sections: Section[] = [
     ],
   },
   {
-    heading: 'How the guides handle who we are',
+    heading: 'How the guides handle referrals',
     body: ['These are the rules every guide follows:'],
     bullets: [
-      `Each guide has **one** box about ${brand}’s services, near the end, and it is always labelled as coming from the company behind this site. The box is also where you can ask for a quote.`,
-      `Inside the guides, we link to ${brand} only where you would actually need a clearance at that point. There are no links to it in the site’s header or footer.`,
+      `Each guide has **one** box near the end on getting the job done. It says what ${partner}, a disposal company we refer jobs to, can do in that situation, and it’s where you can ask for a quote.`,
+      `Inside the guides, we link to ${partner} only where disposal or clearance is your next step. There are no links to it in the site’s header or footer.`,
       'Free routes come first. Where a town council removal, an e-waste collection point, a donation or a resale would do the job, the guide says so before it mentions paying anyone.',
-      'We don’t rank or review disposal companies, including our own, and we don’t publish testimonials.',
+      'We don’t rank or review disposal companies, including the one we refer jobs to, and we don’t publish testimonials.',
     ],
   },
   {
@@ -59,7 +59,7 @@ const afterEnquiry: Section[] = [
   {
     heading: 'Privacy and analytics',
     body: [
-      `The enquiry form is the only place the site asks for your details. What you enter, with the page you sent it from, is emailed to the team behind ${brand} at ${legalName} through FormSubmit, a form-to-email service. The team uses it only for your enquiry: it passes your details to the partner who’ll quote, whether that’s ${brand} or a partner for cleaning, moving, repairs, pest control, aircon or renovation. To see, correct or delete what you sent, or to withdraw your consent, email [${site.email}](mailto:${site.email}).`,
+      `SwyftClear is run by ${site.team}, and the enquiry form is the only place the site asks for your details. What you enter, with the page you sent it from, is emailed to the OurKampung team through FormSubmit, a form-to-email service. The team uses it only for your enquiry: it passes your details to the partner matched to the job, and for disposal, clearance or renovation, that partner can be ${partner}. To see, correct or delete what you sent, or to withdraw your consent, email [${site.email}](mailto:${site.email}).`,
       'SwyftClear uses Google Analytics to count visits and see which guides get read, so we know what to improve. It sets cookies and records things like the pages you view, the device and browser you use, roughly where you’re browsing from, and the links you click, including links to Junk to Clear. When you send an enquiry, it records that one was sent, but not what you wrote.',
       'Nothing you type into the notice templates leaves your browser. You can block analytics cookies in your browser settings, or install Google’s [Analytics opt-out add-on](https://tools.google.com/dlpage/gaoptout).',
     ],
@@ -84,8 +84,8 @@ const afterEnquiry: Section[] = [
         <h1>Who publishes SwyftClear, and why</h1>
         <p class="lede">
           SwyftClear is a set of Singapore guides for people who have to clear a property they’re
-          responsible for. It’s published by the company behind {brand}, and this page explains what
-          that means for the guides.
+          responsible for. It’s run by {site.team}, and this page explains how the guides are written
+          and when they point you to someone who can do the job.
         </p>
       </div>
     </div>
@@ -94,12 +94,11 @@ const afterEnquiry: Section[] = [
   <div class="container article-body">
     <GuideBody sections={sections} />
     <aside class="help-box" aria-labelledby="ask-for-a-quote">
-      <p class="help-box__eyebrow">From the company behind SwyftClear</p>
+      <p class="help-box__eyebrow">Help with the job</p>
       <h2 id="ask-for-a-quote">Ask for a quote</h2>
       <p>
-        If you’d rather hand the job over, tell us what you need. The team behind {brand} reads
-        every enquiry and passes it to the partner who’ll quote: {brand} for clearing and disposal,
-        or a partner for cleaning, moving, repairs, pest control, aircon or renovation.
+        If you’d rather hand the job over, tell us what you need. The OurKampung team reads every
+        enquiry and passes it to the partner who’ll quote for the job.
       </p>
       <EnquiryForm page={{ label: 'About', path: '/about' }} section="about" />
     </aside>

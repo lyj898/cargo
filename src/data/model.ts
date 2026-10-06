@@ -36,9 +36,9 @@ export type Section = {
 };
 
 /**
- * The box that says what Junk to Clear — the company that publishes this
- * site — can do in this situation, with the enquiry form. Exactly one per
- * page, near the end, and always labelled as coming from the publisher.
+ * The box that says what Junk to Clear, a disposal company the family refers
+ * jobs to, can do in this situation, with the enquiry form. Exactly one per
+ * page, near the end, and always clearly labelled.
  */
 export type HelpBox = {
   heading: string;

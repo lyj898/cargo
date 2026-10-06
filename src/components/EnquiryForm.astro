@@ -1,6 +1,6 @@
 ---
 // The enquiry form. It sits in each page's help box, the one place a page
-// offers the publisher's service, and on /about.
+// offers help with the job, and on /about and /contact.
 //
 // It sends to FormSubmit (see site.enquiries) with fetch, and only says "sent"
 // once FormSubmit says it accepted the enquiry: an inactive form still answers
@@ -67,7 +67,6 @@ const timings = [
   'No fixed date yet',
 ];
 
-const { brand, legalName } = site.publisher;
 const pageUrl = absoluteUrl(page.path);
 const subject = `${site.enquiries.subject}: ${page.label} (${withBase(page.path)})`;
 const endpoint = site.enquiries.endpoint;
@@ -174,8 +173,8 @@ const ajaxEndpoint = endpoint.replace('https://formsubmit.co/', 'https://formsub
     </div>
 
     <p class="enquiry__notice">
-      Your details go to the team behind {brand} at {legalName}, which passes them to the partner
-      who’ll quote. They’re used only for this enquiry.
+      Your details go to the OurKampung team, who pass them to the partner who’ll quote for the job.
+      They’re used only for this enquiry.
       <a href={withBase('/about#privacy-and-analytics')}>How we handle them</a>.
     </p>
   </form>
@@ -183,8 +182,8 @@ const ajaxEndpoint = endpoint.replace('https://formsubmit.co/', 'https://formsub
   <div class="enquiry-sent" id="enquiry-sent" tabindex="-1" hidden data-enquiry-sent>
     <h3>Thanks. Your enquiry is on its way.</h3>
     <p>
-      The team behind {brand} will pass it to the partner who’ll quote, and they’ll contact you on
-      the number you gave.
+      The OurKampung team will pass it to the partner who’ll quote, and they’ll contact you on the
+      number you gave.
     </p>
     <button type="button" class="btn btn--secondary" hidden data-enquiry-again>Send another enquiry</button>
   </div>

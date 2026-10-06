@@ -1,7 +1,9 @@
 // JSON-LD. One @graph per page, emitted by BaseLayout.
 //
-// The model is deliberately plain: SwyftClear is a WebSite, and its publisher
-// is the company that runs Junk to Clear. Page nodes (Article, CollectionPage)
+// The model is deliberately plain: SwyftClear is a WebSite, published by the
+// SwyftClear Organization, whose parent is OurKampung, the family of sites it
+// belongs to. No company is named (the independence brief, 6 Oct 2026), so
+// there is no legalName or foundingDate. Page nodes (Article, CollectionPage)
 // reference both by @id rather than repeating them, so there is one
 // authoritative description of each entity on the site.
 //
@@ -35,12 +37,10 @@ export function organizationNode(): JsonLdNode {
   return {
     '@type': 'Organization',
     '@id': ORG_ID,
-    name: site.publisher.legalName,
-    alternateName: site.publisher.brand,
-    // The operating company's own website.
-    url: site.publisher.url,
-    foundingDate: String(site.publisher.foundingYear),
+    name: site.name,
+    url: `${site.url}/`,
     areaServed: { '@type': 'Country', name: 'Singapore' },
+    parentOrganization: { '@type': 'Organization', name: site.family.name, url: site.family.url },
   };
 }
 

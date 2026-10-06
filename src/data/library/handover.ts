@@ -97,14 +97,14 @@ export const handoverGuides: Guide[] = [
       },
       {
         q: 'Do I have to clean the home before handing it over?',
-        a: `Check the sale documents, but even where it isn’t required, handing over a clean home avoids a dispute at inspection. Our sister brand HomeToClean arranges [move-out cleaning](${homeToClean.moveOut}).`,
+        a: `Check the sale documents, but even where it isn’t required, handing over a clean home avoids a dispute at inspection. HomeToClean, run by the same team as SwyftClear, arranges [move-out cleaning](${homeToClean.moveOut}).`,
       },
     ],
     sources: [sources.hdbResaleCompletion, sources.hdbExtensionOfStay, sources.lawSocietyConditions, sources.ceaSelling],
     related: ['/handover/tenant-left-belongings', '/estates/clearing-a-parents-hdb-flat'],
     help: {
       heading: 'When completion is close and the home isn’t empty',
-      body: 'Junk to Clear removes furniture, appliances and general household items, and quotes upfront based on what there is and where it is. It recommends booking as early as you can, so don’t leave it to completion week. It doesn’t take hazardous waste such as paint, solvents or chemicals.',
+      body: 'Junk to Clear, a disposal company we refer jobs to, removes furniture, appliances and general household items, and quotes upfront based on what there is and where it is. It recommends booking as early as you can, so don’t leave it to completion week. It doesn’t take hazardous waste such as paint, solvents or chemicals.',
       href: junkToClear.residential,
       linkLabel: 'See Junk to Clear’s home clearance',
     },
@@ -165,7 +165,7 @@ export const handoverGuides: Guide[] = [
       {
         heading: 'Getting the flat ready again',
         body: [
-          `Once the deadline has passed and anything of value has been returned or dealt with, clear the rest, then clean and fix what needs fixing before the next tenant moves in. Our sister brand HomeToClean arranges [move-out cleaning](${homeToClean.moveOut}) if you’d rather not do it yourself.`,
+          `Once the deadline has passed and anything of value has been returned or dealt with, clear the rest, then clean and fix what needs fixing before the next tenant moves in. HomeToClean, run by the same team as SwyftClear, arranges [move-out cleaning](${homeToClean.moveOut}) if you’d rather not do it yourself.`,
           'Take dated photos of the empty, clean flat before the new tenancy starts. They’re the starting point for the next inventory, and the answer to the next dispute.',
         ],
       },
@@ -188,7 +188,7 @@ export const handoverGuides: Guide[] = [
     related: ['/handover/vacant-possession', '/buildings/items-left-in-common-areas'],
     help: {
       heading: 'When the flat needs clearing before the next tenant',
-      body: 'Once the tenant’s deadline has passed, Junk to Clear can remove furniture, appliances and general household items, with an upfront quote based on what there is and where it is. It doesn’t take hazardous waste such as paint, solvents or chemicals.',
+      body: 'Once the tenant’s deadline has passed, Junk to Clear, a disposal company we refer jobs to, can remove furniture, appliances and general household items, with an upfront quote based on what there is and where it is. It doesn’t take hazardous waste such as paint, solvents or chemicals.',
       href: junkToClear.residential,
       linkLabel: 'See Junk to Clear’s home clearance',
     },

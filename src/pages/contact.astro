@@ -10,9 +10,7 @@ import { site, withBase } from '../config/site';
 
 const title = 'Contact SwyftClear: Ask for a Quote';
 const description =
-  'Ask for a quote to clear a home, a condo’s common areas or business premises in Singapore. Your details go to the team behind Junk to Clear.';
-
-const { brand, legalName } = site.publisher;
+  'Ask for a quote to clear a home, a condo’s common areas or business premises in Singapore. The OurKampung team passes your enquiry to the partner who’ll quote.';
 ---
 
 <BaseLayout title={title} description={description} path="/contact">
@@ -24,8 +22,8 @@ const { brand, legalName } = site.publisher;
         <div class="eyebrow">Contact</div>
         <h1>Ask for a quote</h1>
         <p class="lede">
-          If you’d rather hand the job over, tell us what you need. The team behind {brand} reads
-          every enquiry and passes it to the partner who’ll quote.
+          If you’d rather hand the job over, tell us what you need. The OurKampung team reads every
+          enquiry and passes it to the partner who’ll quote for the job.
         </p>
       </div>
     </div>
@@ -33,12 +31,13 @@ const { brand, legalName } = site.publisher;
 
   <div class="container article-body">
     <aside class="help-box" aria-labelledby="ask-for-a-quote">
-      <p class="help-box__eyebrow">From the company behind SwyftClear</p>
+      <p class="help-box__eyebrow">Help with the job</p>
       <h2 id="ask-for-a-quote">Tell us about the job</h2>
       <p>
-        {brand} quotes for clearing and disposal. For cleaning, moving, repairs, pest control,
-        aircon or renovation, the team passes your enquiry to a partner who does that work, and
-        they contact you on the number you give.
+        For disposal, clearance or renovation, that partner can be {site.partner.name}, a renovation
+        and disposal company we refer jobs to. For cleaning, moving, pest control, aircon or repairs,
+        it’s a partner the family’s own service sites work with. Either way, they contact you on the
+        number you give.
       </p>
       <EnquiryForm page={{ label: 'Contact', path: '/contact' }} section="contact" />
     </aside>
@@ -47,8 +46,8 @@ const { brand, legalName } = site.publisher;
       <section aria-labelledby="who-reads-it">
         <h2 id="who-reads-it">Who reads your enquiry</h2>
         <p>
-          SwyftClear is published by {legalName}, the company behind {brand}.
-          <a href={withBase('/about')}>What that means for these guides</a>.
+          SwyftClear is run by {site.team}, as part of OurKampung.
+          <a href={withBase('/about')}>How we work</a>.
         </p>
         <p>
           Spotted a mistake in a guide? <a href={withBase('/about#corrections')}>Here’s how to tell us</a>.

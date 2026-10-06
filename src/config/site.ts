@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------------
 // Central, editable site configuration.
-// Change the publisher details, links, and analytics ID here — nothing else in
+// Change the site's details, links, and analytics ID here — nothing else in
 // the codebase should need to change.
 // ---------------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ export const site = {
 
   // The enquiry form in each help box and on /about. Every family site takes
   // enquiries on its own FormSubmit form (family rule, 30 Sep 2026), and the
-  // user passes each one to Junk to Clear or the partner who'll quote. The
+  // OurKampung team passes each one to the partner who'll quote. The
   // subject names the site and the page, so enquiries can be counted per site
   // and per page.
   //
@@ -39,14 +39,18 @@ export const site = {
   // analytics tag is emitted at all.
   ga4MeasurementId: 'G-DJDZ60W1D0',
 
-  // Who publishes the site. Disclosed on every guide and on /about, because a
-  // guide that links to its own publisher's service should say so plainly.
-  publisher: {
-    legalName: 'SKAP Waste Management Pte Ltd',
-    brand: 'Junk to Clear',
-    url: 'https://junktoclear.com.sg/',
-    foundingYear: 2009,
-  },
+  // Who runs the site. SwyftClear is part of OurKampung, a family of
+  // independent Singapore home sites run by the OurKampung team. No company runs
+  // the family, so none is named anywhere: no company name, UEN, address or
+  // founding year (the user's decision, 6 Oct 2026; jtc-family/briefs/independence.md).
+  team: 'the OurKampung team',
+  family: { name: 'OurKampung', url: 'https://ourkampung.com/' },
+
+  // Junk to Clear is a separate company the family refers disposal, clearance
+  // and renovation jobs to. It pays no referral fees. Introduce it as "a
+  // disposal company we refer jobs to" (for renovation, "a renovation and
+  // disposal company"), and never call it "our", "sister" or "same team".
+  partner: { name: 'Junk to Clear', url: 'https://junktoclear.com.sg/' },
 
   // --- nav ---
   // One item per section, plus About. Kept to five so the header stays legible

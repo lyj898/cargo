@@ -125,7 +125,7 @@ export const buildingsGuides: Guide[] = [
     related: ['/buildings/items-left-in-common-areas', '/buildings/notice-templates', '/business/reinstatement'],
     help: {
       heading: 'When the bin centre needs a one-off clear',
-      body: 'Junk to Clear clears bulky waste for condos and commercial buildings: furniture, appliances, renovation debris and general junk. It gives commercial clients a certificate of disposal on request, which helps when the council has to account for the cost. It doesn’t take hazardous waste.',
+      body: 'Junk to Clear, a disposal company we refer jobs to, clears bulky waste for condos and commercial buildings: furniture, appliances, renovation debris and general junk. It gives commercial clients a certificate of disposal on request, which helps when the council has to account for the cost. It doesn’t take hazardous waste.',
       href: junkToClear.business,
       linkLabel: 'See Junk to Clear’s commercial disposal',
     },
@@ -235,7 +235,7 @@ export const buildingsGuides: Guide[] = [
     related: ['/buildings/bulky-waste-in-condos', '/buildings/notice-templates', '/handover/tenant-left-belongings'],
     help: {
       heading: 'When the backlog is bigger than a notice can fix',
-      body: 'Junk to Clear clears bulky waste from condos and commercial buildings, including bin centres, storerooms and common areas. It gives commercial clients a certificate of disposal on request, which is useful for the council’s records. It doesn’t take hazardous waste.',
+      body: 'Junk to Clear, a disposal company we refer jobs to, clears bulky waste from condos and commercial buildings, including bin centres, storerooms and common areas. It gives commercial clients a certificate of disposal on request, which is useful for the council’s records. It doesn’t take hazardous waste.',
       href: junkToClear.business,
       linkLabel: 'See Junk to Clear’s commercial disposal',
     },
