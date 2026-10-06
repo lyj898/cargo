@@ -236,8 +236,6 @@ export const buildingsGuides: Guide[] = [
     help: {
       heading: 'When the backlog is bigger than a notice can fix',
       body: 'Junk to Clear, a disposal company we refer jobs to, clears bulky waste from condos and commercial buildings, including bin centres, storerooms and common areas. It gives commercial clients a certificate of disposal on request, which is useful for the council’s records. It doesn’t take hazardous waste.',
-      href: junkToClear.business,
-      linkLabel: 'See Junk to Clear’s commercial disposal',
     },
   },
 ];

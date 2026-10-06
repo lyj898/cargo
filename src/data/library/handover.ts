@@ -189,8 +189,6 @@ export const handoverGuides: Guide[] = [
     help: {
       heading: 'When the flat needs clearing before the next tenant',
       body: 'Once the tenant’s deadline has passed, Junk to Clear, a disposal company we refer jobs to, can remove furniture, appliances and general household items, with an upfront quote based on what there is and where it is. It doesn’t take hazardous waste such as paint, solvents or chemicals.',
-      href: junkToClear.residential,
-      linkLabel: 'See Junk to Clear’s home clearance',
     },
   },
 ];

@@ -1,7 +1,8 @@
 ---
 // The one place on a page that offers help with the job itself: what Junk to
 // Clear, a disposal company the family refers jobs to, can do in this
-// situation, a link to its page, and the enquiry form. It's labelled every
+// situation, the enquiry form, and, only on guides where clearing is that
+// page's own next step, a link to its page. It's labelled every
 // time, and it says plainly that Junk to Clear is a separate company we refer
 // jobs to, because a guide that points readers at a business without saying
 // how it's connected is exactly the kind of page nobody should trust.
@@ -29,10 +30,14 @@ const { help, page, section } = Astro.props;
   </div>
   <p>{help.body}</p>
   {/* A plain link: no "sponsored", since no fees are paid, and never noreferrer. */}
-  <a class="btn btn--secondary" href={help.href} rel="noopener" target="_blank">
-    {help.linkLabel}
-    <span aria-hidden="true">↗</span>
-  </a>
+  {
+    help.href && help.linkLabel && (
+      <a class="btn btn--secondary" href={help.href} rel="noopener" target="_blank">
+        {help.linkLabel}
+        <span aria-hidden="true">↗</span>
+      </a>
+    )
+  }
   {/* Every help box is about a clearance, so that need starts ticked. */}
   <EnquiryForm page={page} section={section} preselect={['Clearing and disposal']} heading="Ask for a quote" />
   <p class="help-box__disclosure">

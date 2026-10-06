@@ -43,8 +43,15 @@ export type Section = {
 export type HelpBox = {
   heading: string;
   body: string;
-  href: string;
-  linkLabel: string;
+  /**
+   * Junk to Clear's page. Set only on guides where clearing or disposal is
+   * that page's own next step, at most six across the site: a partner link
+   * repeated in the same box on every page is the template pattern Google's
+   * link-spam policy describes (PORTFOLIO, partner links, 6 Oct 2026). Leave
+   * it out elsewhere: the sentence about Junk to Clear stays, the link goes.
+   */
+  href?: string;
+  linkLabel?: string;
 };
 
 export type Hub = {

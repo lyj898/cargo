@@ -247,8 +247,6 @@ export const estatesGuides: Guide[] = [
     help: {
       heading: 'When the search is done',
       body: 'Once the family has taken what it wants to keep, Junk to Clear, a disposal company we refer jobs to, can clear the rest: furniture, appliances and general household items. It says it donates or recycles what can be reused. It doesn’t take hazardous waste such as paint, solvents or chemicals.',
-      href: junkToClear.residential,
-      linkLabel: 'See Junk to Clear’s home clearance',
     },
   },
   {
